@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Mofehintolu MUMUNI
- * 
+ *
  * @description SubscriptionPlan  model that handles user subscriptions
  * @slack @Bits_and_Bytes
  * @copyright 2019
@@ -14,12 +14,13 @@ class SubscriptionPlan extends Model
     protected $casts = [
         'features' => 'array'
     ];
+    protected $table='subscription_plans';
     function checkPlan($planId)
     {
         $plan = SubscriptionPlan::find($planId);
-       
+
         if($plan)
-        { 
+        {
             return ['status' => true,'data'=> $plan->toArray()];
         }
         else {

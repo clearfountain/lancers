@@ -15,9 +15,11 @@ class CreateContactMessagesTable extends Migration
     {
         Schema::create('contact_messages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id');
+            $table->unsignedBigInteger('user_id');
+                $table->foreign('user_id')->references('id')->on('users');
             $table->text('subject');
             $table->mediumText('message');
+            $table->mediumText('response')->nullable();
             $table->timestamps();
         });
     }

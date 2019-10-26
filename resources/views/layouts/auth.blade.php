@@ -293,7 +293,7 @@ a.article:hover {
 /* ---------------------------------------------------
     Table
 ----------------------------------------------------- */
-table.project-table{
+/* table.project-table{
   border-collapse:separate;
   border-spacing: 0 1em;
 }
@@ -315,6 +315,37 @@ table.project-table tbody tr td, table.project-table thead tr th {
 
 .dropleft .dropdown-toggle::before{
   display: none;
+} */
+
+
+/* .table-responsive .dropdown-menu {
+    position: static !important; 
+    white-space: nowrap;
+    overflow: hidden;
+} */
+table.project-table {
+    border-collapse: separate;
+    border-spacing: 0 1em;
+}
+
+table.project-table tbody tr {
+    padding-bottom: 10px !important;
+}
+
+table.project-table tbody tr td span.text-small {
+    font-size: 8px;
+}
+
+table.project-table tbody tr td,
+table.project-table thead tr th {
+    max-width: 200px;
+    /* remove the css property and value you have here before */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dropleft .dropdown-toggle::before {
+    display: none;
 }
 
 /*------------floating button---------*/
@@ -345,7 +376,8 @@ table.project-table tbody tr td, table.project-table thead tr th {
 }
 </style>
 
-@stack('styles')
+<!-- @stack('styles') -->
+@yield('style-ext')
 @endsection
 
 
@@ -377,18 +409,18 @@ table.project-table tbody tr td, table.project-table thead tr th {
                         <a href="{{url('project/status')}}" class="pl-4"><i class="fas fa-dot-circle"></i> Status</a>
                     </li>
             
-                    <li>
+                    <!-- <li>
                         <a href="{{url('project/overview')}}" class="pl-4"><i class="fas fa-dot-circle"></i> Overview</a>
+                    </li> -->
+                    <li>
+                        <a href="{{url('project/collaborators')}}" class="pl-4 "><i class="fas fa-dot-circle"></i> Collabrators</a>
                     </li>
                     <li>
-                        <a href="{{url('project/collabrators')}}" class="pl-4 "><i class="fas fa-dot-circle"></i> Collabrators</a>
+                        <a href="{{url('project/tasks')}}" class="pl-4"><i class="fas fa-dot-circle"></i> Task</a>
                     </li>
-                    <li>
-                        <a href="{{url('project/task')}}" class="pl-4"><i class="fas fa-dot-circle"></i> Task</a>
-                    </li>
-                    <li>
+                    <!-- <li>
                         <a href="{{url('project/documents')}}" class="pl-4"><i class="fas fa-dot-circle"></i> Documents</a>
-                    </li>
+                    </li> -->
 
                 </ul>
             </li>
@@ -397,7 +429,7 @@ table.project-table tbody tr td, table.project-table thead tr th {
                     <img src="https://lancer-app.000webhostapp.com/images/svg/approve-invoice.svg" height="20" width="auto"> <span> Invoice</span>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="{{url('contracts')}}">
                     <img src="https://lancer-app.000webhostapp.com/images/svg/policy.svg" height="20" width="auto"> <span> Contract</span>
                 </a>
@@ -406,8 +438,8 @@ table.project-table tbody tr td, table.project-table thead tr th {
                 <a href="{{url('proposals')}}">
                     <img src="https://lancer-app.000webhostapp.com/images/svg/approval.svg" height="20" width="auto"> <span> Proposals</span>
                 </a>
-            </li>
-                     <li class="@if(request()->path() == url('/dashboard/profile/settings')) active @endif">
+            </li> -->
+            <li class="@if(request()->path() == url('/dashboard/profile/settings')) active @endif">
                 <a href="{{ url('/dashboard/profile/settings') }}">
                     <img src="https://lancer-app.000webhostapp.com/images/svg/approval.svg" height="20" width="auto"> <span> Settings</span>
                 </a>
@@ -423,24 +455,30 @@ table.project-table tbody tr td, table.project-table thead tr th {
         <!-- <Topnav /> -->
         <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
             <div class="container-fluid">
-                <button type="button" id="sidebarCollapse" class="navbar-btn">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-
-                <form class="form-inline my-2 ml-4">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text border-right-0 bg-white" id="basic-addon1"><i class="fas fa-search"></i></span>
-                        </div>
-                        <input class="form-control border border-left-0 searchBox" type="text" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
+                <div class="row">
+                    <div class="col-3">
+                        <button type="button"id="sidebarCollapse" class="my-2 navbar-btn">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
                     </div>
-                </form>
-                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-align-justify"></i>
-                </button>
-
+                    <div class="col-6">
+                        <form class="form-inline my-2">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text border-right-0 bg-white" id="basic-addon1"><i class="fas fa-search"></i></span>
+                                </div>
+                                <input class="form-control border border-left-0 searchBox" type="text" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn my-2 btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fas fa-align-justify"></i>
+                        </button>
+                    </div>
+                </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item active">
@@ -453,9 +491,17 @@ table.project-table tbody tr td, table.project-table thead tr th {
                             <a class="nav-link border-left p-3" href="/notifications"><img src="https://lancer-app.000webhostapp.com/images/svg/notification.svg" height="25" width="auto"> <span class="d-lg-none d-xl-none"> Notification</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link border-left p-3" href="/dashboard/profile/settings"><span class="border rounded-circle p-1 font-weight-bold">
+                        <a class="nav-link border-left p-3" href="/dashboard/profile">
+                            @if(Auth::user()->profile_picture !== 'user-default.png')
+                            <img id="image_selecter" src="{{ asset(Auth::user()->profile_picture) }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
+                            @endif
+                            @if(Auth::user()->profile_picture == 'user-default.png')
+                            <img id="image_selecter" src="{{ asset('images/user-default.jpg') }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
+                            @endif
+                            </a>
+                            <!-- <a class="nav-link border-left p-3" href="/dashboard/profile/settings"><span class="border rounded-circle p-1 font-weight-bold">
                                 {{strtoupper(explode(" ", auth()->user()->name)[0][0])}}
-                            </span> <span class="d-lg-none d-xl-none"> Hello {{explode(" ", auth()->user()->name)[0]}}</span></a>
+                            </span> <span class="d-lg-none d-xl-none"> Hello {{explode(" ", auth()->user()->name)[0]}}</span></a> -->
                         </li>
                         <li class="nav-item">
                             <a class="nav-link p-3" href="{{url('/logout')}}" ><i class="fas fa-sign-out-alt"></i> <span class="d-lg-none d-xl-none"> Logout</span></a>

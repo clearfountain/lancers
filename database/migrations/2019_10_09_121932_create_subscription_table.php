@@ -14,11 +14,17 @@ class CreateSubscriptionTable extends Migration
     public function up()
     {
         Schema::create('subscriptions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id'); #should be a foreign key
-            $table->integer('plan_id'); #should be a foreign key
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('plan_id');
+                $table->foreign('plan_id')->references('id')->on('subscription_plans');
+            $table->unsignedBigInteger('authorization_id')->nullable();
+                $table->foreign('authorization_id')->references('id')->on('authorizations');
             $table->date('startdate');
             $table->date('enddate');
+            $table->boolean('auto_renew')->default(true);
+            $table->boolean('expired')->default(false);
             $table->timestamps();
         });
     }

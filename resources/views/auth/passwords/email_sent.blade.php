@@ -85,7 +85,7 @@
                         <div class="text1">
                             <p>An email has been sent to you with password reset
                                 <br> instructions. Be sure to check your spam folder if you
-                                <br> don't see it wiithin five minutes.</p>
+                                <br> don't see it within five minutes.</p>
                         </div>
                         <div class="text2">
                             <p>Resend instructions?</p>

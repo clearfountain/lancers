@@ -1,33 +1,26 @@
-@extends('layouts.app')`
+@extends('layouts.auth')
 
 
-@section('styles')
-    <link rel="stylesheet" type="text/css" href="{{asset('css/add_client.css')}}" />
+
+@section('main-content')
+  <link rel="stylesheet" type="text/css" href="{{asset('css/add_client.css')}}" />
     <style> a:hover{cursor: pointer;}</style>
-@endsection
-
-
-@section('content')
 <div class="container-fluid">
-    <header class="header ">
-        <div class="header_content col-xs-2 header_control"> <button class="col-xs-6">&times;</button>
-            <button class="col-xs-6">&lt;</button></div>
-        <div class="header_content client col-xs-8"><article class="text-center">Client</article></div>
-        <div class="header_content col-xs-2"><button class="next">Add Client</button></div>
-    </header>
+ 
 
     <main>
         
         <form method="post" action="/client/add">
             @csrf
-            <h2>Client Information</h2><br>
+            <h2>New Client</h2><br>
             @if(session('success'))<br> <h6><span class="alert alert-success">{{session('success')}}</span></h6>
             @elseif(session('error'))<br> <h6><span class="">{{session('error')}}</span></h6> @endif
+            <div class="clearfix"></div>
             <section class="content">
                 <h4>Business Information</h4>
                 <div class="form-group">
                     <label for="company_name">Company name</label>
-                    <input type="text" name="name" required id="Cname" placeholder="e.g Sunshine Studio">
+                    <input type="text" name="name" class="form-control" required id="Cname" placeholder="e.g Sunshine Studio">
                 </div>
 
                 <h5>Business Address</h5>
@@ -35,14 +28,14 @@
                     <div class="form-group">
                         <label for="Str_Num">Street & Number</label>
                         <span>
-                            <input required type="text" name="street" id="street" placeholder="Street">
-                            <input required type="number" name="street_number" id="number" placeholder="Number">
+                            <input required class="form-control" type="text" name="street" id="street" placeholder="Street">
+                            <input required type="number" class="form-control" name="street_number" id="number" placeholder="Number">
                         </span>
                         
                         <label for="city_Zcode">City & Zip Code</label>
                         <span>
-                            <input required type="text" name="city" id="city" placeholder="City">
-                            <input required type="number" name="zipcode" id="Zcode" placeholder="Zip code">
+                            <input required type="text"  class="form-control" name="city" id="city" placeholder="City">
+                            <input required type="number" class="form-control" name="zipcode" id="Zcode" placeholder="Zip code">
                         </span>
 
                         <label for="Country_state">Country & State</label>
@@ -67,7 +60,7 @@
                 </div>
             </section>
             <section>
-                <button>Add Client</button>
+                <button class="create-invoice">Add Client</button>
             </section>
         </form>
     </main>
@@ -77,16 +70,19 @@
 @section('script')
 <script type="text/javascript">
     let count = 1;
+	window.addEventListener('load', function() {
+        addContact();
+    })
     function addContact(){
         let element = document.querySelector('#contacts')
         let newElement = document.createElement('div');
         newElement.classList.add('form-group');
         newElement.innerHTML = `
             <label for="company_name_${count}">Contact name</label>
-            <input type="text" name="contact[${count}]['name']" id="contact_name${count}" placeholder="e.g Ben Davies">
+            <input type="text" class="form-control" name="contact[${count}]['name']" id="contact_name${count}" placeholder="e.g Ben Davies">
             
             <label for="company_email">Contact email</label>
-            <input type="email" name="contact[${count}]['email']" id="email_${count}" placeholder="e.g email@domain.com">
+            <input class="form-control" type="email" name="contact[${count}]['email']" id="email_${count}" placeholder="e.g email@domain.com">
         `;
         element.appendChild(newElement);
         count+=1;

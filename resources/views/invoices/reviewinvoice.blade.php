@@ -72,9 +72,9 @@
 
                         <div class="addressAndPayment row">
                             <div class="card addressCard" style="font-weight: normal">
-                                <div style="font-weight: bold">{{$invoice->project->client->name}}</div>
-                                {{$invoice->project->client->city}}, {{getState($invoice->project->client->state_id)}}<br>
-                                {{getCountry($invoice->project->client->country_id)}}
+                                <div style="font-weight: bold">{{$invoice->estimate->project->client->name}}</div>
+                                {{$invoice->estimate->project->client->city}}, {{$invoice->estimate->project->client->state->name}}<br>
+                               {{$invoice->estimate->project->client->country->name}}
                             </div>
 
                             <div class="card payment ml-auto">
@@ -86,7 +86,7 @@
                                 <div>
                                     <div class="issueDate float-left">
                                         <div style="font-size: 0.8em; color: #B1B1B1">Issued <p
-                                                style="font-size: 1.2em; color: black">{{dateSlash($invoice->created_at)}}</p>
+                                                style="font-size: 1.2em; color: black">{{strtotime($invoice->created_at)}}</p>
                                         </div>
                                     </div>
 
@@ -108,7 +108,7 @@
                         <div class=" table-card" style="margin-top: 10px">
                             <div class="">
                                 Invoice <span style="font-weight: bold; font-size: 0.6em; color: #B1B1B1">No. {{strtotime($invoice->created_at)}}</span>
-                                <p class="serviceRendered" style="margin-top: 10px">{{$invoice->project->name}}</p>
+                                <p class="serviceRendered" style="margin-top: 10px">Project name</p>
                             </div>
                             <div class="tableSection" style="font-size: 0.8em; width: 100%; overflow-x: scroll">
                                 <table class="table">

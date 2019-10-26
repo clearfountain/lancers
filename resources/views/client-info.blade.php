@@ -1,4 +1,5 @@
 @extends('layouts.authinvoice')
+@section('title'. 'Client Information')
 
 @section('main-content')
 <style>

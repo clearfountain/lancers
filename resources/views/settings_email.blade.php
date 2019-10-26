@@ -15,10 +15,10 @@
 							</div>
 							<div class="d-flex flex-column align-items-center">
 								<div class="d-flex flex-column">
-									<a href="settings-profile.html" class="nav-option py-3">Profile Settings</a>
-									<a href="settings-email.html" class="nav-option active-nav py-3"
-										>Email Notifications</a>
-										<a href="/users/notifications" class="nav-option py-3">Subscription</a>
+									<a href="/dashboard/profile/settings" class="nav-option py-3">Profile Settings</a>
+									<a href="/dashboard/emails/settings" class="nav-option active-nav py-3"
+										>Email Settings</a>
+										<a href="/pricing" class="nav-option py-3">Subscription</a>
 								</div>
 							</div>
 						</div>

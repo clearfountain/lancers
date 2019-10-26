@@ -239,6 +239,15 @@
 					      <input class="form-control mr-sm-2 col-12" type="search" placeholder="Search" aria-label="Search">
 				    	</form>
 					    <ul class="navbar-nav ml-0 kc-unlist-item">
+
+                        <li class="nav-item border-right">
+                        @if(Auth::user()->profile_picture !== 'user-default.png')
+                    <img id="image_selecter" src="{{ asset(Auth::user()->profile_picture) }}" style="width: 60px; height: 60px; border-radius: 10%; pointer: finger;" alt="Profile Image">
+                    @endif
+                    @if(Auth::user()->profile_picture == 'user-default.png')
+                    <img id="image_selecter" src="{{ asset('images/user-default.jpg') }}" style="width: 60px; height: 60px; border-radius: 10%; pointer: finger;" alt="Profile Image">
+                    @endif
+                    </li>
                         <li class="nav-item active border-right">
 						        <a class="nav-link mt-2 mr-3" href="#">
 						        	<img src="{{ asset('images/help.svg') }}">
@@ -259,17 +268,17 @@
 						    <li class="nav-item">
 						         <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">
 						         	<div class="kc-a-u d-flex align-items-center justify-content-center">
-						         		<h3 style="color:black;" class="text-center mt-2">AU</h3>
+                                     <h3 style="color:black;" class="text-center mt-2">{{Auth::user()->name}}</h3>
 						         	</div>
 						         </a>
 						    </li>
 							</ul>
 							<div class="d-lg-none" style="width:100%">
 								<div class="d-flex flex-column align-items-center	">
-									<a href="settings-profile.html" class="nav-option py-3">Profile Settings</a>
-									<a href="settings-email.html" class="nav-option active-nav py-3"
+									<a href="/dashboard/profile/settings" class="nav-option py-3">Profile Settings</a>
+									<a href="/dashboard/emails/settings" class="nav-option active-nav py-3"
 										>Email Notifications</a>
-									<a href="" class="nav-option py-3">Subscription</a>
+									<a href="/pricing" class="nav-option py-3">Subscription</a>
 								</div>
 							</div>
 						</div>

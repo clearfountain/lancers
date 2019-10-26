@@ -46,8 +46,8 @@ class AddDataToCountriesAndStatesTable extends Command
         $countries =  json_decode($file, true );
 
         echo "emptying tables \n";
-        Country::truncate();
-        State::truncate();
+        // Country::truncate();
+        // State::truncate();
 
 
 
@@ -72,8 +72,15 @@ class AddDataToCountriesAndStatesTable extends Command
         }
 
         echo "Inserting values \n";
-        Country::insert($c);
-        State::insert($s);
+        foreach($c as $country){
+            Country::updateOrCreate(['name'=>$country['name']], $country);
+        }
+        foreach($s as $state){
+            State::updateOrCreate(['name'=>$state['name'], 'country_id'=>$state['country_id']], $state);
+        }
+
+        // Country::insert($c);
+        // State::insert($s);
 
         echo "done ✓";
     }

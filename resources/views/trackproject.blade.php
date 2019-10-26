@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('style')
+@section('styles')
 <style>
     body{
         background-color: #ffffff;

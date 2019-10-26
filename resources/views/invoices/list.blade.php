@@ -6,11 +6,18 @@
 
 @section('main-content')
     <div class="container">
-        <button class='create-invoice' onClick="window.location.href('./invoice/create')">Create Invoice</button>
+        <a href="{{url('estimate/create/step1')}}">    <button class='create-invoice' >Create Invoice</button> </a>
     </div> 
     <section class="">
         <div class="container-fluid">
             <h4 class="mt-0 text-primary">Invoices</h4>
+              @if(session()->has('message.alert'))
+            <div class="text-center">
+                <button class=" alert alert-{{ session('message.alert') }}"> 
+                    {!! session('message.content') !!}
+                </button>
+            </div>
+            @endif
             <div class="">
                 <div class="">
                     <form class="form-inline">
@@ -30,7 +37,9 @@
                                 <th scope="col">Project</th>
                                 <th scope="col">Issued</th>
                                 <th scope="col">Status</th>
+                                 <th scope="col">Amount</th>
                                 <th scope="col">Amount Paid</th>
+                                
                                 <th scope="col"> </th>
                             </tr>
                         </thead>
@@ -43,14 +52,16 @@
                                 @php $count = 1; @endphp
                                 @foreach($invoices as $invoice)
                                 <tr class="py-2">
-                                    <td class="border-top border-bottom titles">{{$count}}</td>
-                                    <td class="border-top border-bottom titles">{{$invoice->client}}</td>
-                                    <td class="border-top border-bottom titles">{{$invoice->project_title}}</td>
+                                    <td class="border-top border-bottom titles"># {{$count}}</td>
+                                    <td class="border-top border-bottom titles">{{$invoice->estimate->project->client->name}}</td>
+                                    <td class="border-top border-bottom titles">{{$invoice->estimate->project->title}}</td>
                                     <td class="border-top border-bottom titles">{{$invoice->created_at}}</td>
+                                    
                                     <td class="border-top border-bottom">
-                                        <span class="alert alert-primary py-0 px-2 small m-0 pending">{{$invoice->status}}</span>
+                                        <span class="alert alert-{{$invoice->status == 'paid' ? 'success' : 'danger'}} py-0 px-2 small m-0 pending">{{ucfirst($invoice->status)}}</span>
                                     </td>
-                                    <td class="border-top border-bottom titles">{{$invoice->invoice_currency}}{{$invoice->amount_paid}}</td>
+                                     <td class="border-top border-bottom titles">{{$invoice->currency->symbol}}{{$invoice->amount}}</td>
+                                    <td class="border-top border-bottom titles">{{$invoice->currency->symbol}}{{$invoice->amount_paid}}</td>
 
                                     <td class="rounded-right border border-left-0">
                                         <div class="dropdown dropleft">

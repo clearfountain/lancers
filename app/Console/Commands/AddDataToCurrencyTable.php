@@ -45,10 +45,10 @@ class AddDataToCurrencyTable extends Command
 
 
         echo "emptying table >> \n";
-        Currency::truncate();
+        // Currency::truncate();
 
         foreach ($currencies as $currency) {
-            Currency::create($currency);
+            Currency::updateOrCreate($currency);
         }
 
         echo "done ✓";

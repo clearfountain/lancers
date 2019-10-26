@@ -85,7 +85,7 @@
 @section('content')
     <div class="container-fluid main">
         <i class="fa fa-check-circle"></i>
-        <a href="#"><img class="clear" src="https://res.cloudinary.com/soot3/image/upload/v1570665870/clear_24px_sz8k0p.png" alt="clear"></i></a>
+        <a href="#" class="go-back"><img class="clear" src="https://res.cloudinary.com/soot3/image/upload/v1570665870/clear_24px_sz8k0p.png" alt="clear"></i></a>
         <h3><strong>Invoice Sent</strong></h3>
         <h5>You would receive a notification once payment has been made</p>
 
@@ -94,4 +94,12 @@
     <div class="side">  
         <a class="invBtn" href="/invoices">VIEW INVOICES</a>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $(".go-back").click(() => {
+            window.history.back();
+        });
+    </script>
 @endsection

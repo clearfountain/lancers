@@ -15,18 +15,21 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+                $table->foreign('user_id')->references('id')->on('users') ->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('client_id')->nullable();
+                $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('estimate_id')->nullable();
+                $table->foreign('estimate_id')->references('id')->on('estimates')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('invoice_id')->nullable();
+                $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade')->onUpdate('cascade');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->integer('user_id')->nullable();
-            $table->integer('client_id')->nullable();
-            $table->integer('estimate_id')->nullable();
-            $table->string('tracking_code')->nullable();
-            $table->integer('invoice_id')->nullable();
+            $table->string('tracking_code');
             $table->integer('progress')->default(0)->nullable();
-            $table->text('collaborators')->nullable();
             $table->enum('status', ['pending', 'in-progress', 'completed']);
-            $table->integer('contract_id')->nullable();
             $table->timestamps();
+              
         });
     }
 

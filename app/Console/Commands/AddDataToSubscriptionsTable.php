@@ -46,11 +46,11 @@ class AddDataToSubscriptionsTable extends Command
 
 
         echo "Making sure table is empty >>\n";
-        SubscriptionPlan::truncate();
+        // SubscriptionPlan::truncate();
         
         foreach ($plans as $plan) {
             echo "adding ". $plan['name'] ." to table\n";
-            SubscriptionPlan::create($plan);
+            SubscriptionPlan::updateOrCreate($plan);
         }
 
         echo "done ✓";

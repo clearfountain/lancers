@@ -10,10 +10,6 @@ class Task extends Model
 
     protected $guarded = ['id'];
 
-    protected $casts = [
-    	'team' => 'array'
-    ];
-
     public function project()
     {
     	return $this->belongsTo('App\Project', 'project_id', 'id');

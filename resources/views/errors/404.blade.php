@@ -86,7 +86,7 @@
 </header>
 <div class="form">
     <h4>Oh Sorry, that page couldnt be found!!!</h4>
-    <p>Pls click <a href="#">here</a> to goto homepage</p>
+    <p>Please click <a href="{{ url('/') }}">here</a> to go back to the homepage</p>
     
     
 </div>

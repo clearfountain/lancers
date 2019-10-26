@@ -19,12 +19,12 @@
 
                                 <div class="col-md-6 offset-md-4">
                                     <br>
-                                    <button id="makepayment" class="btn btn-primary btn-block">Pay ${{$data['amount']}}</button>
+                                    <button id="makepayment" class="btn btn-primary btn-block">Pay NGN{{number_format((float)$data['amount'], 2)}}</button>
                                 </div>
                             @else
                                 <div class="col-md-6 offset-md-3">
                                     <br>
-                                    <button id="pay_default" class="btn btn-primary btn-block">Pay ${{$data['amount']}}</button>
+                                    <button id="pay_default" class="btn btn-primary btn-block">Pay NGN{{number_format((float)$data['amount'], 2)}}</button>
                                 </div>
                             @endif
                         </div>
@@ -58,7 +58,7 @@
                         });
                     }else{                        
                         payDefault.addEventListener('click', function(){
-                            payWithPaystack(dbAmount - balance);
+                            payWithPaystack(dbAmount);
                         });
                     }
 

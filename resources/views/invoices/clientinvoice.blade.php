@@ -43,10 +43,21 @@
       color: #ffffff;
       cursor: pointer;
     }
-    .lanclient-buttons>.right>button {
-    background-color: #009fff; border: thin; color: #fff; font-family: 'Ubuntu', 'san-serif'; padding: 10px; border-radius: 5px; font-size: 13px; font-weight: bold; margin-right: 2em; width: 170px; border: 2px solid #009fff;
+    .lanclient-buttons>.right>.btn {
+    background-color: #009fff; 
+    border: thin; 
+    color: #fff; 
+    font-family: 'Ubuntu', 'san-serif'; 
+    padding: 10px; 
+    border-radius: 5px; 
+    font-size: 13px; 
+    font-weight: bold; 
+    margin-right: 2em; 
+    width: 170px; 
+    border: 2px solid #009fff;
+    outline: none;
     }
-    .lanclient-buttons>.right>button:hover {
+    .lanclient-buttons>.right>.btn:hover {
       background-color: #0ABAB5;
       border-color: #0ABAB5;
       cursor: pointer;
@@ -251,7 +262,7 @@
             <button type="button">Print</button> <button type="button">Download as PDF</button>
           </div>
             <div class="right">
-            <button type="button">Make Payment</button>
+            <a href="/payment/invoice/{{strtotime($invoice->created_at)}}" class="btn btn-secondary" type="button">Make Payment</a>
           </div>
         </div>
 
@@ -259,10 +270,10 @@
           <div class="lanclient-invoice-logo">
             <div class="right-invy">
               <h3 class="invoice-banner-txt">Invoice</h3>
-              <p><strong>Project:&nbsp;</strong>Branding and Marketing</p>
-              <p><strong>Lancer:&nbsp;</strong>Endurance Dan-Jumbo</p>
-              <p><strong>Email:&nbsp;</strong>edanjumbo@gmail.com</p>
-              <p><strong>Address:&nbsp;</strong>Accra, Ghana</p>
+              <p><strong>Project:&nbsp;</strong> {{$invoice->title}}</p>
+              <p><strong>Lancer:&nbsp;</strong> {{auth()->user()->name}}</p>
+              <p><strong>Email:&nbsp;</strong> {{auth()->user()->email}}</p>
+              {{-- <p><strong>Address:&nbsp;</strong>Accra, Ghana</p> --}}
             </div>
             <div class="left-invy-logo">
               <img src="https://res.cloudinary.com/abisalde/image/upload/v1570566026/My_Logo_-_Black.png" alt="Lancer-Logo">
@@ -271,24 +282,24 @@
 
           <div class="lanclient-billing">
               <div> <p class="billing-clhead">Bill to</p>
-                     <div class="bills-descrip"> <p class="bills-description">John Doe</p> <p class="bills-description">johndoe@gmail.com</p>
-                             <p>Accra, Ghana</p>
+                     <div class="bills-descrip"> <p class="bills-description">{{$invoice->estimate->project->client->name}}</p> <p class="bills-description">{{$invoice->estimate->project->client->email}}</p>
+                             <p>{{$invoice->estimate->project->client->state->name}},  {{$invoice->estimate->project->client->country->name}}</p>
                      </div>
               </div>
                         <div>
                               <div class="top-mid-bill-details"> <p class="billing-clhead">Issue Date</p>
-                               <p class="bills-description">18th September 2019</p>
+                               <p class="bills-description">{{strtotime($invoice->issue_date ?? $invoice->created_at)}}</p>
                               </div>
                                      <div class="bottom-mid-bill-details">
                                <p class="billing-clhead">Due Date</p>
-                               <p class="bills-description">28th September 2019</p>
+                               <p class="bills-description">Upon completion</p>
                                     </div>
                           </div>
 
              <div class="last-child-billing">
                      <div class="top-last-bill-details"> <p class="billing-clhead">Hourly Rate</p> <p class="bills-description" id = "hourly-rateN">N/A</p>
                      </div>
-                          <div class="bottom-last-bill-details"> <p class="billing-clhead">Amount Due</p> <p class="bills-description">NGN 38, 500</p>
+                          <div class="bottom-last-bill-details"> <p class="billing-clhead">Amount Due</p> <p class="bills-description">NGN {{number_format($invoice->amount)}}</p>
                            </div>
             </div>
           </div>
@@ -305,28 +316,29 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>Sed ut perspiciatis unde omnis iste</td>
+                  <td>Man Hours</td>
+                  <td>{{$invoice->time}}</td>
+                  <td>NGN{{number_format((float)$invoice->estimate->price_per_hour, 2)}}</td>
+                  <td>NGN{{number_format((float)($invoice->estimate->price_per_hour * $invoice->estimate->time), 2)}}</td>
+                </tr>
+                <tr>
+                  <td>Equipment Cost</td>
                   <td>1</td>
-                  <td>NGN3500</td>
-                  <td>NGN3500</td>
+                  <td>NGN{{number_format((float)$invoice->estimate->equipment_cost, 2)}}</td>
+                  <td>NGN{{number_format((float)$invoice->estimate->equipment_cost, 2)}}</td>
                 </tr>
                 <tr>
-                  <td>Sed ut perspiciatis unde omnis iste</td>
-                  <td>10</td>
-                  <td>NGN1700</td>
-                  <td>NGN17000</td>
-                </tr>
-                <tr>
-                  <td>Sed ut perspiciatis unde omnis iste</td>
-                  <td>15</td>
-                  <td>NGN1200</td> <td>NGN18000</td>
+                  <td>{{$invoice->estimate->sub_contractors}}</td>
+                  <td>1</td>
+                  <td>NGN{{number_format((float)$invoice->estimate->sub_contractors_cost, 2)}}</td> 
+                  <td>NGN{{number_format((float)$invoice->estimate->sub_contractors_cost, 2)}}</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <td colspan="2" class= "no-border-table"></td>
                   <td class= "no-border-table" >Total</td>
-                  <td class= "no-border-table" >NGN 38,500</td>
+                  <td class= "no-border-table" >NGN {{number_format((float)$invoice->amount, 2)}}</td>
                 </tr>
                 <tr>
                   <td colspan="2" class= "no-border-table"></td>
@@ -335,18 +347,13 @@
                 <tr>
                   <td colspan="2" class= "no-border-table"></td>
                   <td class= "no-border-table">Amount Due</td>
-                  <td class= "no-border-table">NGN38,500</td>
+                  <td class= "no-border-table">NGN{{number_format((float)$invoice->amount, 2)}}</td>
                 </tr>
               </tfoot>
             </table>
 
+              
           </section>
-
-          <div class="lanclient-footer-tab">
-            <p class ="light-head"><strong>Notes</strong></p>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor</p>
-            <p>laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi</p>
-          </div>
 
         </div>
       </div>

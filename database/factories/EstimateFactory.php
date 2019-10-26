@@ -7,6 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Estimate::class, function (Faker $faker) {
     return [
+        'user_id'=>$faker->numberBetween(1, 5),
         'time' => $time = $faker->numberBetween(50, 5000),
         'price_per_hour' => $per_hour = $faker->numberBetween(50, 500),
         'equipment_cost' => $e_cost =  $faker->numberBetween(100, 500),

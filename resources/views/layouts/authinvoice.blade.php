@@ -362,8 +362,8 @@ table.project-table tbody tr td, table.project-table thead tr th {
                 <a href="{{url('dashboard')}}">
                     <img src="https://lancer-app.000webhostapp.com/images/svg/home.svg" height="20" width="auto"> <span> Dashboard</span></a>
             </li>
-            <li class=" @if(request()->path() == 'client') active @endif">
-                <a href="{{url('client')}}">
+            <li class=" @if(request()->path() == 'clients') active @endif">
+                <a href="{{url('clients')}}">
                     <img src="https://lancer-app.000webhostapp.com/images/svg/customer.svg" height="20" width="auto"> <span> Client</span>
                 </a>
             </li>

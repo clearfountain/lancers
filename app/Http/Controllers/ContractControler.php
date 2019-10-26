@@ -2,91 +2,93 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\User;
+use App\Client;
+use App\Project;
 use Illuminate\Http\Request;
 use App\Contract;
+use App\Traits\VerifyandStoreTransactions;
 
 class ContractControler extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($id)
-    {
-        $projectContracts = Project::findorfail($id);
-        $projectContracts->contracts;
-        
+  
+public function index() {
+    $user = Auth::user();
+
+    // return $user->projects;
+
+    $contracts = $user->projects()->select('id', 'title', 'client_id')->with(['client:id,name', 'contract:id,project_id,status,issue_date,created_at'])->get();
+
+    foreach ($contracts as $key => $contract) {
+        if ($contract->contract == null) {
+            unset($contracts[$key]);
+        }
+
+        if ($contract->client_id == null) {
+            unset($contracts[$key]);
+        }
+    }
+    // return $contracts;
+    return view('contracts.contractlist')->with('contracts', $contracts);
+}
+
+/**
+ * Creates new record in the contract table
+ */
+public function store(Request $request) {
+
+    $this->validate($request, [
+        'project_id' => 'required|numeric'
+    ]);
+
+    $project = Project::findOrFail($request->project_id);
+
+    $pre_contract = contract::where('project_id', $request->project_id)->first();
+
+    if ($pre_contract !== null) {
+
+        $pre_contract->update(['issue_date' => $project->project]);
+
+        $contract = $pre_contract;
+    } 
+    else {
+
+        $contract = contract::create(['issue_date' => $project->start,'project_id' => $project->id])->with('project');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    return view('contracts.reviewcontract')->with('contract', $contract);
+}
+
+public function delete(Request $request, $contract) {
+    $contract = contract::findOrFail($contract);
+
+    $user = Auth::user();
+
+    if ($contract->project->user_id !== $user->id) {
+        $request->session()->flash('error', "You're unauthorized to delete this contract");
+        return redirect()->back();
+    } else {
+        $request->session()->flash('status', 'Deleted');
+        return redirect()->back();
+    }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, $project_id, $template_id)
-    {
-        // dd($project_id);
-        $contract = new Contract;
-        $contract->template_id = (int)$template_id;
-        $contract->project_id = (int)$project_id;
-        $contract->save();
+    public function show($contract) {
+        $contract = contract::findOrFail($contract);
+
+        // dd($contract);
+        $project_id = $contract->project_id;
+
+        $contract = Project::where('id', $project_id)->select('id', 'title', 'project_id', 'client_id')->with(['project', 'contract', 'client'])->first();
+
+        // return $contract;
+        return view('contracts.viewcontract')->with('contract', $contract);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function view($contract_id) {
+        $contract = contract::where(['id' => $contract_id, 'project_id' => Auth::user()->id])->first();
+        return $contract->count() > 0 ? $this->SUCCESS('contract retrieved', $contract) : $this->SUCCESS('No contract found');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($project_id,$id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $contract = Contract::findorfail($id);
-        $contact->delete();
-    }
 }

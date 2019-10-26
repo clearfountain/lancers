@@ -1,8 +1,8 @@
-@extends('layouts.app')`
+@extends('layouts.app')
 <!-- Select Project -->
 
 @section('styles')
-<style> 
+<style>
     body {
         font-family: 'Roboto', sans-serif;
         overflow: auto;
@@ -57,7 +57,7 @@
         border: 1px solid gray;
         background: #0ABAB5 !important;
         color: white;
-        
+
     }
 
     .dark:hover {
@@ -114,7 +114,7 @@
     #cnc {
         cursor: pointer;
     }
-    
+
     .dropbtn, .project {
         /* margin-top: 37px; */
         width: 100%;
@@ -127,128 +127,128 @@
         font-size: 20px;
         background: rgba(207, 204, 204, 0.4);
     }
-    
+
     a:hover{cursor: pointer;}
 
 
 
 
-    
+
     body {
-      box-sizing: border-box;
-      margin: 0px;
-      font-family: ubuntu !important;
+        box-sizing: border-box;
+        margin: 0px;
+        font-family: ubuntu !important;
     }
 
     .con-div {
-      background-color: #FFFFFF;
-      width: 100%;
-      margin: auto;
+        background-color: #FFFFFF;
+        width: 100%;
+        margin: auto;
     }
 
     .top-divs {
-      display: flex;
-      margin: 0 auto;
-      width: 100%;
-      background-color: #FFFFFF;
-      font-family: Roboto;
+        display: flex;
+        margin: 0 auto;
+        width: 100%;
+        background-color: #FFFFFF;
+        font-family: Roboto;
     }
 
     .ctrl-div {
-      width: 8%;
-      text-align: center;
-      border: 1px solid #919191;
+        width: 8%;
+        text-align: center;
+        border: 1px solid #919191;
     }
 
     .ctrl-btn {
-      width: 100%;
-      background-color: #FFFFFF;
-      border: none;
+        width: 100%;
+        background-color: #FFFFFF;
+        border: none;
     }
 
     .inv-div {
-      width: 60%;
-      text-align: center;
-      border: 1px solid #919191;
+        width: 60%;
+        text-align: center;
+        border: 1px solid #919191;
     }
 
     #inv-btn {
-      width: 100%;
-      border: none;
-      padding: 0.5em;
-      font-weight: 500;
-      font-size: 28px;
-      background-color: #FFFFFF;
+        width: 100%;
+        border: none;
+        padding: 0.5em;
+        font-weight: 500;
+        font-size: 28px;
+        background-color: #FFFFFF;
     }
 
     .send-div {
-      width: 32%;
-      text-align: center;
-      border: 1px solid #919191;
+        width: 32%;
+        text-align: center;
+        border: 1px solid #919191;
     }
 
     #send-btn {
-      width: 100%;
-      border: none;
-      padding: 0.5em;
-      color: #FFF;
-      font-size: 28px;
-      background-color:  rgba(196, 196, 196, 0.4);
+        width: 100%;
+        border: none;
+        padding: 0.5em;
+        color: #FFF;
+        font-size: 28px;
+        background-color:  rgba(196, 196, 196, 0.4);
     }
 
     .cli-info {
-      width:75%;
-      height:80vh;
-      background-color:#FFFFFF;
-      margin: auto
+        width:75%;
+        height:80vh;
+        background-color:#FFFFFF;
+        margin: auto
     }
 
     .cli-box {
-      display: flex;
-      justify-content:space-around;
+        display: flex;
+        justify-content:space-around;
     }
 
     .sub-box {
-      width: 30%;
-      padding: 2em 1em;
-      margin: 2em;
-      background-color:#FFF;
-      text-align:center;
-      border: 1px solid #919191;
-      border-radius: 2px
+        width: 30%;
+        padding: 2em 1em;
+        margin: 2em;
+        background-color:#FFF;
+        text-align:center;
+        border: 1px solid #919191;
+        border-radius: 2px
     }
 
     .sub-box:hover {
-      border: 3px solid gray;
+        border: 3px solid gray;
     }
 
     .select-project {
-      width: 90%;
-      padding: 1em;
-      border: 1px solid #919191;
+        width: 90%;
+        padding: 1em;
+        border: 1px solid #919191;
     }
 
     .cli-text {
-      padding-top: 1.5em;
+        padding-top: 1.5em;
     }
 
     .my-icon {
-      width: 100%;
-      margin: 0.6em 0;
-      color: #c4c4c4;
-      background-color: #FFFFFF;
+        width: 100%;
+        margin: 0.6em 0;
+        color: #c4c4c4;
+        background-color: #FFFFFF;
     }
 
     .what-cli {
-      padding: 1.5em 1em !important;
-      margin: 0;
-      font-size: 42px !important;
-      font-weight: bold !important;
-      color: #323232;
+        padding: 1.5em 1em !important;
+        margin: 0;
+        font-size: 42px !important;
+        font-weight: bold !important;
+        color: #323232;
     }
 
     .txt {
-      margin: 2em 0;
+        margin: 2em 0;
     }
     .column-1 {
         width: 5%;
@@ -282,20 +282,20 @@
 
     @media screen and (max-width: 500px) {
         .cli-box {
-        display: block;
+            display: block;
         }
 
         .sub-box {
-        width: 90%;
-        margin: 2em 0em;
+            width: 90%;
+            margin: 2em 0em;
         }
 
         option {
-        width: 80%;
+            width: 80%;
         }
 
         .what-cli {
-        font-size: 1.3em;
+            font-size: 1.3em;
         }
     }
     @media (max-width: 575.98px) {
@@ -335,76 +335,74 @@
         }
     }
 </style>
-    
+
 @endsection
 
 
 @section('content')
-    <div class="contaner">
-            
-        <header style="border-bottom: 2px solid rgb(223, 223, 223);">
-            <nav style="display: flex; ">
-                <a href="#"  @click.prevent="$router.push('/estimate')" class="column-1">
-                    <img
-                        src="https://res.cloudinary.com/mide358/image/upload/v1570621469/clear_24px_rasbwc.png"
-                        alt="navIcon"
+<div class="contaner">
+
+    <header style="border-bottom: 2px solid rgb(223, 223, 223);">
+        <nav style="display: flex; ">
+            <a href="#"  @click.prevent="$router.push('/estimate')" class="column-1">
+                <img
+                    src="https://res.cloudinary.com/mide358/image/upload/v1570621469/clear_24px_rasbwc.png"
+                    alt="navIcon"
                     />
-                </a>
-                <a href="#" @click.prevent="previous" class="column-1">
-                    <img
-                        src="https://res.cloudinary.com/mide358/image/upload/c_scale,h_27,w_13/v1570621434/Vector_ag4hnv.png"
-                        alt="navIcon"
-                    />
-                </a>
-                <div class="column-2">Create Estimate</div>
-                <a href="#" @click.prevent="next" class="column-3">NEXT</a>
-            </nav>
-        </header>
+            </a>
+
+            <div class="column-2">Create Estimate</div>
+            <a href="#" @click.prevent="next" id="upperNext" class="column-3 float-right" style="border: 1px solid gray;
+               background: #0ABAB5 !important;">NEXT</a>
+        </nav>
+    </header>
 
 
-        <h1 class="">What project are you estimating?</h1>
-        <form method="post" action="/estimate/create/step2">
-            @csrf
-            <div class="row ml-auto mr-auto box justify-content-center">
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">A previously created project</h5>
-                            <p style="padding-bottom: 10px;" class="card-text">Find estimate for a previously created project, by doing so the
-                                estimate
-                                gets populated with some of the data. 
-                            </p>
-                            <div class="contents dropdown">
-                                <select class="dropbtn" name="old_project" id="projectSelect">
-                                    <option selected value="">Select</option>
-                                    @foreach($projects as $project)
-                                    <option value="{{$project->id}}">{{$project->title}}</option>
-                                    @endforeach
-                                </select>  
-                                <!-- <i class="fa fa-caret-down"></i> -->                            
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">A new project</h5>
-                            <p class="card-text">Create a new estimate and set up a new project based on the
-                                information.
-                            </p>
-                            <input type="text" name="new_project" id="name" placeholder="Project Name">
+    <h1 class="">What project are you estimating?</h1>
+    <h1 style="color:red;">@if(null !== session('error')) {{session('error')}} @endif</h1>
+    <form method="post" action="/estimate/create/step2">
+        @csrf
+        <div class="row ml-auto mr-auto box justify-content-center">
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">A previously created project</h5>
+                        <p style="padding-bottom: 10px;" class="card-text">Find estimate for a previously created project, by doing so the
+                            estimate
+                            gets populated with some of the data.
+                        </p>
+                        <div class="contents dropdown">
+                            <select class="dropbtn form-control" name="old_project" id="projectSelect">
+                                <option selected value="">Select</option>
+                                @foreach($projects as $project)
+                                <option value="{{$project->id}}">{{$project->title}}</option>
+                                @endforeach
+                            </select>
+                            <!-- <i class="fa fa-caret-down"></i> -->
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12">
-                <!-- @if(session('success'))<p><span class="alert alert-success">{{session('success')}}</span></p>
-                @elseif(session('error'))<p><span class="">{{session('error')}}</span></p> @endif -->
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">A new project</h5>
+                        <p class="card-text">Create a new estimate and set up a new project based on the
+                            information.
+                        </p>
+                        <input type="text" name="new_project" id="name" placeholder="Project Name">
+                    </div>
+                </div>
             </div>
-            <button type="submit" class="btn dark">NEXT</button>
-        </form>
-    </div>
+        </div>
+        <div class="col-12">
+            <!-- @if(session('success'))<p><span class="alert alert-success">{{session('success')}}</span></p>
+            @elseif(session('error'))<p><span class="">{{session('error')}}</span></p> @endif -->
+        </div>
+        <button type="submit" id="formNext" class="btn dark">NEXT</button>
+    </form>
+</div>
+
 @endsection
 
 @section('script')

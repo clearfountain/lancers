@@ -8,57 +8,51 @@ use App\Project;
 use App\Rules\IsUser;
 use Illuminate\Http\Request;
 
-class ProjectController extends Controller
-{
+class ProjectController extends Controller {
+
     /**
      * NEW PROJECT IMPLEMENTATION STARTS
      */
-
-    public function list(){
-        $filter = Request()->filter ?? false;
-        if($filter && !in_array($filter, ['all', 'pending', 'completed', 'active'])) $filter = false;
-        $filter == 'active' ? $filter = 'in-progress' : $filter = $filter;
-
-        $projects = Project::join('estimates AS e', 'e.id', 'projects.estimate_id')
-                    ->leftjoin('invoices AS i', 'i.project_id', 'projects.id')
-                    ->leftjoin('currencies AS ic', 'i.currency_id', 'ic.id')
-                    ->leftjoin('currencies AS ec', 'e.currency_id', 'ec.id')
-                    ->where('projects.user_id', Auth::user()->id);
+    public function listGet() {
+        $filter = Request()->filter;
+        if ($filter == 'pending') {
+            $data['projects'] =Project::whereUser_id(Auth::user()->id)->whereStatus('pending')->with('user')->get();
+        } elseif ($filter == 'active') {
+            $data['projects'] = Project::whereUser_id(Auth::user()->id)->whereStatus('active')->with('user')->get();
+        } elseif ($filter == 'completed') {
+            $data['projects'] = Project::whereUser_id(Auth::user()->id)->whereStatus('completed')->with('user')->get();
+        } else {
+            $data['projects'] = Project::whereUser_id(Auth::user()->id)->with('user')->get();
+        }
+		
+		//dd($data);
+        return view('projects.list', $data);
         
-        if($filter && $filter !== 'all') $projects = $projects->where('projects.status', $filter);
-        
-        $projects = $projects->select('projects.*', 'e.start', 'e.end', 'ec.symbol AS estimate_currency', 'ic.symbol AS invoice_currency', 'i.amount', 'i.amount_paid')
-                    ->get();
-        
-        return view('projects.list')->withProjects($projects);
     }
 
     /**
      * NEW PROJECT IMPLEMENTATION ENDS
      */
-
-    public function index()
-    {
+    public function index() {
         $user = Auth::user();
 
-        $projects = $user->projects()->select('id','title', 'status', 'created_at')->with(['estimate:project_id,start,end,estimate', 'invoice:project_id,amount,amount_paid'])->get();
+        $projects = $user->projects()->select('id', 'title', 'status', 'created_at')->with(['estimate:project_id,start,end,estimate', 'invoice:project_id,amount,amount_paid'])->get();
 
         // return $projects, and not json verified by @BlinShine
-        if($projects){
-            return $this->SUCCESS("project retrieved", $projects);
+        if ($projects) {
+            return $this->SUCCESS("Projects retrieved", $projects);
         }
-         return $this->ERROR('no Project Found');
+        return $this->ERROR('no Project Found');
     }
 
-    public function userProjects()
-    {
+    public function userProjects() {
         $user = Auth::user();
 
-        $projects = $user->projects()->select('id','title')->get()->toArray();
+        $projects = $user->projects()->select('id', 'title')->get()->toArray();
 
         // return $projects, instead of json verified by @BlinShine
-        if($projects){
-            return $this->SUCCESS("Projects retrieved", $tasks);
+        if ($projects) {
+            return $this->SUCCESS("Projects retrieved", $projects);
         }
         return $this->ERROR('no project Found');
     }
@@ -69,8 +63,7 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $this->validate($request, [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string'
@@ -83,7 +76,7 @@ class ProjectController extends Controller
             'tracking_code' => Project::generateTrackingCode()
         ];
 
-        if(isset($request->description)){
+        if (isset($request->description)) {
             $data['description'] = $request->description;
         }
 
@@ -98,17 +91,15 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
-    {
+    public function show(Project $project) {
         $user_id = Auth::id();
 
-        if($project->user_id == $user_id){      
+        if ($project->user_id == $user_id) {
             return $this->success("Projects retrieved", $project, 201);
-        }else{
+        } else {
             return $this->error("Project not found", [], 404);
         }
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -117,8 +108,7 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
-    {
+    public function update(Request $request, Project $project) {
         $this->validate($request, [
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
@@ -126,19 +116,19 @@ class ProjectController extends Controller
             'status' => 'nullable|in:pending,in-progress,completed'
         ]);
 
-        if(isset($request->title)){
+        if (isset($request->title)) {
             $project->title = $request->title;
         }
 
-        if(isset($request->description)){
+        if (isset($request->description)) {
             $project->description = $request->description;
         }
 
-        if(isset($request->progress)){
+        if (isset($request->progress)) {
             $project->progress = $request->progress;
         }
 
-        if(isset($request->status)){
+        if (isset($request->status)) {
             $project->status = $request->status;
         }
 
@@ -153,28 +143,26 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy($project)
-    {
-        if($project = Project::find($project)){
+    public function destroy($project) {
+        if ($project = Project::find($project)) {
             $user = Auth::user();
 
-            if($project->user_id == $user->id){
+            if ($project->user_id == $user->id) {
                 $project->delete();
             }
 
             return $this->SUCCESS("project deleted", null, $code = 204);
-        }else{
+        } else {
             return $this->error("project not found");
         }
     }
 
-    public function collaborators(Project $project)
-    {
+    public function collaborators(Project $project) {
         $user_id = Auth::id();
 
         if ($user_id == $project->user_id) {
             $team = $project->collaborators ?? [];
-            
+
             // fetch all the team mates as users with profile_picture, name
             $people = array_column($team, "user_id");
             $people = User::whereIn('id', $people)->select('id', 'name', 'profile_picture')->get()->toArray();
@@ -185,17 +173,16 @@ class ProjectController extends Controller
                 $people[$key]["designation"] = $team[$key]["designation"];
             }
 
-            return $this->success("collaborators retrieved", $people);        
-        }else{
-            return $this->error("You are not authorized to view this collaborators",[] , 401);
+            return $this->success("collaborators retrieved", $people);
+        } else {
+            return $this->error("You are not authorized to view this collaborators", [], 401);
         }
     }
 
-    public function allCollaborators()
-    {
+    public function allCollaborators() {
         $user = Auth::user();
 
-        $team = $user->projects()->select('title', 'collaborators')->get()->map(function($val){
+        $team = $user->projects()->select('title', 'collaborators')->get()->map(function($val) {
             $people = array_column($val->collaborators, "user_id");
             $people = User::whereIn('id', $people)->select('id', 'name', 'profile_picture')->get()->toArray();
 
@@ -224,11 +211,11 @@ class ProjectController extends Controller
             // dd($user->subscription);
             $max_collaborators = $user->subscription->subscriptionPlan->features['collaborators'];
 
-            if(count($team) >= $max_collaborators){
+            if (count($team) >= $max_collaborators) {
                 return $this->ERROR("You can only add $max_collaborators collaborators", $code = 412);
             }
 
-            if(in_array($request->user_id, array_column($team, "user_id"))){
+            if (in_array($request->user_id, array_column($team, "user_id"))) {
                 return $this->error("collaborator already exists", []);
             }
 
@@ -244,20 +231,19 @@ class ProjectController extends Controller
             // $project->save();
 
             return $this->SUCCESS("collaborator added", $project);
-        }else{
-            return $this->error("Not authorized",[] , 401);
+        } else {
+            return $this->error("Not authorized", [], 401);
         }
     }
 
-    public function deleteCollaborator(Project $project, $user)
-    {
+    public function deleteCollaborator(Project $project, $user) {
         $user_id = Auth::id();
 
         if ($user_id == $project->user_id) {
             $collaborators = $project->collaborators ?? [];
 
-            if(in_array($user, array_column($collaborators, "user_id"))){
-                           // return "here x";
+            if (in_array($user, array_column($collaborators, "user_id"))) {
+                // return "here x";
                 $place = array_search($user, array_column($collaborators, "user_id"));
 
                 unset($collaborators[$place]);
@@ -266,15 +252,15 @@ class ProjectController extends Controller
 
                 $project->update(['collaborators' => $collaborators]);
 
-                return $this->success("collaborator removed", null , 204);
+                return $this->success("collaborator removed", null, 204);
 
                 // return $this->success("collaborator removed", [] , 204);
-            }else{
+            } else {
                 return $this->error("collaborator not found", [], 404);
             }
-        }else{
-            return $this->error("Not authorized",[] , 401);
+        } else {
+            return $this->error("Not authorized", [], 401);
         }
-
     }
+
 }
