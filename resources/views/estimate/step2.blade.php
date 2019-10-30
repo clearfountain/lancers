@@ -405,7 +405,7 @@
                 padding: 3px;
             }
         </style>
-        <div class="clearrfix"></div>
+        <div class="clearfix"></div>
         <div class="container">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 mx-auto">
