@@ -85,5 +85,64 @@ $("#closeForm").on("click", function() {
         }
     }
     </script>
+
+    
+<script>
+    let form = document.querySelector('#stage1');
+    let form_children = {};
+    ['old_project', 'new_project', 'previous_page', 'create_estimate', 'next_page', 'next_btn']
+    .forEach(e=>form_children[e] = document.querySelector(`[name="${e}"]`));
+    let {old_project, new_project, previous_page, create_estimate, next_page, next_btn} = form_children;
+
+    window.onload=function(){
+        ['keyup', 'click']
+        .forEach(e=>form.addEventListener(e, validate));
+    }
+
+    function validate(){
+        if(!falsy(old_project) && !falsy(new_project)) {
+            next_page.disabled = false;
+            next_btn.disabled = false;
+            next_page.classList.add('validated');
+            next_btn.classList.add('validated');
+        }else{
+            next_page.disabled = true;
+            next_btn.disabled = true;
+        }       
+    }
+    
+    function falsy(el){
+        if(typeof el.selected !== 'undefined'){
+            if(el.selected != '' && el.selected !== 0 && el.selected == null) return false;
+        }else if(typeof el.value !== 'undefined'){
+            if(el.value !== '' && el.value !== 0 && el.value !== null) return false;
+        }
+        return true;
+    }
+    function verifyPath() {
+        let a_next =  document.querySelector('.a-next');
+        let next = document.querySelector('.next');
+        let bt = document.getElementById('btne');
+
+
+        console.log('here:' + newProjectName);
+        
+        if (newProjectName != "" && newProjectName.length >= 4 ) {
+            console.log('here:' + newProjectName);
+            document.querySelectorAll('#ext')[0].style.background = '#0ABAB5';
+
+            document.querySelectorAll('#ext')[1].style.background = '#0ABAB5';
+           
+        } else {
+
+            //console.log('here works');
+            document.querySelectorAll('#ext')[0].style.background = '';
+            document.querySelectorAll('#ext')[1].style.background = '';
+   
+             
+        }
+    }
+    
+    </script>
 @endsection
 

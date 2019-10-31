@@ -90,7 +90,7 @@
     }
 
     function validate(){
-        if(!falsy(old_project) && !falsy(new_project)) {
+        if(!falsy(old_project) || !falsy(new_project)) {
             next_page.disabled = false;
             next_btn.disabled = false;
             next_page.classList.add('validated');
