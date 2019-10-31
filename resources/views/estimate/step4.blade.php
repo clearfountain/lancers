@@ -192,6 +192,7 @@
     }
 
 
+
     body {
         box-sizing: border-box;
         margin: 0px;
@@ -402,6 +403,10 @@
             width: 9%;
         }
     }
+
+
+
+
 </style>
 
 @endsection
@@ -410,9 +415,9 @@
 @section('content')
 <div id="container">
     <div>
-        <button class="close navM" ><a href="index.html"><span>
+    <a href="{{url('/dashboard')}}"><button class="close navM" ><span>
                 <i class="fa fa-times"></i>
-              </span></a></button>
+              </span></button></a>
     </div>
 
     <div class="" align="center">
