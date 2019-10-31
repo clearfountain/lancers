@@ -23,7 +23,7 @@
                 <form method="POST" action="/invoice/send">
                     @csrf
                     <input type="text" style="display: none;" name="invoice" value="{{$invoice->id}}">
-                    <a href="#"><button class="sendInvoice">SEND</button></a>
+                    <button type="submit" class="sendInvoice">SEND</button>
                 </form>
             </div>
         </header>
@@ -48,7 +48,7 @@
                 <form method="POST" action="/invoice/send">
                     @csrf
                     <input type="text" style="display: none;" name="invoice" value="{{$invoice->id}}">
-                    <a href="#"><button class="sendInvoice">SEND INVOICE</button></a>
+                    <button type="submit" class="sendInvoice">SEND INVOICE</button>
                 </form>
             </div>
         </header>
