@@ -23,7 +23,7 @@
         <div class="section1">
 
             <div id="glac">
-                <h2 class="pull-left">{{$project}}</h2>
+                <h2 class="pull-left">{{$project['project_name']}}</h2>
                 <hr />
             </div>
             <hr />

@@ -82,6 +82,7 @@ class GuestController extends Controller {
 
         if ($data) {
             $project = Session::get('project');
+            // dd($project);
             $request->session()->put('project', $project);
             return view('guests/step2')->with(['project' => $project, 'currencies' => $currencies]);
         }
