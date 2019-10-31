@@ -88,9 +88,9 @@
 
 
 @section('others')
-<button class="btn btn-secondary text-white rounded-circle" id="add-something">
+<a href="{{url('estimate/create/step1')}}"><button class="btn btn-secondary text-white rounded-circle" id="add-something">
     <i class="fas fa-plus"></i>
-</button>
+</button></a>
 @endsection
 
 

@@ -349,13 +349,13 @@
 
     <header style="border-bottom: 2px solid rgb(223, 223, 223);">
         <nav style="display: flex; ">
-            <a href="#"  @click.prevent="$router.push('/estimate')" class="column-1">
+            <a href="{{url('/dashboard')}}"  @click.prevent="$router.push('/estimate')" class="column-1">
                 <img
                     src="https://res.cloudinary.com/mide358/image/upload/v1570621469/clear_24px_rasbwc.png"
                     alt="navIcon"
-                    />
+                    /> 
             </a>
-            <a href="#" @click.prevent="previous" class="column-1">
+            <a href="{{url('/estimate/create/step1')}}" @click.prevent="previous" class="column-1">
                 <img
                     src="https://res.cloudinary.com/mide358/image/upload/c_scale,h_27,w_13/v1570621434/Vector_ag4hnv.png"
                     alt="navIcon"
@@ -438,7 +438,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="cc-exp" class="control-label">How much  do you charge per hour?</label>
@@ -450,7 +450,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <br/>
+                                <br/> -->
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
@@ -492,7 +492,10 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="input-group">
-                                            <input type="text"  class="form-control col-md-6 col-sm-10" required name="sub_contractors" id="est2" placeholder="E.g. Illustrator, Consulting..." />
+                                            <select class="form-control col-md-6 col-sm-10" required name="sub_contractors" id="est2" placeholder="E.g. Illustrator, Consulting..." >
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

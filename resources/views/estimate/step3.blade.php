@@ -481,9 +481,9 @@ button {
 @section('content')
   <div id="container">
     <div>
-        <button class="close navM" ><a href="index.html"><span>
+       <a href="{{url('/dashboard')}}"> <button class="close navM" ><span>
         <i class="fa fa-times" style="color: #555"></i>
-        </span></a></button>
+        </span></button></a>
     </div>
 
     <div class="d-flex align-items-center justify-content-center" align="center">
@@ -508,7 +508,7 @@ button {
             <h5 class="card-title">Select Client</h5>
             <p class="card-text">Please select an already existing client on the platform</p>
             
-            <select name="client" class="l-proj" style="color: #919191" oninput="verifyPath()" id="createProject">
+            <select name="client" class="l-proj" style="color: #919191" oninput="verifyPath()" id="createProject" required>
               <option value="new" selected>Select Client</option>
               <option value="new">Client 1</option>
               <option value="new">Client 2</option>
@@ -520,6 +520,7 @@ button {
     </div>
   </div>
 <!--  -->
+
 <div class="col-md-6 p-0">
 <div class="row m-auto box justify-content-center">
 <div class="card">
@@ -527,8 +528,6 @@ button {
         <h5 class="card-title"   >New Client</h5>
         <p class="card-text">Please Type here for new Client
         </p>
-        
-      
        <div class="project"style="border: none;"  >
            <input class="l-proj" type="text" oninput="verifyPath()"  placeholder= "Project Name"  name="" id="createProject">
            <br>
@@ -544,7 +543,6 @@ button {
 
 
 <button type="submit" class="btn disabled my-5 mx-auto" id="btn" >NEXT</button>
-
 </div>
 </form>
 @endsection

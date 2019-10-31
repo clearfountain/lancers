@@ -93,8 +93,6 @@
    {{--  // inline scrpt  --}}
 
    @yield('script')
-
-</body>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
@@ -103,4 +101,5 @@
         });
     });
 </script>
+</body>
 </html>

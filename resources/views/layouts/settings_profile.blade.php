@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -265,6 +264,15 @@
                 border-radius:50%;
             }
 
+            .firstname, 
+            .title,
+            .newPass,
+            .coy-details-name,
+            .coy-currency,
+            .coy-contact-country,
+            .caret-angles {
+                float: left;
+            }
 
             @media only screen and (max-width: 1024px) {
                 .kc-a-u{

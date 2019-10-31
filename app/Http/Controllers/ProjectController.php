@@ -337,7 +337,7 @@ class ProjectController extends Controller {
           if(Project::where('tracking_code',$trackCode)->first()){
             $docData = [];
             //$projectData = Project::where('tracking_code',$pid)->get();
-            $projectData = Project::where('tracking_code',$trackCode)->with('user','client','profile',)->get();
+            $projectData = Project::where('tracking_code',$trackCode)->with('user','client','profile')->get();
             
             if(isset($projectData[0]->client->country_id)){
                 $country_id = $projectData[0]->client->country_id;
@@ -471,7 +471,7 @@ class ProjectController extends Controller {
             }
             //$issueDate = dd($projectData[0]->estimate->start);
             //$dueDate = $projectData[0]->estimate[0]->end;
-            $docData += compact("currencySymbol","projectName","lancerName","lancerMail","trackCode",);
+            $docData += compact("currencySymbol","projectName","lancerName","lancerMail","trackCode");
             //$data += [$category => $question];
             //$docData += $dData;
             //array_push($docData,$dData);
@@ -491,7 +491,7 @@ class ProjectController extends Controller {
           if(Project::where('tracking_code',$trackCode)->first()){
             $docData = [];
             
-            $projectData = Project::where('tracking_code',$trackCode)->with('user','client','profile',)->get();
+            $projectData = Project::where('tracking_code',$trackCode)->with('user','client','profile')->get();
             
             if(isset($projectData[0]->client->country_id)){
                 $country_id = $projectData[0]->client->country_id;
@@ -625,7 +625,7 @@ class ProjectController extends Controller {
             }
             //$issueDate = dd($projectData[0]->estimate->start);
             //$dueDate = $projectData[0]->estimate[0]->end;
-            $docData += compact("currencySymbol","projectName","lancerName","lancerMail","trackCode",);
+            $docData += compact("currencySymbol","projectName","lancerName","lancerMail","trackCode");
             
             
         // Fetch all customers from database
