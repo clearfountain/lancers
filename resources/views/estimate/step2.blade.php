@@ -5,580 +5,529 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <style>
     body {
-        font-family: 'Roboto', sans-serif;
-        overflow: auto;
-    }
+  font-family: 'Ubuntu', sans-serif;
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+}
 
-    h1 {
-        margin-top: 5%;
-        margin-left: 18%;
-        color: #262626;
-    }
+/* nav */
 
-    h5 {
-        font-weight: bold;
-        color: #262626;
-    }
+#container {
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr 5fr 1fr;
+}
 
-    p {
-        padding-bottom: 40px;
-    }
+#container div {
+  box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.1);
+  height: 50px;
+}
 
-    .box {
-        margin-top: 5%;
+#container i {
+  padding-top: 15px;
+  color: #C4C4C4
+}
 
-    }
+#container p {
+  justify-content: center;
+  margin-top: 15px;
+  font-style: normal;
+  font-weight: bold;
+  color: #323A43;
+}
 
-    .card-body:hover {
-        border: 2px solid #0ABAB5;
-        box-sizing: border-box;
-    }
+.cnc {
+  border: none;
+  background:rgba(207, 204, 204, 0.4);
+  height: 50px;
+  width: 100%;
+  color: white
+}
 
-    .btn-on {
-        width: 100%;
-        background: gray;
-        border: 1px solid rgba(145, 145, 145, 0.4);
-        box-sizing: border-box;
+/* main section */
 
-        text-align: left;
-        color: #091429;
-        height: 50px;
-    }
+.main-section {
+  margin: 50px auto;
+  width: 50%;
+}
 
-    .btn-on:hover {
-        color: #E4E4E4;
-        background: #0ABAB5 !important;
-    }
+.section1 {
+  border: 1px solid #919191;
+  box-sizing: border-box;
+}
 
-    .dark {
-        margin-top: 40px;
-        margin-left: 40%;
-        width: 20%;
-        height: 60px;
-        border: 1px solid gray;
-        background: #0ABAB5 !important;
-        color: white;
+.section1 div {
+  padding: 5px 20px;
+}
 
-    }
+#word h1 {
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 48px;
+  color: #262626;
+}
 
-    .dark:hover {
+#word h5 {
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  color: #262626;
+}
 
-        background: #0ABAB5!important;
-        color: white;
-    }
+#glac h1 {
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.8rem;
+  line-height: 41px;
+  color: #262626;
+  padding-top: 30px;
+  margin-left: 50px;
+}
 
-    #name {
-        padding: 10px;
-        width: 100%;
-        height: 50px;
-        font-size: 20px;
-        border: 1px solid rgba(145, 145, 145, 0.4);
-    }
+div h3 {
+  font-family: Ubuntu;
+  font-style: bold;
+  font-weight: bold;
+  font-size: 1.4rem;
+  line-height: 41px;
+  color: #262626;
+}
 
-    #container {
-        display: grid;
-        grid-template-columns: 1fr 5fr 1fr;
+.bill p {
+  font-size: 1em;
+  padding-top: 10px;
+  color: #262626;
+}
 
-    }
+.hour {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 
-    #container div {
-        border: 1px solid black;
-        height: 50px;
-    }
+.hours {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 
-    #container p {
-        justify-content: center;
-        margin-top: 15px;
-        font-style: normal;
-        font-weight: bold;
+   }
 
+input {
+  height: 30px;
+  width: 50%;
+  text-align: center;
+  border: 1px solid;
+}
 
-        color: #323A43;
-    }
+.start {
+  margin-left: 1px;
+  width: 100%;
+}
 
-    #ext {
-        justify-content: center;
-        border: none;
-        background: gray !important;
-        color: white;
-        width: 100%;
-        height: 50px;
-    }
+.end {
+  margin-left: 50px;
+  width: 100%;
+}
 
+i input {
+  border: none;
+  border-bottom: 1px solid;
+  text-decoration: underline;
+}
 
-    #ext:hover {
+.sub {
+  width: 90%;
+}
 
-        background:  #091429 !important;
-
-    }
-
-    #cnc {
-        cursor: pointer;
-    }
-
-    .dropbtn, .project {
-        /* margin-top: 37px; */
-        width: 100%;
-        height: 50px;
-        padding: 10px;
-        border: 1px solid rgba(145, 145, 145, 0.4);
-        /* box-sizing: border-box; */
-    }
-    option, select {
-        font-size: 20px;
-        background: rgba(207, 204, 204, 0.4);
-    }
-
-    a:hover{cursor: pointer;}
-
-
-
-
-
-    body {
-        box-sizing: border-box;
-        margin: 0px;
-        font-family: ubuntu !important;
-    }
-
-    .con-div {
-        background-color: #FFFFFF;
-        width: 100%;
-        margin: auto;
-    }
-
-    .top-divs {
-        display: flex;
-        margin: 0 auto;
-        width: 100%;
-        background-color: #FFFFFF;
-        font-family: Roboto;
-    }
-
-    .ctrl-div {
-        width: 8%;
-        text-align: center;
-        border: 1px solid #919191;
-    }
-
-    .ctrl-btn {
-        width: 100%;
-        background-color: #FFFFFF;
-        border: none;
-    }
-
-    .inv-div {
-        width: 60%;
-        text-align: center;
-        border: 1px solid #919191;
-    }
-
-    #inv-btn {
-        width: 100%;
-        border: none;
-        padding: 0.5em;
-        font-weight: 500;
-        font-size: 28px;
-        background-color: #FFFFFF;
-    }
-
-    .send-div {
-        width: 32%;
-        text-align: center;
-        border: 1px solid #919191;
-    }
-
-    #send-btn {
-        width: 100%;
-        border: none;
-        padding: 0.5em;
-        color: #FFF;
-        font-size: 28px;
-        background-color:  rgba(196, 196, 196, 0.4);
-    }
-
-    .cli-info {
-        width:75%;
-        height:80vh;
-        background-color:#FFFFFF;
-        margin: auto
-    }
-
-    .cli-box {
-        display: flex;
-        justify-content:space-around;
-    }
-
-    .sub-box {
-        width: 30%;
-        padding: 2em 1em;
-        margin: 2em;
-        background-color:#FFF;
-        text-align:center;
-        border: 1px solid #919191;
-        border-radius: 2px
-    }
-
-    .sub-box:hover {
-        border: 3px solid gray;
-    }
-
-    .select-project {
-        width: 90%;
-        padding: 1em;
-        border: 1px solid #919191;
-    }
-
-    .cli-text {
-        padding-top: 1.5em;
-    }
-
-    .my-icon {
-        width: 100%;
-        margin: 0.6em 0;
-        color: #c4c4c4;
-        background-color: #FFFFFF;
-    }
-
-    .what-cli {
-        padding: 1.5em 1em !important;
-        margin: 0;
-        font-size: 42px !important;
-        font-weight: bold !important;
-        color: #323232;
-    }
-
-    .txt {
-        margin: 2em 0;
-    }
-    .column-1 {
-        width: 5%;
-        border-right: 2px solid rgb(223, 223, 223);
-        padding: 1em;
-        text-align: center;
-        color: black;
-        text-decoration: none;
-    }
-    .column-2 {
-        width: 75%;
-        text-align: center;
-        align-items: center;
-        padding: 0.8em;
-        color: black;
-        text-decoration: none;
-        font-size: 1.5em;
-        font-weight: bold;
-    }
-    .column-3 {
-        width: 15%;
-        border-left: 2px solid rgb(223, 223, 223);
-        padding: 0.8em;
-        text-align: center;
-        background-color: rgba(196, 196, 196, 0.4);
-        color: white;
-        text-decoration: none;
-        font-size: 1.5em;
-        font-weight: bold;
-    }
-
-    @media screen and (max-width: 500px) {
-        .cli-box {
-            display: block;
-        }
-
-        .sub-box {
-            width: 90%;
-            margin: 2em 0em;
-        }
-
-        option {
-            width: 80%;
-        }
-
-        .what-cli {
-            font-size: 1.3em;
-        }
-    }
-    @media (max-width: 575.98px) {
-        .column-1 {
-            width: 15%;
-            padding: 0;
-        }
-        .column-2 {
-            width: 75%;
-            padding-top: 0.6em;
-            font-size: 0.9em;
-        }
-        .column-3 {
-            width: 25%;
-            padding-top: 0.7em;
-            font-size: 0.8em;
-        }
-        img {
-            height: 20px;
-            width: 10px;
-            padding-top: 0.6em;
-        }
-    }
-
-    @media (min-width: 576px) and (max-width: 767px) {
-        .column-1 {
-            width: 10%;
-        }
-        img {
-            height: 15px;
-            width: 10px;
-        }
-    }
-    @media (min-width: 768px) and (max-width: 991.98px) {
-        .column-1 {
-            width: 9%;
-        }
-    }
+.hour {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 
 
 
+#currency {
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 28px;
+  color: #262626;
+  padding-bottom: 20px;
+  
+}
 
+#currency p{
+float: right;
+padding-right: 10px;
+}
+select {
+  border: none;
+  border-bottom: 1px solid;
+}
+
+.btn {
+  border: 1px solid #e4e4e4;
+  background: rgba(207, 204, 204, 0.4);
+  margin-top: 40px;
+  margin-left: 30%;
+  width: 40%;
+  height: 60px;
+  color: white;
+  font-size:17px;
+}
+
+@media screen and (max-width: 1400px) {
+  .start {
+    margin-left: 80px;
+    width: 100%;
+  }
+  .end {
+    margin-left: 30px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1102px) {
+  .hours {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 948px) {
+  .hour, .hours {
+    display: block;
+  }
+  .start {
+    margin-left: 0px;
+    width: 100%;
+  }
+  .end {
+    margin-left: 0px;
+    width: 100%;
+  }
+}
+    
+ @media (max-width: 600px) {
+  .main-section {
+  margin: 50px auto;
+  width: 80%;
+}
+  
+  
+input {
+   width: 80%;
+  margin-bottom:10px;
+ }
+}
+
+.text-center:hover{
+color: black;
+}
+
+txt:hover{
+  color: black;
+}
 </style>
 
 @endsection
 
 
 @section('content')
-<div class="contaner">
+<div id="container">
 
-    <header style="border-bottom: 2px solid rgb(223, 223, 223);">
-        <nav style="display: flex; ">
-            <a href="{{url('/dashboard')}}"  @click.prevent="$router.push('/estimate')" class="column-1">
-                <img
-                    src="https://res.cloudinary.com/mide358/image/upload/v1570621469/clear_24px_rasbwc.png"
-                    alt="navIcon"
-                    /> 
-            </a>
-            <a href="{{url('/estimate/create/step1')}}" @click.prevent="previous" class="column-1">
-                <img
-                    src="https://res.cloudinary.com/mide358/image/upload/c_scale,h_27,w_13/v1570621434/Vector_ag4hnv.png"
-                    alt="navIcon"
-                    />
-            </a>
-            <div class="column-2">Create Estimate</div>
-            <a href="#" @click.prevent="next" id="upperNext" class="column-3 float-right" style="border: 1px solid gray;
-               background: #0ABAB5 !important;">NEXT</a>
-        </nav>
-    </header>
+    <!------I added the href function in order to make the cancel button return to the dashboard------>
+<div class=" text-center" id="txt">
+  <span>
+      
+    <a href="dashboard.html">
+    <i class="fa fa-times"></i>
+  </span></a>
+</div>
 
-    <!--@Ezeko -->
-    <div class="container">
-        <div class="clearrfix"></div>
-        <br/> <br/>
-        <div class="card-title">
-            <h2 class="">Evaluation</h2>
-            <h6>Please Input the required fields in the form below</h6>
-        </div>
-        <style>
-            .my-hr-line {
-                position: relative;
-                left: -20px;
-                width: calc(100% + 40px);
-                border: 1px solid #ddd;
-            }
-            .hiddeinput {
-                color: grey!important;
-                background: linear-gradient(to right, #808080, #808080) 5px calc(100% - 5px)/calc(100% - 10px) 2px no-repeat;
-                /* <5px calc(100% - 5px)> : position of the gradient [5px from left and 5px from bottom  */
-                /* <calc(100% - 10px) 2px> : size of the gradient [width:100%-10px height:2px] */
-                background-color: #fcfcfc;
-                border: hidden;
-                padding: 3px;
-            }
-            .icon {
-                color: grey!important;
-                padding: 3px;
-            }
-            .hiddeselect {
-                color: #000!important;
-                background: linear-gradient(to right, #000, #000) 5px calc(100% - 5px)/calc(100% - 10px) 2px no-repeat;
-                /* <5px calc(100% - 5px)> : position of the gradient [5px from left and 5px from bottom  */
-                /* <calc(100% - 10px) 2px> : size of the gradient [width:100%-10px height:2px] */
-                background-color: #fcfcfc;
-                border: hidden;
-                padding: 3px;
-            }
-        </style>
-        <div class="clearfix"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 mx-auto">
-                    <div id="pay-invoice" class="card">
-                        <div class="card-body">
-                            <div class="card-title">
-                                <h2 class="pull-left">{{$project}}</h2>
-                            </div>
-                            <hr>
-                            <div class="clearrfix"></div>
-                            <br/>
+ <!------I added the href function in order to make the back button return to step 1------>
+<div class="text-center">
+  <span>
+        <a href="create_estimate_page.html">
+    <i class="fa fa-chevron-left"></i>
+  </span></a>
+</div>
 
-                            <hr class="my-hr-line">
-                            <form method="post" action="/estimate/create/step3">
-                                @csrf
+<div class="text-center">
+  <p class=""> <h4>Create Estimate</h4></p>
+</div>
 
-                                <div class="">
-                                    <label>  <h3>Billing</h3></label>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label">How long (in hours) will it take you to complete this project?</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control col-md-4 col-sm-10" required name="time" placeholder="Hours" />
-                                        </div>
-                                    </div>
-                                </div>
+<div class="">
 
-                                <!-- <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label">How much  do you charge per hour?</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control col-md-4 col-sm-10" required name="price_per_hour" placeholder="NGN 0.00" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <br/> -->
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label">Project starts/ends</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <i class="icon fa fa-calendar"></i>&nbsp;
-                                            <input class="hiddeinput col-md-4 col-sm-3" type="text" required onfocus="(this.type = 'date'); (this.name = 'start')" name="start" placeholder=" Set start date" />
-                                            <i class="icon fa fa-calendar"></i>
-                                            <input type="text" class="hiddeinput col-md-4 col-sm-3"  required onfocus="(this.type = 'date'); (this.name = 'end')" name="end" placeholder="Set end date" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <hr class="my-hr-line">
-                                <div class="">
-                                    <label>  <h3>Expenses</h3></label>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label"> How much would it cost you to power your devices or equipment for this project?</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control col-md-4 col-sm-10" required name="equipment_cost" id="est1" placeholder="NGN 0.00" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label">Are you subcontracting to anyone?</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <select class="form-control col-md-6 col-sm-10" required name="sub_contractors" id="est2" placeholder="E.g. Illustrator, Consulting..." >
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label">How much would they be paid?</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control col-md-4 col-sm-10" required name="sub_contractors_cost" id="est3" placeholder="NGN 0.00" />
-                                        </div>
-                                    </div>
-                                </div>
+  <input class="text-center cnc" id="but" value="SETUP THIS PROJECT" type="button">
+</div>
 
 
-                                <div class="">
-                                    <label>  <h3>Expertise</h3></label>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label"> How many similar projects have you done before?</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control col-md-4 col-sm-10" required name="similar_projects" id="exp1">
-                                        </div>
-                                    </div>
-                                </div>
+</div>
 
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label">Out of 5 how would you rate your experience level in executing this project?</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <input class="form-control col-md-6 col-sm-10" type="number" required name="rating" id="exp2"> /5
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr class="my-hr-line">
-                                <div class="">
-                                    <label>  <h3>Currency:
 
-                                            <select class="hiddeselect" name="currency_id" required>
-                                                <option value="">Select Currency</option>
-                                                @foreach($currencies as $currency)
-                                                <option value="{{$currency->id}}">{{$currency->code}}</option>
-                                                @endforeach
-                                            </select>
+<div class="container-fluid main-section">
 
-                                        </h3></label>
-                                </div>
+<div id="word">
+  <h1>Evaluation</h1>
+  <h5>Please Input the required fields in the form below</h5><br>
+</div>
 
 
 
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <br/>
-                    <div>
-                        <div class="text-center">
-                        <button  type="submit" class="btn" style="border: 1px solid gray;
-                                 background: #0ABAB5 !important; height: 70px; width: 200px;color:#fff!important">NEXT
+<div class="section1">
 
-                        </button>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+  <div id="glac">
+    <h1>Glacier Fintech App</h1>
+    <hr />
+  </div>
+  <hr />
+
+<form action="/estimate/create/step3" method="post">
+    @csrf
+  <div id="bill">
+    <h3>&nbsp&nbsp&nbsp Billing</h3>
+
+     <div class="hour">
+      <p>How long (in hours) will it take you <br> to complete this project?</p>
+
+      <input type="number" name="time" placeholder="Hours" id="hrs"  style="border: 1px solid #919191;" required/>
+    </div>
+
+                      <!------I eliminated the "how much in hours, do you charge per hour" text------>
+
+    <div class="hours">
+      <p> Project starts/ends</p>
+      <i class="fa fa-calendar start"><input type="text" min="2019-10-31" placeholder="Set start date" onfocus="(this.type='date')" name="start"
+          placeholder=" Set start date"  required/></i>
+      <i class="fa fa-calendar end"><input type="text" min="2019-10-31" placeholder="Set end date" onfocus="(this.type='date')" name="end"
+          placeholder="Set end date" required/></i>
+
+    </div>
+
+  </div>
+
+  <hr />
+  <div>
+    <h3>&nbsp&nbsp&nbsp Expenses</h3>
+    <div class="hour">
+      <p id="cost">
+        How much would it cost you to power your devices or equipment <br>for this
+        project?
+      </p>
+      <input type="number" name="equipment_cost" placeholder="NGN 0.00" id="amt"  style="border: 1px solid #919191;" required/>
+    </div>
+
+
+    <div class="hour">
+      <p id="sub">Are you subcontracting to anyone?</p>
+      <input type="text" name="sub_contractors" id="estt"  placeholder="E.g. Illustrator, Consulting..." class="sub"  style="border: 1px solid #919191;" required/>
+    </div><br>
+
+    <div class="hour">
+      <p id="pay">How much would they be paid?</p>
+      <input type="number" name="sub_contractors_cost" placeholder="NGN 0.00" id="amt2" style="border: 1px solid #919191;" required/>
+    </div>
+  </div>
+  <br>
+  <div>
+    <h3>&nbsp&nbsp&nbsp Expertise</h3>
+
+    <div class="hour">
+      <p id="proj">How many similar projects have<br>you done before?</p>
+      <input type="number" name="similar_projects" id="sp" style="border: 1px solid #919191;" required/>
+
+    </div>
+
+
+    <div class="hour">
+        <p id="rate">Out of 5 how would you rate your<br>experience level in executing this </i><br>project?<p>
+        <input type="number" name="rating" id="rte" style="border: 1px solid #919191;" required/>/5
+    </div>
+
+  </div>
+  <hr />
+
+
+  <div class="ml-4" id="currency" name="currency_id" style="color: 1px solid #919191;">
+         Currency:<select>
+         
+      <option>NGN</option>
+      <option>AED</option>
+      <option>AFN</option>
+      <option>ALL</option>
+      <option>AMD</option>
+      <option>ANG</option>
+      <option>AOA</option>
+      <option>ARS</option>
+      <option>AUD</option>
+      <option>AWG</option>
+      <option>AZN</option>
+      <option>BAM</option>
+      <option>BBD</option>
+      <option>BDT</option>
+      <option>BGN</option>
+      <option>BHD</option>
+      <option>BIF</option>
+      <option>BMD</option>
+      <option>BND</option>
+      <option>BOB</option>
+      <option>BRL</option>
+      <option>BSD</option>
+      <option>BSD</option>
+      <option>BTN</option>
+      <option>BWP</option>
+      <option>BYN</option>
+      <option>BZD</option>
+      <option>CAD</option>
+      <option>CDF</option>
+      <option>CHF</option>
+      <option>CLP</option>
+      <option>CNY</option>
+      <option>COP</option>
+      <option>CRC</option>
+      <option>CUC</option>
+    </select>
+
+   </div>
+
+  
 
 
 
-        @endsection
+</div>
 
-        @section('script')
 
-        @endsection
+  <button type="submit" class="btn next" id="button">SETUP THIS PROJECT</button>
+</div>
+</form>
+@endsection
+
+@section('script')
+<script>
+    var button = document.getElementById("button");
+    var but = document.getElementById("but");
+    but.addEventListener("click",function(){
+      var hrs = document.getElementById("hrs").value;
+      var estt = document.getElementById("estt").value;
+      var amt = document.getElementById("amt").value;
+      var amt2 = document.getElementById("amt2").value;
+      var sp = document.getElementById("sp").value;
+      var rte = document.getElementById("rte").value;
+    //&& est2.length < 1 && amt.length < 1 && amt2.length < 1 && sp.length < 1 && rte.length < 1){  
+     if(hrs.length < 1 ){
+        alert("please answer all the questions to proceed");
+      }
+      else{
+        if(amt.length < 1){
+          alert("please answer all the questions to proceed");
+        }
+        else if(amt.length < 1){
+          alert("please answer all the questions to proceed");
+        }
+        else if(estt.length < 1){
+          alert("please answer all the questions to proceed");
+        }
+        else if{
+          if(amt2.length < 1){
+          alert("please answer all the questions to proceed");
+        }
+        else if(sp.length < 1){
+          alert("please answer all the questions to proceed");
+        }
+        else if(rte.length < 1){
+            alert("please answer all the questions to proceed");
+        }
+        // else{
+        // window.open("create_estimate_step1.html");
+        // }
+    
+      }
+    },false);
+
+    button.addEventListener("click",function(){
+      var hrs = document.getElementById("hrs").value;
+      var estt = document.getElementById("estt").value;
+      var amt = document.getElementById("amt").value;
+      var amt2 = document.getElementById("amt2").value;
+      var sp = document.getElementById("sp").value;
+      var rte = document.getElementById("rte").value;
+    //&& est2.length < 1 && amt.length < 1 && amt2.length < 1 && sp.length < 1 && rte.length < 1){  
+     if(hrs.length < 1 ){
+        alert("please answer all the questions to proceed");
+      }
+      else{
+        if(amt.length < 1){
+          alert("please answer all the questions to proceed");
+        }
+        else{
+          if(amt.length < 1){
+          alert("please answer all the questions to proceed");
+        }
+        else{
+          if(estt.length < 1){
+          alert("please answer all the questions to proceed");
+        }
+        else{
+          if(amt2.length < 1){
+          alert("please answer all the questions to proceed");
+        }
+        else{
+          if(sp.length < 1){
+          alert("please answer all the questions to proceed");
+        }
+        else{
+          if(rte.length < 1){
+          alert("please answer all the questions to proceed");
+        }
+        else{
+        window.open("/estimate/create/step3");
+        }
+        }
+        }
+        }
+        }
+  
+        }
+      }
+    },false);
+  </script>
+  
+  
+  <script>
+  var currentDate = new Date();
+  
+  var date = currentDate.getDate();
+  var day = currentDate.getDay();
+  var month = currentDate.getMonth(); //Be careful! January is 0 not 1
+  var year = currentDate.getFullYear();
+  
+  var cld = document.getElementById("cld");
+  var cldTwo = document.getElementById("cldTwo");
+  
+  cld.min ="year-month-day";
+  cldTwo.min ="year-month-day";
+  
+  
+  </script>
+  
+  <script>
+  $(document).ready(function(){
+     
+     $('input').on('keypress',function(){
+      $('.next').css({"background":"#0ABAB5" , "color":"white"});
+      $('.cnc').css({"background":"#0ABAB5"});
+    })
+    $('input').on('keyup',function(){
+      $('.next').addClass("cnc");
+      $('.cnc').css({"background":"rgba(207, 204, 204, 0.4);"});
+    })
+    
+    
+  })
+  </script>
+@endsection
