@@ -117,9 +117,35 @@
     
     let form = document.querySelector('#form');
     let form_children = {};
-    ['next_page', 'next_btn', 'time', 'rating', 'currency_id', 'similar_projects', 'sub_contractors_cost', 'sub_contractors', 'equipment_cost']
+    ['next_page', 'next_btn', 'time', 'start', 'end', 'rating', 'currency_id', 'similar_projects', 'sub_contractors_cost', 'sub_contractors', 'equipment_cost']
     .forEach(e=>form_children[e] = document.querySelector(`[name="${e}"]`));
-    let {next_btn, next_page, time, rating, currency_id, similar_projects, sub_contractors_cost, sub_contractors, equipment_cost} = form_children;
+    let {next_btn, start, end, next_page, time, rating, currency_id, similar_projects, sub_contractors_cost, sub_contractors, equipment_cost} = form_children;
+
+    if(typeof(form_children['start']) !== 'undefined' &&  typeof(form_children['end']) !== 'undefined'){
+        form_children['end'].addEventListener('change', function(e){
+            if(form_children['start'].value > form_children['end'].value ){
+                next_page.disabled = true;
+                next_btn.disabled = true;
+                next_page.classList.remove('validated');
+                next_btn.classList.remove('validated');
+                alert('Start date cannot be greater than end date')
+                form_children['end'].value = '';
+                return; // remove the validated toggle
+            }
+        });
+        form_children['start'].addEventListener('change', function(e){
+            if(form_children['end'].value !== '' && form_children['start'].value > form_children['end'].value ){
+                next_page.disabled = true;
+                next_btn.disabled = true;
+                next_page.classList.remove('validated');
+                next_btn.classList.remove('validated');
+                alert('Start date cannot be greater than end date')
+                form_children['end'].value = '';
+                return; // remove the validated toggle
+            }
+        });
+    }
+    
 
     window.onload=function(){
         ['keyup', 'click']
