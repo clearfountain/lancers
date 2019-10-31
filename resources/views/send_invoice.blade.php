@@ -318,7 +318,7 @@
 	                <section>
 	                    <div class="addressAndPayment row">
 	                        <div class="card addressCard" style="font-weight: normal">
-	                            <div style="font-weight: bold">Glacier Inc,</div>
+	                            <div style="font-weight: bold">Lancers,</div>
 	                            Abuja, FCT<br>
 	                            Nigeria
 	                        </div>
@@ -346,7 +346,7 @@
 	                <section class="invoiceDetails row">
 	                    <div class=" table-card" style="margin-top: 10px">
 	                        <div class="">
-	                            Invoice <span style="font-weight: bold; font-size: 0.6em; color: #B1B1B1">No. 1</span> <p class="serviceRendered" style="margin-top: 10px">Glacier Fintech App</p>
+	                            Invoice <span style="font-weight: bold; font-size: 0.6em; color: #B1B1B1">No. 1</span> <p class="serviceRendered" style="margin-top: 10px">Lancers</p>
 	                        </div>
 	                        <div class="tableSection" style="font-size: 0.8em; width: 100%; overflow-x: scroll">
 	                            <table class="table">

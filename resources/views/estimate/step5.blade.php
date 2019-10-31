@@ -342,7 +342,7 @@
             <section class="invoiceDetails row">
                 <div class=" table-card" style="margin-top: 10px">
                     <div class="">
-                        Invoice <span style="font-weight: bold; font-size: 0.6em; color: #B1B1B1">No. {{$data['invoice_no']}}</span> <p class="serviceRendered" style="margin-top: 10px">Glacier Fintech App</p>
+                        Invoice <span style="font-weight: bold; font-size: 0.6em; color: #B1B1B1">No. {{$data['invoice_no']}}</span> <p class="serviceRendered" style="margin-top: 10px">Lancers</p>
                     </div>
                     <div class="tableSection" style="font-size: 0.8em; width: 100%; overflow-x: scroll">
                         <table class="table">
