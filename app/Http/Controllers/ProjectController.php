@@ -12,6 +12,12 @@ use App\Estimate;
 use App\Rules\IsUser;
 use PDF;
 use Illuminate\Http\Request;
+use App\Currency;
+use App\Estimate;
+use App\Client;
+use App\Country;
+use App\State;
+use Illuminate\Support\Facades\Redirect;
 
 class ProjectController extends Controller {
 
@@ -21,7 +27,7 @@ class ProjectController extends Controller {
     public function listGet() {
         $filter = Request()->filter;
         if ($filter == 'pending') {
-            $data['projects'] =Project::whereUser_id(Auth::user()->id)->whereStatus('pending')->with('user')->get();
+            $data['projects'] = Project::whereUser_id(Auth::user()->id)->whereStatus('pending')->with('user')->get();
         } elseif ($filter == 'active') {
             $data['projects'] = Project::whereUser_id(Auth::user()->id)->whereStatus('active')->with('user')->get();
         } elseif ($filter == 'completed') {
@@ -29,10 +35,55 @@ class ProjectController extends Controller {
         } else {
             $data['projects'] = Project::whereUser_id(Auth::user()->id)->with('user')->get();
         }
-		
-		//dd($data);
+
+        //dd($data);
         return view('projects.list', $data);
-        
+    }
+
+    public function edit($id) {
+        $data['currencies'] = Currency::all('id', 'code');
+        $data['clients'] = Client::all();
+        $data['countries'] = Country::all('id', 'name');
+        $data['states'] = State::all();
+        $data['projects'] = Project::whereUser_id(Auth::user()->id)->with('user')->find($id);
+        return view('projects.edit', $data);
+    }
+
+    public function view($id) {
+
+        $data['projects'] = Project::whereUser_id(Auth::user()->id)->with('user')->find($id);
+        return view('projects.view', $data);
+    }
+
+    public function complete($id) {
+        $project = Project::whereUser_id(Auth::user()->id)->with('user')->find($id);
+        $project->update([
+            'status' => 'completed'
+        ]);
+
+        session()->flash('message.alert', 'success');
+        session()->flash('message.content', "Project Successfully Completed");
+        return back();
+    }
+
+    public function pending($id) {
+        $project = Project::whereUser_id(Auth::user()->id)->with('user')->find($id);
+        $project->update([
+            'status' => 'pending'
+        ]);
+
+        session()->flash('message.alert', 'success');
+        session()->flash('message.content', "Project Successfully Put to Pending");
+        return back();
+    }
+
+    public function delete($id) {
+        $project = Project::whereUser_id(Auth::user()->id)->with('user')->find($id);
+        $estimate = Estimate::find($project->estimate_id);
+        $estimate->delete();
+        session()->flash('message.alert', 'success');
+        session()->flash('message.content', "Project Successfully Deleted");
+        return back();
     }
 
     /**
@@ -113,33 +164,34 @@ class ProjectController extends Controller {
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project) {
-        $this->validate($request, [
-            'title' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'progress' => 'nullable|numeric',
-            'status' => 'nullable|in:pending,in-progress,completed'
+    public function update(Request $request, $id) {
+        $project = Project::whereUser_id(Auth::user()->id)->with('user')->find($id);
+        $project->update([
+            'title' => $request->title,
+            'client_id' => $request->client
         ]);
+        $estimate = Estimate::find($project->estimate_id);
 
-        if (isset($request->title)) {
-            $project->title = $request->title;
-        }
+        $workmanship = $request->time;
+        $equipment_cost = $request->equipment_cost;
+        $sub_contractors_cost = $request->sub_contractors_cost;
+        $total = $workmanship + $equipment_cost + $sub_contractors_cost;
 
-        if (isset($request->description)) {
-            $project->description = $request->description;
-        }
-
-        if (isset($request->progress)) {
-            $project->progress = $request->progress;
-        }
-
-        if (isset($request->status)) {
-            $project->status = $request->status;
-        }
-
-        $project->save();
-
-        return $this->success("project updated", $project);
+        $estimate->update([
+            'time' => $request->time,
+            'currency_id' => $request->currency_id,
+            'equipment_cost' => $request->equipment_cost,
+            'sub_contractors' => $request->sub_contractors,
+            'sub_contractors_cost' => $request->sub_contractors_cost,
+            'similar_projects' => $request->similar_projects,
+            'rating' => $request->rating,
+            'estimate' => $total,
+            'start' => $request->start,
+            'end' => $request->end
+        ]);
+        session()->flash('message.alert', 'success');
+        session()->flash('message.content', "Project Updated");
+        return redirect('project/status');
     }
 
     /**
