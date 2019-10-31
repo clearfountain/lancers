@@ -53,6 +53,7 @@ class EstimateController extends Controller {
     }
 
     public function step4(Request $request) {
+        // dd(session()->all());
         $data['countries'] = Country::all('id', 'name');
         $data['states'] = State::all();
         $client = Client::whereId($request->client)->first();

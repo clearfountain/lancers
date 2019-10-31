@@ -99,6 +99,34 @@
 
 @section('script')
   <script>
+      
+    //use jquery to handle next buttons
+    $("#step3UpperButton").on("click", function() {
+        $("#step3LowerButton").trigger("click");
+      });
+
+      $("#moveBack").on("click", function() {
+    window.history.back();
+
+    });
+
+    $("#client").on("onChange", function() {
+       $("#step3UpperButton").css( "background-color", "#0ABAB5");
+       $("#step3LowerButton").css( "background-color", "#0ABAB5");
+      });
+
+    //handle form close
+    $("#closeForm").on("click", function() {
+        let path = "@php echo session("path") @endphp";
+        window.location = path;
+
+    });
+
+    function next(e){
+        let form = document.querySelector('#form');
+        form.submit();
+    }
+    
     function verifyPath(){
         let createProject = document.getElementById('createProject').value;
 
