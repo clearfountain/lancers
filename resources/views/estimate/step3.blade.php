@@ -492,12 +492,14 @@ button {
     </div>
 
     <div>
-      <button class="next disabled" id="btn" >NEXT</button>
+      <button type="submit" class="next disabled" id="btn" >NEXT</button>
     </div>
   </div>
 
   <h1 class="my-5 text-center">What Client is it for?</h1>
 
+<form action="/estimate/create/step4" method="post">
+    @csrf
   <div class="row ">
     <div class="col-md-6 p-0">
       <div class="row m-auto box justify-content-center">
@@ -533,16 +535,18 @@ button {
            <span class="req">Required</span>
        </div>
     </div>
-  </div></div></div>
+</div>
+</div>
+</div>
 
     <!--  -->
 
 
 
-<button class="btn disabled my-5 mx-auto" id="btn" >NEXT</button>
+<button type="submit" class="btn disabled my-5 mx-auto" id="btn" >NEXT</button>
 
 </div>
-</div>
+</form>
 @endsection
 
 @section('script')
