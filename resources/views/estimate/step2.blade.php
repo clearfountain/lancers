@@ -145,9 +145,9 @@
     
     function falsy(el){
         if(typeof el.selected !== 'undefined'){
-            if(el.selected != '' && el.selected !== 0 && el.selected == null) return false;
+            if(el.selected != '' && el.selected == null) return false;
         }else if(typeof el.value !== 'undefined'){
-            if(el.value !== '' && el.value !== 0 && el.value !== null) return false;
+            if(el.value !== '' && el.value !== null) return false;
         }
         return true;
     }

@@ -137,6 +137,9 @@
                 return; // remove the validated toggle
             }
         }
+        if(form_children['start'] > form_children['end'] ){
+            alert('Start date cannot be greater than end date')
+        }
         next_page.disabled = false;
         next_btn.disabled = false;
         next_page.classList.add('validated');
@@ -145,9 +148,9 @@
     
     function falsy(el){
         if(typeof el.selected !== 'undefined'){
-            if(el.selected != '' && el.selected !== 0 && el.selected == null) return false;
+            if(el.selected != '' && el.selected == null) return false;
         }else if(typeof el.value !== 'undefined'){
-            if(el.value !== '' && el.value !== 0 && el.value !== null) return false;
+            if(el.value !== '' && el.value !== null) return false;
         }
         return true;
     }

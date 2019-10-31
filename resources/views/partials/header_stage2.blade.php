@@ -17,7 +17,7 @@
     </div>
 
     <div class="">
-        <input class="text-center cnc" name="next_page" value="NEXT" type="button">
+        <input class="text-center cnc" name="next_page" value="NEXT" type="submit">
     </div>
 
 </div>
