@@ -22,7 +22,12 @@
 
     <!-- Styles -->
     {{--  <link href="{{ asset('css/app.css') }}" rel="stylesheet">  --}}
-
+    <style>
+        .validated{
+            background: #0ABAB5 !important;
+            color:white;
+        }
+    </style>
 
    {{--  //inline styles  --}}
 

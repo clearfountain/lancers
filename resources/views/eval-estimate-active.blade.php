@@ -313,7 +313,7 @@ select {
   height: 60px;
   color: white;
 }
-.btn:hover{
+.active:hover{
     background: rgb(10, 241, 234);
     color:white;
 }

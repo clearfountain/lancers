@@ -53,6 +53,7 @@ Route::post('/guest/save/step3', 'GuestController@savestep3')->middleware('guest
 Route::get('/guest/create/step4', 'GuestController@createstep4')->middleware('guest');
 Route::post('/guest/save/step4', 'GuestController@savestep4')->middleware('guest');
 
+Route::get('/guest/invoice/review', 'InvoiceController@review');
 
 
 
@@ -171,13 +172,10 @@ Route::group(['middleware' => 'auth:web'], function() {
 
     //Invoice routes
     // Route::resource('invoices', 'InvoiceController');
-    Route::post('/invoices/send', 'InvoiceController@sendinvoice');
+    Route::post('/invoice/send', 'InvoiceController@sendinvoice');
 
     Route::get('/invoice/pay/{txref}', 'InvoiceController@pay');
     Route::get('/invoices/{invoice}/getpdf', 'InvoiceController@getPdf');
-    Route::get('/invoice/review', function() {
-        return view('reviewinvoice');
-    });
     // Route::get('/invoice', function () { return view('invoice_view'); });
     Route::get('/invoice_sent', function () {
         return view('invoice_sent');
@@ -235,9 +233,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::put('/estimates/{estimate}', 'EstimateController@update')->middleware('auth');
     Route::delete('/estimates/{estimate}', 'EstimateController@destroy')->middleware('auth');
 
-    Route::get('/estimate/create', function () {
-        return view('set_estimate');
-    });
+    Route::get('/estimate/create', 'EstimateController@step1');
 
 
     // Task Routes
@@ -271,11 +267,9 @@ Route::group(['middleware' => 'auth:web'], function() {
     // Route::post('invoices/send', 'InvoiceController@sendinvoice');
     // Route::get('/invoices', 'InvoiceController@list');
     Route::get('/invoices', 'InvoiceController@listGet');
+    Route::get('/invoice/review', 'InvoiceController@review');
     Route::get('/invoices/{invoice}/getpdf', 'InvoiceController@getPdf');
     Route::get('/invoice/pay/{txref}', 'InvoiceController@pay');
-    Route::get('/invoice/review', function() {
-        return view('reviewinvoice');
-    });
     Route::get('/invoice', function () {
         return view('invoice_view');
     });

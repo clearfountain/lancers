@@ -29,7 +29,7 @@ class EstimateController extends Controller {
         $currencies = Currency::all('id', 'code');
 
         if ($request->old_project && $request->new_project)
-            $project = ['type' => 'new', 'project' => $request->new_project];
+            return back()->with('error', 'Please specify either an old or new project');
         elseif ($request->old_project)
             $project = ['type' => 'old', 'project' => $request->old_project];
         elseif ($request->new_project)
@@ -53,7 +53,6 @@ class EstimateController extends Controller {
     }
 
     public function step4(Request $request) {
-      
         $data['countries'] = Country::all('id', 'name');
         $data['states'] = State::all();
         $client = Client::whereId($request->client)->first();
@@ -85,7 +84,12 @@ class EstimateController extends Controller {
                         'status' => 'pending'
             ]);
             $project->save();
-            return view('addclients')->with('estimate', $estimate->id);
+            
+            // $request->session()->flush();
+
+            $request->session()->put('new_estimate_id', $estimate->id);
+            return redirect('invoice/review');
+            // return view('addclients')->with('estimate', $estimate->id);
         }
         return view('estimate.step4',$data);
     }
@@ -102,7 +106,7 @@ class EstimateController extends Controller {
             $contacts = $contacts;
         }
         if(empty($contacts[0]['email'])){
-           session()->flash('message.alert', 'danger');
+            session()->flash('message.alert', 'danger');
             session()->flash('message.content', "Client Contact Email Can Not Be Empty.. Please Check Contact Information");
             return back();
         }
@@ -114,12 +118,12 @@ class EstimateController extends Controller {
         try {
             // $client = new Client;
             // $estimate = new Estimate;
-    if(!empty($contacts[0]['email'])){
-        $emailcontact = $contacts[0]['email'];
-    }
-    else{
-        $emailcontact = null;
-    }
+            if(!empty($contacts[0]['email'])){
+                $emailcontact = $contacts[0]['email'];
+            }
+            else{
+                $emailcontact = null;
+            }
     
 
             $data['project'] = session('project')['project'];
@@ -135,6 +139,7 @@ class EstimateController extends Controller {
             $data['equipment_cost'] = session('estimate')['equipment_cost'];
             $data['sub_contractors_cost'] = session('estimate')['sub_contractors_cost'];
             $data['total'] = $data['workmanship'] + $data['equipment_cost'] + $data['sub_contractors_cost'];
+            
             $clients = new Client;
             $clients->user_id = Auth::user()->id;
             $clients->name = session('client')['name'];
@@ -176,9 +181,11 @@ class EstimateController extends Controller {
             // $data['invoice_no'] = $invoice->id;
             // $invoice->save();
             DB::commit();
-            // dd(session()->all());
-            return view('addclients')
-                            ->with('estimate', $estimate->id);
+            
+            // $request->session()->flush();
+            $request->session()->put('new_estimate_id', $estimate->id);
+            return redirect('invoice/review');
+
         } catch (\Throwable $e) {
             return back()->with('error', $e->getMessage());
             DB::rollback();

@@ -147,7 +147,7 @@ select {
   height: 60px;
   color: white;
 }
-.btn:hover{
+.active:hover{
     background: #0ABAB5;
     color:white;
 }
