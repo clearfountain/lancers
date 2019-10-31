@@ -234,7 +234,7 @@
                     alt="navIcon"
                 />
             </a>
-            <a href="#" @click.prevent="previous"  id="moveBack" class="column-1">
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}" @click.prevent="previous"  class="column-1">
                 <img
                     src="https://res.cloudinary.com/mide358/image/upload/c_scale,h_27,w_13/v1570621434/Vector_ag4hnv.png"
                     alt="navIcon"

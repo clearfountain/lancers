@@ -365,20 +365,20 @@
 
     <header style="border-bottom: 2px solid rgb(223, 223, 223);">
         <nav style="display: flex; ">
-            <a href="{{ url('/') }}"   class="column-1">
+            <a href="{{ url('/') }}"   class="column-1" id="closeForm" >
                 <img
                     src="https://res.cloudinary.com/mide358/image/upload/v1570621469/clear_24px_rasbwc.png"
                     alt="navIcon"
                     />
             </a>
-            <a href="{{ redirect()->getUrlGenerator()->previous() }}"  class="column-1">
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}"  class="column-1" id="moveBack">
                 <img
                     src="https://res.cloudinary.com/mide358/image/upload/c_scale,h_27,w_13/v1570621434/Vector_ag4hnv.png"
                     alt="navIcon"
                     />
             </a>
             <div class="column-2">client</div>
-            <a href="#" @click.prevent="next" class="column-3">NEXT</a>
+            <a href="#" @click.prevent="next" id="step4UpperButton" class="column-3">NEXT</a>
         </nav>
     </header>
 
@@ -442,7 +442,7 @@
                 </div>
             </section>
             <section>
-                <button type="submit">Next</button>
+                <button id="step4LowerButton" type="submit">Next</button>
             </section>
         </form>
     </main>
@@ -454,9 +454,9 @@
 @section('script')
 <script type="text/javascript">
 
-//use jquery to handle next buttons
-$("#step3UpperButton").on("click", function() {
-        $("#step3LowerButton").trigger("click");
+    //use jquery to handle next buttons
+    $("#step4UpperButton").on("click", function() {
+        $("#step4LowerButton").trigger("click");
       });
 
       $("#moveBack").on("click", function() {
@@ -464,9 +464,9 @@ $("#step3UpperButton").on("click", function() {
 
     });
 
-    $("#client").on("onChange", function() {
-       $("#step3UpperButton").css( "background-color", "#0ABAB5");
-       $("#step3LowerButton").css( "background-color", "#0ABAB5");
+    $("#Cname").on("input", function() {
+       $("#step4UpperButton").css( "background-color", "#0ABAB5");
+       $("#step4LowerButton").css( "background-color", "#0ABAB5");
       });
 
 //handle form close
