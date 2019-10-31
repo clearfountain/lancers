@@ -109,6 +109,7 @@
         }
         return true;
     }
+    
     function verifyPath() {
         let a_next =  document.querySelector('.a-next');
         let next = document.querySelector('.next');

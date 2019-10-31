@@ -57,7 +57,7 @@
         </div>
 
         <div class="">
-            <input class="text-center cnc" value="NEXT" type="button">
+            <input class="text-center cnc" id="next_page" value="NEXT" type="button">
         </div>
 
     </div>
@@ -73,7 +73,7 @@
                         <div class="cli-box" style="color: #919191">
                             <div class="sub-box">
                                 <p class="txt">An already existing Client</p>
-                                <select name="client" class="select-project" style="color: #919191">
+                                <select name="client" id="client" class="select-project" style="color: #919191">
                                     <option value="new" selected>Select Client</option>
                                     @foreach($clients as $client)
                                     <option value="{{$client->id}}">{{$client->name}}</option>
@@ -94,7 +94,7 @@
                         </a>
                     </div>
                 </div>
-            <button class="btn">NEXT</button>
+            <button class="btn" id="next_btn">NEXT</button>
         </div>
 
     </div>
@@ -103,29 +103,41 @@
 
 @section('script')
   <script>
+    
+    let client = document.querySelector('#client');
+    console.log(client)
+    let next_page = document.querySelector('#next_page');
+    let next_btn = document.querySelector('#next_btn');
+    window.onload=function(){
+        client.addEventListener('change', validate);
+    }
+
+
+    function validate(){
+        if(client.value == 'new' || falsy(client)) {
+            // console.log(form_children[i])
+            next_page.disabled = true;
+            next_btn.disabled = true;
+            next_page.classList.remove('validated');
+            next_btn.classList.remove('validated');
+            return; // remove the validated toggle
+        }
+        next_page.disabled = false;
+        next_btn.disabled = false;
+        next_page.classList.add('validated');
+        next_btn.classList.add('validated');
+    }
+    
+    function falsy(el){
+        if(typeof el.selected !== 'undefined'){
+            if(el.selected != '' && el.selected !== 0 && el.selected == null) return false;
+        }else if(typeof el.value !== 'undefined'){
+            if(el.value !== '' && el.value !== 0 && el.value !== null) return false;
+        }
+        return true;
+    }
       
-    //use jquery to handle next buttons
-    $("#step3UpperButton").on("click", function() {
-        $("#step3LowerButton").trigger("click");
-      });
-
-      $("#moveBack").on("click", function() {
-    window.history.back();
-
-    });
-
-    $("#client").on("onChange", function() {
-       $("#step3UpperButton").css( "background-color", "#0ABAB5");
-       $("#step3LowerButton").css( "background-color", "#0ABAB5");
-      });
-
-    //handle form close
-    $("#closeForm").on("click", function() {
-        let path = "@php echo session("path") @endphp";
-        window.location = path;
-
-    });
-
+    
     function next(e){
         let form = document.querySelector('#form');
         form.submit();

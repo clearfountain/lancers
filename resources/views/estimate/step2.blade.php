@@ -102,7 +102,7 @@
         <!-- <button class="btn">NEXT</button> -->
         <div class="row ml-auto box justify-content-center mt-20" style="margin-top: 20px;">
             <div class="col-sm-6">
-                <button class="btn">NEXT</button>
+                <button class="btn" name="next_btn">NEXT</button>
                 <!-- <input class="disabled" id="ext" type="submit" value="NEXT"> -->
             </div>
         </div>
@@ -114,21 +114,42 @@
 
 @section('script')
 <script>
-    function submitEvent(e){
-        let form = document.querySelector('#form');
-        let time = document.querySelector('[name="time"]');
-        let rating = document.querySelector('[name="rating"]');
-        let cost_per_hour = document.querySelector('[name="cost_per_hour"]');
-        let currency_id = document.querySelector('[name="currency_id"]');
-        let similar_projects = document.querySelector('[name="similar_projects"]');
-        let sub_contractors_cost = document.querySelector('[name="sub_contractors_cost"]');
-        let sub_contractors = document.querySelector('[name="sub_contractors"]');
-        let equipment_cost = document.querySelector('[name="equipment_cost"]');
+    
+    let form = document.querySelector('#form');
+    let form_children = {};
+    ['next_page', 'next_btn', 'time', 'rating', 'currency_id', 'similar_projects', 'sub_contractors_cost', 'sub_contractors', 'equipment_cost']
+    .forEach(e=>form_children[e] = document.querySelector(`[name="${e}"]`));
+    let {next_btn, next_page, time, rating, currency_id, similar_projects, sub_contractors_cost, sub_contractors, equipment_cost} = form_children;
 
-        if(1 == 2){
-           e.preventDefault(); 
+    window.onload=function(){
+        ['keyup', 'click']
+        .forEach(e=>{form.addEventListener(e, validate)});
+    }
+
+    function validate(){
+        for(let i in form_children){
+            if(form_children[i] !== next_btn && form_children[i] !== next_page && falsy(form_children[i])) {
+                // console.log(form_children[i])
+                next_page.disabled = true;
+                next_btn.disabled = true;
+                next_page.classList.remove('validated');
+                next_btn.classList.remove('validated');
+                return; // remove the validated toggle
+            }
         }
-        
+        next_page.disabled = false;
+        next_btn.disabled = false;
+        next_page.classList.add('validated');
+        next_btn.classList.add('validated');
+    }
+    
+    function falsy(el){
+        if(typeof el.selected !== 'undefined'){
+            if(el.selected != '' && el.selected !== 0 && el.selected == null) return false;
+        }else if(typeof el.value !== 'undefined'){
+            if(el.value !== '' && el.value !== 0 && el.value !== null) return false;
+        }
+        return true;
     }
     
 

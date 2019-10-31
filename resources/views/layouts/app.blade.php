@@ -106,13 +106,12 @@
    @yield('script')
 <script type="text/javascript">
         
-        window.onload=function(){
+        // window.onload=function(){
             let back = document.querySelector('#icon-back');
             let close = document.querySelector('#icon-close');
-            // console.log(close);
             if(back !== null) back.addEventListener('click', function(e){e.preventDefault(); window.history.back()});
             if(close !== null) close.addEventListener('click', function(e){e.preventDefault(); window.location.href='/dashboard'});
-        }
+        // }
         
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
