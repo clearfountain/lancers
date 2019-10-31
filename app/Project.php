@@ -13,18 +13,19 @@ class Project extends Model
         return $this->belongsTo(User::class, 'user_id')->with('estimate');
     }
     
-   
+    public function profile(){
+        return $this->belongsTo(Profile::class, 'user_id');
+    }
+    
      public function client(){
         return $this->belongsTo(Client::class, 'client_id');
     }
-
-   
 
     public function estimate()
     {
         return $this->belongsTo('App\Estimate');
     }
-
+    
     public function tasks()
     {
         return $this->hasMany('App\Task');

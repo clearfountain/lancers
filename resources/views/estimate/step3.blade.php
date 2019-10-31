@@ -3,286 +3,567 @@
 
 @section('styles')
 <style>
-    body {
-      box-sizing: border-box;
-      margin: 0px;
-      font-family: ubuntu !important;
-    }
+* {
+  margin-right: 0px;
+  margin-left: 0px;
+  font-family: Ubuntu;
+}
+            
+body {
+  margin-top: 0px;
+}
 
-    .con-div {
-      background-color: #FFFFFF;
-      width: 100%;
-      margin: auto;
-    }
+ul {
+  display: inline-block;
+  float: none;   
+  width: fit-content;
+  padding-inline-start: 10px;
+  margin-top: 24px;
+    
+}
 
-    .top-divs {
-      display: flex;
-      margin: 0 auto;
-      width: 100%;
-      background-color: #FFFFFF;
-      font-family: Roboto;
-    }
+li {
+  display: inline;
+}
+.h1, h1 {
+  font-size: 2.4rem !important;
+  margin-top: 4% !important;
+  color: #262626;
+}
+.text-center h1 {
+  text-align: left !important;
+  margin-left: 17.2%;
+}
+button {
+  width: 120px;
+  background: #ffffff;
+  border: none;
+  height: 100%;
+}
+.disabled {
+  cursor: not-allowed !important;
+}
+     /*navbar css*/
+#container {
+  display: grid;
+  grid-template-columns: 1fr 8fr 2fr;
+}
+/*changed this*/
+#container div {
+  box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.1);
+  outline: none;
+  height: 60px;
+}
+#container p {
+  justify-content: center;
+  margin-top: 15px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.3em;
+  color: #323A43;
+}
+div>#ext {
+  background: rgba(207, 204, 204, 0.4);
+  font-size: 24px;
+  font-weight: bold;
+  justify-content: center;
+  border: none;
+  color: white;
+  width: 100%;
+  height: 60px;
+  outline: none;
+  /*added outline none*/
+}
+            
+/*changed this from clear to close*/
+div>.close {
+  outline: none;
+}
+.close {
+  color: #C4C4C4;
+  width: 100%;
+}
+    /*end of nav bar*/
+.cEstimate { 
+  margin: 0 auto;
+  align-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.next a {
+  color: #ffffff;
+}
+.next {
+    width: 10px;
+    background: rgba(196, 196, 196, 0.4);
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    padding-right: 98px;
+    padding-left: 47px;
+    color: white;
+}
 
-    .ctrl-div {
-      width: 8%;
-      text-align: center;
-      border: 1px solid #919191;
-    }
+ .btn {
+    background: rgba(207, 204, 204, 0.4);
+    width: 220px;
+    height: 60px;
+    padding: 5px 20px;
+    margin: 0 auto;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 60px;
+    clear: both;
+    border: none;
+    color: white;
+    border: none !important;
+}
 
-    .ctrl-btn {
-      width: 100%;
-      background-color: #FFFFFF;
-      border: none;
-    }
+.btn a {
+    color: white;
+}
+p, h3 {
+    width: fit-content;
+}
+.lists {
+    width: fit-content;
+}
+h5 {
+    font-weight: bold;
+    color: #262626;
+}
+  .card
+  {
+    display: grid;
+    height:30vh;
+    position: relative;
+    width: 90%;
+    margin: 20px;
+}
+.card .card-body
+{
+    display: inline-grid;
+    justify-content: baseline;
+    align-items: flex-end;
+}
+.card-body:hover {
+    border: 5px solid black;
+    box-sizing: border-box;
+}
+.dropbtn, .project {
+     margin-top: 1vh; 
+    height: 50px;
+    padding: 10px;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid rgba(145, 145, 145, 0.4);
+    color: #091429;
+}
+.project {
+    border: 2px solid rgba(145, 145, 145, 0.4);
+    overflow: hidden;
+}
+.l-proj {
+    font-size: 14px;
+    border: none;
+    width: 100%;
+    vertical-align: middle;
+    -webkit-box-pack: justify;
+}
+.l-proj::placeholder {
+    color: #919191;
+}
+.l-proj:focus {
+    border: none;
+}
+.req {
+     margin-left: 221px; 
+     margin-top: 12rem;
+    float: right;
+}
+.signup {
+    background: #0ABAB5;
+    width: 145px;
+    height: 54px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    color: white;
+}
 
-    .inv-div {
-      width: 60%;
-      text-align: center;
-      border: 1px solid #919191;
-    }
+.est {
+    color: white; 
+    background:  #0ABAB5;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 32px;
+    padding: 10px;
+    text-align: center;
+    padding-top: 10px !important;
+}
+li {
+    padding: 15px;
+    margin: 8px !important;
+    margin-top: 21px;
+}
+li a {
+    margin: 1px;
+    padding: 1px;
+    color: black;
+}
 
-    #inv-btn {
-      width: 100%;
-      border: none;
-      padding: 0.5em;
-      font-weight: 500;
-      font-size: 28px;
-      background-color: #FFFFFF;
-    }
+#new_user {
+    margin-top: 20px;
+    margin-left: 2%;
+}
+.shift {
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 32px;
+}
+.login {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+}
+.hidden {
+    display: none;
+}
+.disabled {
+    cursor: not-allowed;
+}
+.box {
+    margin-top: 4%;
+}
 
-    .send-div {
-      width: 32%;
-      text-align: center;
-      border: 1px solid #919191;
-    }
+#container {
+    display: grid;
+    grid-template-columns: 1fr 8fr 2fr;
+}
+option, select{
+    font-size: 14px;
+}
+.dropbtn:focus, .project:focus, .dropbtn:hover, .project:hover {
+    cursor: pointer !important;
+}
+#clear{
+    padding: auto;
+}
+ 
+.row {
+    margin-right: 0;
+    margin-left: -15px;
+}
 
-    #send-btn {
-      width: 100%;
-      border: none;
-      padding: 0.5em;
-      color: #FFF;
-      font-size: 28px;
-      background-color:  rgba(196, 196, 196, 0.4);
-    }
 
-    .cli-info {
-      width:75%;
-      height:80vh;
-      background-color:#FFFFFF;
-      margin: auto
-    }
 
-    .cli-box {
-      display: flex;
-      justify-content:space-around;
-    }
+@media (max-width: 992px) 
+{
+.h1, h1 {
+    font-size: 2rem !important;
+    margin-top: 3% !important;
+}
+.text-center h1 {
+    margin-left: 17.2%;
+}
+button {
+    width: 120px;
+    height: 100%;
+}
+#container p {
+    font-size: 19.5px;
+    margin-top: 9px;
+}
+div > #ext{
+    font-size: 20px;
+}
+.btn {
+    width: 180px;
+    height: 60px;
+    padding: 5px 20px;
+    font-size: 20px;
+    margin-top: 60px;
+}
+.h5, h5 {
+    font-size: 1.05rem;
+}
+p.card-text {
+    font-size: .8rem;
+}
+  .card
+  {
+    height:30vh;
+}
+.card-body:hover {
+    border: 3px solid black;
+}
+.dropbtn, .project {
+     margin-top: 1vh; 
+    height: 40px;
+    padding: 10px;
+    width: 100%;
+}
+.project {
+    border: 1.5px solid rgba(145, 145, 145, 0.4);
+    overflow: hidden;
+}
+.l-proj {
+    font-size: 14px;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+.l-proj::placeholder {
+    line-height: 10px;
+}
+.box {
+    margin-top: 3%;
+}
+option, select{
+    font-size: 14px;
+}
+#container .navM img {
+    height: 20px;
+}
 
-    .sub-box {
-      width: 30%;
-      padding: 2em 1em;
-      margin: 2em;
-      background-color:#FFF;
-      text-align:center;
-      border: 1px solid #919191;
-      border-radius: 2px
-    }
+}
 
-    .sub-box:hover {
-      border: 3px solid gray;
-    }
 
-    .select-project {
-      width: 90%;
-      padding: 1em;
-      border: 1px solid #919191;
-    }
 
-    .cli-text {
-      padding-top: 1.5em;
-    }
+@media (max-width: 767px) 
+{
+.h1, h1 {
+    font-size: 1.5rem !important;
+    margin-top: 3% !important;
+}
+.text-center h1 {
+    margin-left: 17.2%;
+}
+#container p {
+    margin-top: 5px;
+}
+.btn {
+    width: 160px;
+    height: 55px;
+    padding: 5px 15px;
+    font-size: 18px;
+    margin-top: 60px;
+    margin-bottom: 100px;
+}
+  .card
+  {
+    height:30vh;
+    margin-bottom: 30px;
+    max-width: 85%;
+    margin-left: 7%;
+}
+.card-body:hover {
+    border: 2px solid black;
+}
+.dropbtn, .project {
+     margin-top: 1vh; 
+    height: 40px;
+    padding: 0;
+    width: 72vw !important;
+}
+.project {
+    border: 1.5px solid rgba(145, 145, 145, 0.4);
+    overflow: hidden;
+}
+.l-proj {
+    font-size: 14px;
+    width: 100%;
+    margin: .5rem 0 0 .3rem;
+}
+.l-proj::placeholder {
+    line-height: 10px;
+}
+.box {
+    margin-top: 3%;
+}
+option, select{
+    font-size: 14px;
+}
+#container .navM img {
+    height: 20px;
+}
+#container p {
+    font-size: 17.5px;
+    margin-top: 12px;
+}
+div > #ext {
+    font-size: 18px;
+}
+#container .navM img {
+    height: 18px;
+}
 
-    .my-icon {
-      width: 100%;
-      margin: 0.6em 0;
-      color: #c4c4c4;
-      background-color: #FFFFFF;
-    }
+}
 
-    .what-cli {
-      padding: 1.5em 1em !important;
-      margin: 0;
-      font-size: 42px !important;
-      font-weight: bold !important;
-      color: #323232;
-    }
 
-    .txt {
-      margin: 2em 0;
-    }
-    .column-1 {
-        width: 5%;
-        border-right: 2px solid rgb(223, 223, 223);
-        padding: 1em;
-        text-align: center;
-        color: black;
-        text-decoration: none;
-    }
-    .column-2 {
-        width: 75%;
-        text-align: center;
-        align-items: center;
-        padding: 0.8em;
-        color: black;
-        text-decoration: none;
-        font-size: 1.5em;
-        font-weight: bold;
-    }
-    .column-3 {
-        width: 15%;
-        border-left: 2px solid rgb(223, 223, 223);
-        padding: 0.8em;
-        text-align: center;
-        background-color: rgba(196, 196, 196, 0.4);
-        color: white;
-        text-decoration: none;
-        font-size: 1.5em;
-        font-weight: bold;
-    }
+@media (max-width: 576px) 
+{
+.h1, h1 {
+    font-size: 1.15rem !important;
+}
+#container p {
+    margin-top: 0x;
+}
+.btn {
+    width: 120px;
+    height: 45px;
+    padding: 5px 10px;
+    font-size: 15px;
+    margin-top: 25px;
+    margin-bottom: 110px;
+}
+.h5, h5 {
+    font-size: 1rem;
+}
+  .card
+  {
+    height:30vh;
+}
+p.card-text {
+    font-size: .78rem;
+    padding-right: .5rem;
+}
+.card-body:hover {
+    border: 1px solid black;
+}
+.dropbtn, .project {
+     margin-top: 0; 
+    height: 35px;
+    padding: 0;
+    width: 70vw !important;
+}
+.project {
+    border: .5px solid rgba(145, 145, 145, 0.4);
+}
+.l-proj {
+    font-size: 12px;
+}
+.box {
+    margin-top: 2%;
+}
+option, select{
+    font-size: 12px;
+}
+#container .navM img {
+    height: 20px;
+}
+#container p {
+    font-size: 16px;
+    margin-top: 12px;
+}
+div > #ext {
+    font-size: 15px;
+}
+#container .navM img {
+    height: 14px;
+}
+button {
+    width: 70px;
+}
 
-    @media screen and (max-width: 500px) {
-        .cli-box {
-        display: block;
-        }
-
-        .sub-box {
-        width: 90%;
-        margin: 2em 0em;
-        }
-
-        option {
-        width: 80%;
-        }
-
-        .what-cli {
-        font-size: 1.3em;
-        }
-    }
-    @media (max-width: 575.98px) {
-        .column-1 {
-            width: 15%;
-            padding: 0;
-        }
-        .column-2 {
-            width: 75%;
-            padding-top: 0.6em;
-            font-size: 0.9em;
-        }
-        .column-3 {
-            width: 25%;
-            padding-top: 0.7em;
-            font-size: 0.8em;
-        }
-        img {
-            height: 20px;
-            width: 10px;
-            padding-top: 0.6em;
-        }
-    }
-
-    @media (min-width: 576px) and (max-width: 767px) {
-        .column-1 {
-            width: 10%;
-        }
-        img {
-            height: 15px;
-            width: 10px;
-        }
-    }
-    @media (min-width: 768px) and (max-width: 991.98px) {
-        .column-1 {
-            width: 9%;
-        }
-    }
-
-    .footer-next {
-        width: 200px;
-        margin: 0 auto;
-    }
-
-    .footer-next button {
-        width: 100%;
-        height: 100%;
-        font-size: 1.5em;
-        border: none;
-        color: white;
-        margin-top: 30px;
-        margin-bottom: 30px;
-        padding: 10px 50px;
-    }
-    a:hover{cursor: pointer;}
+}
+           
+@media (max-width: 976px) {
+  div>#ext{
+    font-size: 15px;
+  }
+}
 </style>
 @endsection
 
 
-@section('content')<div class="con-div">
-<div class="max-con">
-    <header style="border-bottom: 2px solid rgb(223, 223, 223);">
-        <nav style="display: flex; ">
-            <a href="#"  @click.prevent="$router.push('/estimate')" class="column-1">
-                <img
-                    src="https://res.cloudinary.com/mide358/image/upload/v1570621469/clear_24px_rasbwc.png"
-                    alt="navIcon"
-                />
-            </a>
-            <a href="#" @click.prevent="previous" class="column-1">
-                <img
-                    src="https://res.cloudinary.com/mide358/image/upload/c_scale,h_27,w_13/v1570621434/Vector_ag4hnv.png"
-                    alt="navIcon"
-                />
-            </a>
-            <div class="column-2">Client</div>
-           <a href="#" @click.prevent="next" id="NextStep3Upper" class="column-3 float-right" style="border: 1px solid gray;
-               background: #0ABAB5 !important;">NEXT</a>
-        </nav>
-    </header>
-
-    <div class="cli-info">
-        <div>
-            <p class="what-cli">What Client is it for?</p>
-        </div>
-        <form method="post" action="/estimate/create/step4" id="form">
-            @csrf
-            <div class="cli-box" style="color: #919191">
-                <div class="sub-box">
-                <p class="txt">An already existing Client</p>
-                <select name="client" class="select-project" style="color: #919191">
-                    <option value="new" selected>Select Client</option>
-                    @foreach($clients as $client)
-                    <option value="{{$client->id}}">{{$client->name}}</option>
-                    @endforeach
-                </select>
-                </div>
-                <a class="sub-box" onClick="next(event)">
-                    <p class="cli-text">A new Client</p>
-                </a>
-            </div>
-
-            <div class="footer-next">
-                <button id="NextStep3form" class=""type="submit" style="border: 1px solid gray;
-                                 background: #0ABAB5 !important; height: 70px; width: 200px;color:#fff!important">NEXT</button>
-            </div>
-            </form>
+@section('content')
+  <div id="container">
+    <div>
+        <button class="close navM" ><a href="index.html"><span>
+        <i class="fa fa-times" style="color: #555"></i>
+        </span></a></button>
     </div>
-</div>
 
+    <div class="d-flex align-items-center justify-content-center" align="center">
+      <h3>
+        <p class="nav cEstimate " id="cre" >Client</p></h3>
+    </div>
+
+    <div>
+      <button class="next disabled" id="btn" >NEXT</button>
+    </div>
+  </div>
+
+  <h1 class="my-5 text-center">What Client is it for?</h1>
+
+  <div class="row ">
+    <div class="col-md-6 p-0">
+      <div class="row m-auto box justify-content-center">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Select Client</h5>
+            <p class="card-text">Please select an already existing client on the platform</p>
+            
+            <select name="client" class="l-proj" style="color: #919191" oninput="verifyPath()" id="createProject">
+              <option value="new" selected>Select Client</option>
+              <option value="new">Client 1</option>
+              <option value="new">Client 2</option>
+              <option value="new">Client 3</option>
+              <option value="new">Client 4</option>
+            </select>
+          </div>
+      </div>
+    </div>
+  </div>
+<!--  -->
+<div class="col-md-6 p-0">
+<div class="row m-auto box justify-content-center">
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title"   >New Client</h5>
+        <p class="card-text">Please Type here for new Client
+        </p>
+        
+      
+       <div class="project"style="border: none;"  >
+           <input class="l-proj" type="text" oninput="verifyPath()"  placeholder= "Project Name"  name="" id="createProject">
+           <br>
+           <span class="req">Required</span>
+       </div>
+    </div>
+  </div></div></div>
+
+    <!--  -->
+
+
+
+<button class="btn disabled my-5 mx-auto" id="btn" >NEXT</button>
+
+</div>
 </div>
 @endsection
 
 @section('script')
-<script>
-    function next(e){
-        let form = document.querySelector('#form');
-        form.submit();
+  <script>
+    function verifyPath(){
+        let createProject = document.getElementById('createProject').value;
+
+        if ( createProject !== "" ){
+            document.querySelector('.btn').style.background = '#0ABAB5';
+            document.querySelector('.next').style.background = '#0ABAB5';
+
+            document.querySelector('.btn').classList.remove('disabled');
+            document.querySelector('.next').classList.remove('disabled');
+        } else {
+            //console.log('here works');
+            document.querySelector('.next').style.background = 'rgba(207, 204, 204, 0.4)';
+            document.querySelector('.next').classList.add('disabled');
+            document.querySelector('.btn').style.background = 'rgba(207, 204, 204, 0.4)';
+            document.querySelector('.btn').classList.add('disabled');
+        }
+
     }
-</script>
+  </script>
 @endsection

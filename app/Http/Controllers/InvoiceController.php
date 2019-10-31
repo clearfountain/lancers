@@ -21,6 +21,49 @@ class InvoiceController extends Controller {
 
     use VerifyandStoreTransactions;
 
+    public function view($id)
+    {
+        $invoice = Invoice::where('id', $id)->first();
+
+        return view('invoice')->withInvoice($invoice);
+    }
+    public function edit($id)
+    {
+        $invoice = Invoice::where('id', $id)->first();
+        $projects = Project::where('user_id', Auth::user()->id)->get(['id', 'title']);
+        $users = User::all(['id', 'name']);
+        return view('invoices.reviewinvoice')->withInvoice($invoice)->withProjects($projects)->withUsers($users);
+    }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'role' => 'required|string',
+            'user_id' => 'required|numeric',
+            'project_id' => 'required|numeric',
+        ]);
+        $query = Invoice::whereId($id)->FirstOrFail();
+        $query->user_id = $request->user_id;
+        $query->project_id = $request->project_id;
+        $query->role =  $request->role;
+        if ($query->save()) {
+            // $request->session()->flash('success', 'Invoice Added!');
+            return back()->withSuccess('Update Successful');
+        } else {
+            // $request->session()->flash('errors', 'Invoice addtion failed!');
+            return back()->withInputs()->withError('Unable to save your input');
+        }
+    }
+    public function delete($id)
+    {
+        $object = Invoice::whereId($id)->first();
+        if ($object) {
+            $object->delete();
+            return redirect()->back()->with('success', 'Invoice has been deleted');
+        } else {
+            return redirect()->back()->with('error', 'An error occur');
+        }
+    }
+
     public function __construct() {
         $this->middleware('auth');
     }
@@ -82,19 +125,19 @@ class InvoiceController extends Controller {
         return view('invoices.reviewinvoice')->with('invoice', $invoice);
     }
 
-    public function delete(Request $request, $invoice) {
-        $invoice = Invoice::findOrFail($invoice);
+    // public function delete(Request $request, $invoice) {
+    //     $invoice = Invoice::findOrFail($invoice);
 
-        $user = Auth::user();
+    //     $user = Auth::user();
 
-        if ($invoice->project->user_id !== $user->id) {
-            $request->session()->flash('error', "You're unauthorized to delete this invoice");
-            return redirect()->back();
-        } else {
-            $request->session()->flash('status', 'Deleted');
-            return redirect()->back();
-        }
-    }
+    //     if ($invoice->project->user_id !== $user->id) {
+    //         $request->session()->flash('error', "You're unauthorized to delete this invoice");
+    //         return redirect()->back();
+    //     } else {
+    //         $request->session()->flash('status', 'Deleted');
+    //         return redirect()->back();
+    //     }
+    // }
 
     public function show($invoice) {
         $pre_invoice = Invoice::findOrFail($invoice);
@@ -192,9 +235,9 @@ class InvoiceController extends Controller {
         }
     }
 
-    public function view($invoice_id) {
-        $invoice = Invoice::where(['id' => $invoice_id, 'project_id' => Auth::user()->id])->first();
-        return $invoice->count() > 0 ? $this->SUCCESS('Invoice retrieved', $invoice) : $this->SUCCESS('No invoice found');
-    }
+    // public function view($invoice_id) {
+    //     $invoice = Invoice::where(['id' => $invoice_id, 'project_id' => Auth::user()->id])->first();
+    //     return $invoice->count() > 0 ? $this->SUCCESS('Invoice retrieved', $invoice) : $this->SUCCESS('No invoice found');
+    // }
 
 }
