@@ -2,7 +2,7 @@
 
 
 @section('styles')
-<style> 
+<style>
     body {
       box-sizing: border-box;
       margin: 0px;
@@ -228,20 +228,20 @@
 <div class="max-con">
     <header style="border-bottom: 2px solid rgb(223, 223, 223);">
         <nav style="display: flex; ">
-            <a href="#"  @click.prevent="$router.push('/estimate')" class="column-1">
+            <a href="#"  @click.prevent="$router.push('/estimate')" id="closeForm" class="column-1">
                 <img
                     src="https://res.cloudinary.com/mide358/image/upload/v1570621469/clear_24px_rasbwc.png"
                     alt="navIcon"
                 />
             </a>
-            <a href="#" @click.prevent="previous" class="column-1">
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}" @click.prevent="previous"  class="column-1">
                 <img
                     src="https://res.cloudinary.com/mide358/image/upload/c_scale,h_27,w_13/v1570621434/Vector_ag4hnv.png"
                     alt="navIcon"
                 />
             </a>
             <div class="column-2">Client</div>
-            <a href="#" @click.prevent="next" class="column-3">NEXT</a>
+            <a href="#" @click.prevent="next" id="step3UpperButton" class="column-3">NEXT</a>
         </nav>
     </header>
 
@@ -265,9 +265,9 @@
                     <p class="cli-text">A new Client</p>
                 </a>
             </div>
-            
+
             <div class="footer-next">
-                <button type="submit">NEXT</button>
+                <button  id="step3LowerButton" type="submit">NEXT</button>
             </div>
             </form>
     </div>
@@ -278,6 +278,28 @@
 
 @section('script')
 <script>
+//use jquery to handle next buttons
+$("#step3UpperButton").on("click", function() {
+        $("#step3LowerButton").trigger("click");
+      });
+
+      $("#moveBack").on("click", function() {
+    window.history.back();
+
+    });
+
+    $("#client").on("onChange", function() {
+       $("#step3UpperButton").css( "background-color", "#0ABAB5");
+       $("#step3LowerButton").css( "background-color", "#0ABAB5");
+      });
+
+//handle form close
+$("#closeForm").on("click", function() {
+    let path = "@php echo session("path") @endphp";
+    window.location = path;
+
+});
+
     function next(e){
         let form = document.querySelector('#form');
         form.submit();

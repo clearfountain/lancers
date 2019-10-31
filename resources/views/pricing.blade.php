@@ -313,10 +313,10 @@
                                 <a class="nav-link" href="{{ url('/pricing') }}">Pricing <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/guest/create/step1') }}">Create Estimate </a>
-                            </li>
+						          <a class="nav-link" href="{{ url('guest/track') }}">Track a Project</a>
+					       </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/project/track') }}">Track a Project </a>
+                                <a class="nav-link" href="{{ url('/guest/create/step1') }}">Create Estimate </a>
                             </li>
                             @guest
                             <li class="nav-item">
