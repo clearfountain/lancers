@@ -17,6 +17,7 @@ function getCurrency($id){
 }
 
 function dateSlash($date){
+	$date = date_create($date);
 	return $date->format('d/m/Y');
 }
 

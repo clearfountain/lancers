@@ -319,7 +319,7 @@ table.project-table tbody tr td, table.project-table thead tr th {
 
 
 /* .table-responsive .dropdown-menu {
-    position: static !important; 
+    position: static !important;
     white-space: nowrap;
     overflow: hidden;
 } */
@@ -401,14 +401,14 @@ table.project-table thead tr th {
                     <img src="https://lancer-app.000webhostapp.com/images/svg/customer.svg" height="20" width="auto"> <span> Client</span>
                 </a>
             </li>
-           
+
             <li class="@if(request()->path() == 'projects/status') active @endif">
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><img src="https://lancer-app.000webhostapp.com/images/svg/lightbulb.svg" height="20" width="auto"> <span> Projects</span></a>
                 <ul class="collapse list-unstyled " id="homeSubmenu">
                     <li>
                         <a href="{{url('project/status')}}" class="pl-4"><i class="fas fa-dot-circle"></i> Status</a>
                     </li>
-            
+
                     <!-- <li>
                         <a href="{{url('project/overview')}}" class="pl-4"><i class="fas fa-dot-circle"></i> Overview</a>
                     </li> -->
@@ -493,10 +493,10 @@ table.project-table thead tr th {
                         <li class="nav-item">
                         <a class="nav-link border-left p-3" href="/dashboard/profile">
                             @if(Auth::user()->profile_picture !== 'user-default.png')
-                            <img id="image_selecter" src="{{ asset(Auth::user()->profile_picture) }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
+                            <img  src="{{ asset(Auth::user()->profile_picture) }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
                             @endif
                             @if(Auth::user()->profile_picture == 'user-default.png')
-                            <img id="image_selecter" src="{{ asset('images/user-default.jpg') }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
+                            <img  src="{{ asset('images/user-default.jpg') }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
                             @endif
                             </a>
                             <!-- <a class="nav-link border-left p-3" href="/dashboard/profile/settings"><span class="border rounded-circle p-1 font-weight-bold">

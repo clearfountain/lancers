@@ -45,14 +45,15 @@ class AddDataToSubscriptionsTable extends Command
         $plans =  json_decode($file, true );
 
 
-        echo "Making sure table is empty >>\n";
+        echo "🗑 Emptying subscriptions table\n";
         // SubscriptionPlan::truncate();
         
         foreach ($plans as $plan) {
-            echo "adding ". $plan['name'] ." to table\n";
+            echo "📁 Adding ". $plan['name'] ." to table\n";
             SubscriptionPlan::updateOrCreate($plan);
+            // SubscriptionPlan::create($plan);
         }
 
-        echo "done ✓";
+        echo "✔ Added subscription plans sucessfully \n";
     }
 }

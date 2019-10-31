@@ -290,6 +290,9 @@
 						<a class="nav-link" href="{{ url('/pricing') }}">Pricing</a>
 					</li>
 					@guest
+                    <li class="nav-item">
+						<a class="nav-link" href="{{ url('guest/track') }}">Track a Project</a>
+					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ route('login') }}">Sign in</a>
 					</li>

@@ -29,6 +29,7 @@
                         <!-- <li class="navi-links"><a href="#">Overview</a></li> -->
                         <li class="navi-links"><a href="{{url('project/collaborators')}}">Collaborators</a></li>
                         <li class="navi-links navi-active"><a href="javascript:void(0)">Task</a></li>
+                        <li class="navi-links"><a href="{{url('project/invite')}}">Invite</a></li>
                         <!-- <li class="navi-links"><a href="#">Documents</a></li> -->
                     </ul>
                 </div>

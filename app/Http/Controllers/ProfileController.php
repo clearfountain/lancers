@@ -181,9 +181,9 @@ class ProfileController extends Controller
         'last_name' => ['required', 'regex:/^[a-zA-Z]{2,20}$/', 'max:255'],
         'title' => ['required', 'string', 'max:255'],
         'email' => ['required', 'email:rfc', 'max:255'],
-        'password' => ['required', 'regex:/^(?=[^\s]*?[0-9])(?=[^\s]*?[a-zA-Z])[a-zA-Z0-9]*$/', 'max:255'],
-        'password_old' => ['required', 'regex:/^(?=[^\s]*?[0-9])(?=[^\s]*?[a-zA-Z])[a-zA-Z0-9]*$/', 'max:255'],
-        'password_confirmation' => ['required', 'regex:/^(?=[^\s]*?[0-9])(?=[^\s]*?[a-zA-Z])[a-zA-Z0-9]*$/', 'max:255'],
+        'password' => ['required', 'regex:/^[a-zA-Z0-9_,.!?&() ]{8,2000}$/', 'max:255'],
+        'password_old' => ['required', 'regex:/^[a-zA-Z0-9_,.!?&() ]{8,2000}$/', 'max:255'],
+        'password_confirmation' => ['required', 'regex:/^[a-zA-Z0-9_,.!?&() ]{8,2000}$/', 'max:255'],
         ],$messages);
     }
 
@@ -202,11 +202,11 @@ class ProfileController extends Controller
     {
       //check user provided input
       $validateAll = $this->validator($request->all());
-   
+
         if((!$validateAll->fails()))
       {
 
-                //check if usr has saved data before
+                //check if user has saved data before
                 $userProfileData = User::where('id',auth()->user()->toArray()['id'])->first()->profile()->get();
 
                 if($userProfileData)
@@ -250,7 +250,7 @@ class ProfileController extends Controller
                     }
                     else
                     {
-                        //save new data
+                        //save new data into db
                         $userProfile = Profile::create([
                             'user_id' => auth()->user()->id,
                             'first_name' => 'null',
@@ -304,7 +304,7 @@ class ProfileController extends Controller
           $errorsArray = $validateAll->errors()->all();
           $errorString = [];
 
-          //pass in a ponter of the $errorString
+          //pass in a ponter of the $errorString to aray map function
           array_map(function($value)use(&$errorString)
           {
             $errorString[] = $value;
@@ -316,7 +316,7 @@ class ProfileController extends Controller
           $errorString[] = implode("<br/>", $validateAll->messages()->all());
       }
 
-      
+
 
         return redirect('/dashboard/profile/settings')->with('editErrors',$errorString);
 
@@ -356,7 +356,7 @@ class ProfileController extends Controller
 
         if(!$validateAll->fails())
       {
-        //get user details
+        //get user details from auth() helper
        $userDetails = auth()->user();
 
         //check if password was also uploaded via form
@@ -492,7 +492,6 @@ class ProfileController extends Controller
 
               return redirect('/dashboard/profile/settings')->with('editErrors',$errorString);
             }
-
 
 
       }

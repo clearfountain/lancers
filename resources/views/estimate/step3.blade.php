@@ -98,10 +98,24 @@
 @endsection
 
 @section('script')
-<script>
-    function next(e){
-        let form = document.querySelector('#form');
-        form.submit();
+  <script>
+    function verifyPath(){
+        let createProject = document.getElementById('createProject').value;
+
+        if ( createProject !== "" ){
+            document.querySelector('.btn').style.background = '#0ABAB5';
+            document.querySelector('.next').style.background = '#0ABAB5';
+
+            document.querySelector('.btn').classList.remove('disabled');
+            document.querySelector('.next').classList.remove('disabled');
+        } else {
+            //console.log('here works');
+            document.querySelector('.next').style.background = 'rgba(207, 204, 204, 0.4)';
+            document.querySelector('.next').classList.add('disabled');
+            document.querySelector('.btn').style.background = 'rgba(207, 204, 204, 0.4)';
+            document.querySelector('.btn').classList.add('disabled');
+        }
+
     }
-</script>
+  </script>
 @endsection

@@ -20,3 +20,5 @@ Lancer is a simple
 ##Add countries, states and currencies to table
 - `php artisan countriesandstates:table`
 - `php artisan currencies:table`
+
+if you're refreshing your database it would be helpful to run `php artisan run:migrations`, this command refreshes the database, fills in the needed data for countries, states and currencies, if you'll like to seed the database you could add the `--seed` flag to the command i.e `php artisan run:migrations --seed`.

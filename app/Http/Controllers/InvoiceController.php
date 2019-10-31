@@ -21,6 +21,49 @@ class InvoiceController extends Controller {
 
     use VerifyandStoreTransactions;
 
+    public function view($id)
+    {
+        $invoice = Invoice::where('id', $id)->first();
+
+        return view('invoice')->withInvoice($invoice);
+    }
+    public function edit($id)
+    {
+        $invoice = Invoice::where('id', $id)->first();
+        $projects = Project::where('user_id', Auth::user()->id)->get(['id', 'title']);
+        $users = User::all(['id', 'name']);
+        return view('invoices.reviewinvoice')->withInvoice($invoice)->withProjects($projects)->withUsers($users);
+    }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'role' => 'required|string',
+            'user_id' => 'required|numeric',
+            'project_id' => 'required|numeric',
+        ]);
+        $query = Invoice::whereId($id)->FirstOrFail();
+        $query->user_id = $request->user_id;
+        $query->project_id = $request->project_id;
+        $query->role =  $request->role;
+        if ($query->save()) {
+            // $request->session()->flash('success', 'Invoice Added!');
+            return back()->withSuccess('Update Successful');
+        } else {
+            // $request->session()->flash('errors', 'Invoice addtion failed!');
+            return back()->withInputs()->withError('Unable to save your input');
+        }
+    }
+    public function delete($id)
+    {
+        $object = Invoice::whereId($id)->first();
+        if ($object) {
+            $object->delete();
+            return redirect()->back()->with('success', 'Invoice has been deleted');
+        } else {
+            return redirect()->back()->with('error', 'An error occur');
+        }
+    }
+
     public function __construct() {
         $this->middleware('auth');
     }
@@ -70,7 +113,7 @@ class InvoiceController extends Controller {
                 unset($invoices[$key]);
             }
         }
-        // return $invoices;
+
         return view('invoices.invoicelist')->with('invoices', $invoices);
     }
 
@@ -85,40 +128,49 @@ class InvoiceController extends Controller {
 
         $estimate = Estimate::find($request->estimate_id);
 
-        $pre_invoice = Invoice::whereEstimate_id($request->estimate_id)->first();
+        $pre_invoice = Invoice::where('estimate_id', $request->estimate_id)->first();
+
         if (is_object($pre_invoice)) {
             $pre_invoice->update(['amount' => $estimate->estimate]);
-        }
-        $createinvoice = Invoice::create(['user_id' => Auth::user()->id, 'issue_date' => $estimate->start, 'due_date' => $estimate->end, 'estimate_id' => $estimate->id, 'amount' => $estimate->estimate, 'currency_id' => $estimate->currency_id]);
-        $invoice = Invoice::whereId($createinvoice->id)->with('estimate')->first();
+            $invoice = $pre_invoice;
+        }else{
 
+            $createinvoice = Invoice::create(['user_id' => Auth::user()->id, 'issue_date' => $estimate->start, 'due_date' => $estimate->end, 'estimate_id' => $estimate->id, 'amount' => $estimate->estimate, 'currency_id' => $estimate->currency_id]);
+
+            $invoice = $createinvoice;
+
+            // $estimate->update(['invoice_id' => $createinvoice->id]);
+            $estimate->project->update(['invoice_id' => $createinvoice->id]);
+        }
+
+
+        $invoice->estimate;
+        // return $invoice;
 
         return view('invoices.reviewinvoice')->with('invoice', $invoice);
     }
 
-    public function delete(Request $request, $invoice) {
-        $invoice = Invoice::findOrFail($invoice);
+    // public function delete(Request $request, $invoice) {
+    //     $invoice = Invoice::findOrFail($invoice);
 
-        $user = Auth::user();
+    //     $user = Auth::user();
 
-        if ($invoice->project->user_id !== $user->id) {
-            $request->session()->flash('error', "You're unauthorized to delete this invoice");
-            return redirect()->back();
-        } else {
-            $request->session()->flash('status', 'Deleted');
-            return redirect()->back();
-        }
-    }
+    //     if ($invoice->project->user_id !== $user->id) {
+    //         $request->session()->flash('error', "You're unauthorized to delete this invoice");
+    //         return redirect()->back();
+    //     } else {
+    //         $request->session()->flash('status', 'Deleted');
+    //         return redirect()->back();
+    //     }
+    // }
 
     public function show($invoice) {
-        $invoice = Invoice::findOrFail($invoice);
-
+        $pre_invoice = Invoice::findOrFail($invoice);
         // dd($invoice);
-        $project_id = $invoice->project_id;
 
-        $invoice = Project::where('id', $project_id)->select('id', 'title', 'estimate_id', 'client_id')->with(['estimate', 'invoice', 'client'])->first();
+        $invoice = Project::where('invoice_id', $invoice)->select('id', 'title', 'estimate_id', 'client_id', 'invoice_id')->with(['estimate', 'invoice', 'client'])->first();
 	
-        // return $invoice;
+    // return $invoice;
         return view('invoices.viewinvoice')->with('invoice', $invoice);
     }
 
@@ -139,9 +191,7 @@ class InvoiceController extends Controller {
 
         $filename = "invoice#" . strtotime($invoice->created_at) . ".pdf";
 
-        $project_id = $invoice->project_id;
-
-        $invoice = Project::where('id', $project_id)->select('id', 'title', 'estimate_id', 'client_id')->with(['estimate', 'invoice', 'client'])->first();
+        $invoice = Project::where('invoice_id', $invoice->id)->select('id', 'title', 'estimate_id', 'invoice_id','client_id')->with(['estimate', 'invoice', 'client'])->first();
 
         $pdf = PDF::loadView('invoices.pdf', ['invoice' => $invoice]);
 
@@ -211,9 +261,9 @@ class InvoiceController extends Controller {
         }
     }
 
-    public function view($invoice_id) {
-        $invoice = Invoice::where(['id' => $invoice_id, 'project_id' => Auth::user()->id])->first();
-        return $invoice->count() > 0 ? $this->SUCCESS('Invoice retrieved', $invoice) : $this->SUCCESS('No invoice found');
-    }
+    // public function view($invoice_id) {
+    //     $invoice = Invoice::where(['id' => $invoice_id, 'project_id' => Auth::user()->id])->first();
+    //     return $invoice->count() > 0 ? $this->SUCCESS('Invoice retrieved', $invoice) : $this->SUCCESS('No invoice found');
+    // }
 
 }

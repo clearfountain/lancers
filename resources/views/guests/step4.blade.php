@@ -45,7 +45,7 @@
 
             @if(session()->has('message.alert'))
             <div class="text-center">
-                <button class=" alert alert-{{ session('message.alert') }}"> 
+                <button class=" alert alert-{{ session('message.alert') }}">
                     {!! session('message.content') !!}
                 </button>
             </div>
@@ -108,6 +108,29 @@
 @section('script')
 
 <script type="text/javascript">
+
+    //use jquery to handle next buttons
+    $("#step4UpperButton").on("click", function() {
+        $("#step4LowerButton").trigger("click");
+      });
+
+      $("#moveBack").on("click", function() {
+    window.history.back();
+
+    });
+
+    $("#Cname").on("input", function() {
+       $("#step4UpperButton").css( "background-color", "#0ABAB5");
+       $("#step4LowerButton").css( "background-color", "#0ABAB5");
+      });
+
+//handle form close
+$("#closeForm").on("click", function() {
+    let path = "@php echo session("path") @endphp";
+    window.location = path;
+
+});
+
     let count = 1;
 	window.addEventListener('load', function() {
 		addContact();
@@ -119,7 +142,7 @@
         newElement.innerHTML = `
             <label for="company_name_${count}">Contact name</label>
             <input type="text" name="contact[${count}]['name']" id="contact_name${count}" placeholder="e.g Ben Davies">
-            
+
             <label for="company_email">Contact email</label>
             <input type="email" name="contact[${count}]['email']" id="email_${count}" placeholder="e.g email@domain.com">
         `;

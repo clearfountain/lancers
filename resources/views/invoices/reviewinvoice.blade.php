@@ -114,7 +114,7 @@
                         <div class=" table-card" style="margin-top: 10px">
                             <div class="">
                                 Invoice <span style="font-weight: bold; font-size: 0.6em; color: #B1B1B1">No. {{strtotime($invoice->created_at)}}</span>
-                                <p class="serviceRendered" style="margin-top: 10px">Project name</p>
+                                <p class="serviceRendered" style="margin-top: 10px">{{$invoice->estimate->project->title}}</p>
                             </div>
                             <div class="tableSection" style="font-size: 0.8em; width: 100%; overflow-x: scroll">
                                 <table class="table">

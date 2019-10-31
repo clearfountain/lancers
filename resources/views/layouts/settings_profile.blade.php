@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,9 +43,9 @@
                 border: 1px solid #c4c4c4;
             }
 
-            .names, 
-            .title_text, 
-            .newpassword 
+            .names,
+            .title_text,
+            .newpassword
             .coy-details,
             .coy-details-2,
             .coy-contact{
@@ -67,7 +68,7 @@
                 width: 49%;
             }
 
-            .firstname, 
+            .firstname,
             .title,
             .newPass,
             .coy-details-name,
@@ -150,7 +151,7 @@
             }
 
             /* .password-section {
-                display: none;   
+                display: none;
                 transform: scale(1.0);
                 transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
             } */
@@ -219,12 +220,12 @@
                     margin: 0 auto;
                 }
 
-                .mybtn, 
+                .mybtn,
                 .btn-company-details{
                     margin-left: 0px;
                 }
 
-                .firstname, 
+                .firstname,
                 .title,
                 .newPass,
                 .lastname,
@@ -380,14 +381,7 @@
                     </form>
                     <ul class="navbar-nav ml-0 kc-unlist-item">
 
-                        <li class="nav-item border-right">
-                            @if(Auth::user()->profile_picture !== 'user-default.png')
-                            <img id="image_selecter" src="{{ asset(Auth::user()->profile_picture) }}" style="width: 60px; height: 60px; border-radius: 10%; pointer: finger;" alt="Profile Image">
-                            @endif
-                            @if(Auth::user()->profile_picture == 'user-default.png')
-                            <img id="image_selecter" src="{{ asset('images/user-default.jpg') }}" style="width: 60px; height: 60px; border-radius: 10%; pointer: finger;" alt="Profile Image">
-                            @endif
-                        </li>
+
                         <li class="nav-item active border-right">
                             <a class="nav-link mt-2 mr-3" href="#">
                                 <img src="{{ asset('images/help.svg') }}">
@@ -406,11 +400,17 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">
-                                <div class="kc-a-u d-flex align-items-center justify-content-center">
-                                    <h3 style="color:black;" class="text-center mt-2">{{Auth::user()->name}}</h3>
-                                </div>
+                        <a class="nav-link border-left p-3" href="/dashboard/profile">
+                            @if(Auth::user()->profile_picture !== 'user-default.png')
+                            <img  src="{{ asset(Auth::user()->profile_picture) }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
+                            @endif
+                            @if(Auth::user()->profile_picture == 'user-default.png')
+                            <img  src="{{ asset('images/user-default.jpg') }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
+                            @endif
                             </a>
+                            <!-- <a class="nav-link border-left p-3" href="/dashboard/profile/settings"><span class="border rounded-circle p-1 font-weight-bold">
+                                {{strtoupper(explode(" ", auth()->user()->name)[0][0])}}
+                            </span> <span class="d-lg-none d-xl-none"> Hello {{explode(" ", auth()->user()->name)[0]}}</span></a> -->
                         </li>
                     </ul>
                     <div class="d-lg-none" style="width:100%">
@@ -444,4 +444,28 @@
     x.style.display = "none";
   }
 }
+
+//image picker jquery
+$("#image_selecter").on("click", function() {
+        $("#picture").trigger("click");
+      });
+
+
+     function image1(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image_selecter')
+                    .attr('src', e.target.result)
+                    .width(100)
+                    .height(100);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+   var upload_button = document.getElementById("picture_upload");
+   upload_button.style.display = "block";
+    }
+
 </script>

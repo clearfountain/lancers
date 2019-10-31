@@ -30,7 +30,6 @@ public function index() {
         }
     }
     // return $contracts;
-    return view('contracts.contractlist')->with('contracts', $contracts);
 }
 
 /**

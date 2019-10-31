@@ -15,20 +15,20 @@
                         {{session('ImageUploadMessage')}}
                         @endif
 
-                        @if(Auth::user()->profile_picture == 'user-default.png')
-                        <form style="margin:0px!important;display: inline!important;min-height: 0px!important" action="{{ route('Profile-Image') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <input id="picture" name="profileimage" type="file" style=""  onchange="image1(this);" />
-                            <div class="clearfix"></div>
-                            <br/>
-                            <div class="d-flex justify-content-center mb-3">
-                                <button  id="picture_upload" type="submit" class="green-btn">Upload Image</button>
-                            </div>
-                        </form>
-
-                        @else
-                        <img id="image_selecter" src="{{ asset(Auth::user()->profile_picture) }}" style="width: 100px; height: 100px; border-radius: 10%; pointer: finger;" alt="Profile Image">
-                        @endif
+                        @if(Auth::user()->profile_picture !== 'user-default.png')
+                    <img id="image_selecter" src="{{ asset(Auth::user()->profile_picture) }}" style="width: 100px; height: 100px; border-radius: 10%; pointer: finger;" alt="Profile Image">
+                    @endif
+                    @if(Auth::user()->profile_picture == 'user-default.png')
+                    <img id="image_selecter" src="{{ asset('images/user-default.jpg') }}" style="width: 100px; height: 100px; border-radius: 10%; pointer: finger;" alt="Profile Image">
+                    @endif
+						<form style="margin:0px!important;display: inline!important;min-height: 0px!important" action="{{ route('Profile-Image') }}"" method="POST" enctype="multipart/form-data">
+							@csrf
+							<input id="picture" name="profileimage" type="file" style="visibility: hidden;"  onchange="image1(this);" />
+							</br>
+							<div class="d-flex justify-content-center mb-3">
+								<button style="display: none;" id="picture_upload" type="submit" class="green-btn">Upload Image</button>
+							</div>
+						</form>
 
                         <div class="d-flex flex-column align-items-center">
                             <div class="d-flex flex-column">
