@@ -300,7 +300,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/invoice/review', function() {
         return view('reviewinvoice');
     });
-<<<<<<< HEAD
+
     Route::get('/invoice', function () {
         return view('invoice_view');
     });
@@ -315,7 +315,6 @@ Route::group(['middleware' => 'auth:web'], function() {
     });
     
     
-=======
     // Route::get('/invoice', function () {
     //     return view('invoice_view');
     // });
@@ -328,7 +327,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     // Route::get('/client-doc-view', function () {
     //     return view('client-doc-view');
     // });
->>>>>>> edfd93372f8b11ee98530c8c55436e1c6954b444
+
 
 
     //Proposals
