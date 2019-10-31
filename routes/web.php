@@ -33,7 +33,7 @@ Route::get('/', function () {
 
 Route::get('/pricing', "SubscriptionController@showSubscriptions")->name('subscriptions'); //THIS IS THE CORRECT ROUTE
 
-//Email subscription    
+//Email subscription
 Route::post('/submailinglist', 'MailSubscriptionController@mailStore');
 
 
