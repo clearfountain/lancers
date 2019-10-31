@@ -117,6 +117,9 @@ class InvoiceController extends Controller {
             // $estimate->update(['invoice_id' => $createinvoice->id]);
             $estimate->project->update(['invoice_id' => $createinvoice->id]);
         }
+        $createinvoice = Invoice::create(['user_id' => Auth::user()->id, 'issue_date' => $estimate->start, 'due_date' => $estimate->end, 'estimate_id' => $estimate->id, 'amount' => $estimate->estimate, 'currency_id' => $estimate->currency_id]);
+        $invoice = Invoice::whereId($createinvoice->id)->with('estimate')->first();
+
 
 
         $invoice->estimate;
