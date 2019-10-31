@@ -21,15 +21,83 @@ class InvoiceController extends Controller {
 
     use VerifyandStoreTransactions;
 
+    public function view($id)
+    {
+        $invoice = Invoice::where('id', $id)->first();
+
+        return view('invoice')->withInvoice($invoice);
+    }
+    public function edit($id)
+    {
+        $invoice = Invoice::where('id', $id)->first();
+        $projects = Project::where('user_id', Auth::user()->id)->get(['id', 'title']);
+        $users = User::all(['id', 'name']);
+        return view('invoices.reviewinvoice')->withInvoice($invoice)->withProjects($projects)->withUsers($users);
+    }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'role' => 'required|string',
+            'user_id' => 'required|numeric',
+            'project_id' => 'required|numeric',
+        ]);
+        $query = Invoice::whereId($id)->FirstOrFail();
+        $query->user_id = $request->user_id;
+        $query->project_id = $request->project_id;
+        $query->role =  $request->role;
+        if ($query->save()) {
+            // $request->session()->flash('success', 'Invoice Added!');
+            return back()->withSuccess('Update Successful');
+        } else {
+            // $request->session()->flash('errors', 'Invoice addtion failed!');
+            return back()->withInputs()->withError('Unable to save your input');
+        }
+    }
+    public function delete($id)
+    {
+        $object = Invoice::whereId($id)->first();
+        if ($object) {
+            $object->delete();
+            return redirect()->back()->with('success', 'Invoice has been deleted');
+        } else {
+            return redirect()->back()->with('error', 'An error occur');
+        }
+    }
+
     public function __construct() {
         $this->middleware('auth');
+    }
+
+    public function review(Request $request){
+        $estimate_id = session('new_estimate_id');
+        // dd($estimate_id);
+        
+        if($estimate_id && is_int($estimate_id)){
+            $estimate = Estimate::find($estimate_id);
+            if($estimate){
+                $pre_invoice = Invoice::whereEstimate_id($request->estimate_id)->first();
+                if (is_object($pre_invoice)) {
+                    $pre_invoice->update(['amount' => $estimate->estimate]);
+                    $invoice = Invoice::whereId($pre_invoice->id)->with('estimate')->first();
+                }else{
+                    $createinvoice = Invoice::create(['user_id' => Auth::user()->id, 'issue_date' => $estimate->start, 'due_date' => $estimate->end, 'estimate_id' => $estimate->id, 'amount' => $estimate->estimate, 'currency_id' => $estimate->currency_id]);
+                    $invoice = Invoice::whereId($createinvoice->id)->with('estimate')->first();
+                }
+        
+                return view('invoices.reviewinvoice')->with('invoice', $invoice);
+            }else return redirect('estimate/create');
+        }else{
+            return redirect('estimate/create');
+        }
+
+        return redirect('estimate/create');
     }
 
     public function send($id) {
         return view('invoice_sent');
     }
 
-    public function index() {
+    public function index() { 
         $user = Auth::user();
 
         // return $user->projects;
@@ -74,6 +142,9 @@ class InvoiceController extends Controller {
             // $estimate->update(['invoice_id' => $createinvoice->id]);
             $estimate->project->update(['invoice_id' => $createinvoice->id]);
         }
+        $createinvoice = Invoice::create(['user_id' => Auth::user()->id, 'issue_date' => $estimate->start, 'due_date' => $estimate->end, 'estimate_id' => $estimate->id, 'amount' => $estimate->estimate, 'currency_id' => $estimate->currency_id]);
+        $invoice = Invoice::whereId($createinvoice->id)->with('estimate')->first();
+
 
 
         $invoice->estimate;
@@ -82,19 +153,19 @@ class InvoiceController extends Controller {
         return view('invoices.reviewinvoice')->with('invoice', $invoice);
     }
 
-    public function delete(Request $request, $invoice) {
-        $invoice = Invoice::findOrFail($invoice);
+    // public function delete(Request $request, $invoice) {
+    //     $invoice = Invoice::findOrFail($invoice);
 
-        $user = Auth::user();
+    //     $user = Auth::user();
 
-        if ($invoice->project->user_id !== $user->id) {
-            $request->session()->flash('error', "You're unauthorized to delete this invoice");
-            return redirect()->back();
-        } else {
-            $request->session()->flash('status', 'Deleted');
-            return redirect()->back();
-        }
-    }
+    //     if ($invoice->project->user_id !== $user->id) {
+    //         $request->session()->flash('error', "You're unauthorized to delete this invoice");
+    //         return redirect()->back();
+    //     } else {
+    //         $request->session()->flash('status', 'Deleted');
+    //         return redirect()->back();
+    //     }
+    // }
 
     public function show($invoice) {
         $pre_invoice = Invoice::findOrFail($invoice);
@@ -156,6 +227,7 @@ class InvoiceController extends Controller {
                         'project' => $project_name
             ]));
         } catch (\Throwable $e) {
+            // dd($e->getMessage());
             session()->flash('message.alert', 'danger');
             session()->flash('message.content', "Error We Are Unable to Send This Invoice Now, Please Try Back Later ");
             return back();
@@ -192,9 +264,9 @@ class InvoiceController extends Controller {
         }
     }
 
-    public function view($invoice_id) {
-        $invoice = Invoice::where(['id' => $invoice_id, 'project_id' => Auth::user()->id])->first();
-        return $invoice->count() > 0 ? $this->SUCCESS('Invoice retrieved', $invoice) : $this->SUCCESS('No invoice found');
-    }
+    // public function view($invoice_id) {
+    //     $invoice = Invoice::where(['id' => $invoice_id, 'project_id' => Auth::user()->id])->first();
+    //     return $invoice->count() > 0 ? $this->SUCCESS('Invoice retrieved', $invoice) : $this->SUCCESS('No invoice found');
+    // }
 
 }

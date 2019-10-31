@@ -22,7 +22,12 @@
 
     <!-- Styles -->
     {{--  <link href="{{ asset('css/app.css') }}" rel="stylesheet">  --}}
-
+    <style>
+        .validated{
+            background: #0ABAB5 !important;
+            color:white;
+        }
+    </style>
 
    {{--  //inline styles  --}}
 
@@ -93,8 +98,6 @@
    {{--  // inline scrpt  --}}
 
    @yield('script')
-
-</body>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
@@ -103,4 +106,5 @@
         });
     });
 </script>
+</body>
 </html>

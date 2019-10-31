@@ -33,7 +33,7 @@ class GuestController extends Controller {
 
     public function step1(Request $request) {
         $project = $request->session()->get('project');
-
+        session(["path" => url('/')]);
         if (!$project) {
             return view('guests/step1');
         }
@@ -163,7 +163,7 @@ class GuestController extends Controller {
             session()->flash('message.content', "Client Contact Email Can Not Be Empty.. Please Check Contact Information");
             return back();
         }
-        
+
         $data = [
             'name' => $request->name,
             'email' => $request->email,
@@ -182,7 +182,7 @@ class GuestController extends Controller {
         $request->session()->put('project', $project);
         $request->session()->put('client', $data);
         $request->session()->put('contacts', $contacts);
-        
+
         return redirect('guest/create/step4');
     }
 
@@ -192,13 +192,14 @@ class GuestController extends Controller {
     }
 
     public function savestep4(Request $request) {
+        // Called on submission of registeration
         $data = [];
         $session_project = $request->session()->get('project');
 
         $session_contacts = $request->session()->get('contacts');
         $session_contactsq = $request->session()->get('contacts');
-       
-      
+
+
         if (!empty($session_contactsq["'email'"])) {
             $emailcontact = $session_contactsq["'email'"];
         } else {
@@ -227,7 +228,6 @@ class GuestController extends Controller {
         ]);
         Auth::login($user);
         
-
         $clients = new Client;
         $clients->user_id = $user->id;
         $clients->name = session('client')['name'];
@@ -240,9 +240,9 @@ class GuestController extends Controller {
         $clients->zipcode = session('client')['zipcode'];
         $clients->contacts = $session_contacts;
         $clients->save();
-		
+        
         $estimate = Estimate::create(array_merge(session('guestestmate'), ['estimate' => $data['total'], 'user_id' => $user->id]));
-		
+
         $project = Project::create([
                     'title' => $session_project['project_name'],
 					'estimate_id'=>$estimate->id,
@@ -255,9 +255,12 @@ class GuestController extends Controller {
         ]);
         $project->save();
 
+        $request->session()->flush();
+        $request->session()->put('new_estimate_id', $estimate->id);
+        
+        return redirect('invoice/review');
 
-
-        return view('addclients')->with('estimate', $estimate->id);
+        // return view('addclients')->with('estimate', $estimate->id);
     }
 
 }

@@ -33,7 +33,7 @@ Route::get('/', function () {
 
 Route::get('/pricing', "SubscriptionController@showSubscriptions")->name('subscriptions'); //THIS IS THE CORRECT ROUTE
 
-//Email subscription    
+//Email subscription
 Route::post('/submailinglist', 'MailSubscriptionController@mailStore');
 
 
@@ -52,6 +52,8 @@ Route::get('/guest/create/step3', 'GuestController@createstep3')->middleware('gu
 Route::post('/guest/save/step3', 'GuestController@savestep3')->middleware('guest');
 Route::get('/guest/create/step4', 'GuestController@createstep4')->middleware('guest');
 Route::post('/guest/save/step4', 'GuestController@savestep4')->middleware('guest');
+
+Route::get('/guest/invoice/review', 'InvoiceController@review');
 
 /* Track Project */
 Route::get('/guest/track/', 'ProjectController@acceptproject');
@@ -152,7 +154,12 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/projects', 'ProjectController@listGet');
     Route::get('/project/status', 'ProjectController@listGet');
     Route::get('/project/track', function(){ return view('trackproject'); });
-    
+    Route::get('/edit-project/{id}', 'ProjectController@edit');
+    Route::post('/edit-project-save/{id}', 'ProjectController@update');
+    Route::get('/view-project/{id}', 'ProjectController@view');
+    Route::post('/completed-project/{id}', 'ProjectController@complete');
+    Route::post('/pending-project/{id}', 'ProjectController@pending');
+     Route::post('/delete-project/{id}', 'ProjectController@delete');
     // Task Routes
     Route::get('/project/tasks', 'TaskController@getAllTasks');
     Route::post('/project/task/create', 'TaskController@store');
@@ -183,13 +190,10 @@ Route::group(['middleware' => 'auth:web'], function() {
 
     //Invoice routes
     // Route::resource('invoices', 'InvoiceController');
-    Route::post('/invoices/send', 'InvoiceController@sendinvoice');
+    Route::post('/invoice/send', 'InvoiceController@sendinvoice');
 
     Route::get('/invoice/pay/{txref}', 'InvoiceController@pay');
     Route::get('/invoices/{invoice}/getpdf', 'InvoiceController@getPdf');
-    Route::get('/invoice/review', function() {
-        return view('reviewinvoice');
-    });
     // Route::get('/invoice', function () { return view('invoice_view'); });
     Route::get('/invoice_sent', function () {
         return view('invoice_sent');
@@ -207,6 +211,13 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('client-send-invoice', function () {
         return view('client-send-invoice');
     });
+    Route::get('invoice/remove/{id}', 'InvoiceController@delete');
+    Route::get('invoice/edit/{id}', 'InvoiceController@edit');
+    Route::post('invoice/update/{id}', 'InvoiceController@update');
+    Route::get('user/{id}', function ($id) {
+        return 'User ' . $id;
+    });
+
 
     // Estimate Routes
     Route::get('/estimates', 'EstimateController@index')->middleware('auth');
@@ -247,9 +258,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::put('/estimates/{estimate}', 'EstimateController@update')->middleware('auth');
     Route::delete('/estimates/{estimate}', 'EstimateController@destroy')->middleware('auth');
 
-    Route::get('/estimate/create', function () {
-        return view('set_estimate');
-    });
+    Route::get('/estimate/create', 'EstimateController@step1');
 
 
     // Task Routes
@@ -283,12 +292,9 @@ Route::group(['middleware' => 'auth:web'], function() {
     // Route::post('invoices/send', 'InvoiceController@sendinvoice');
     // Route::get('/invoices', 'InvoiceController@list');
     Route::get('/invoices', 'InvoiceController@listGet');
+    Route::get('/invoice/review', 'InvoiceController@review');
     Route::get('/invoices/{invoice}/getpdf', 'InvoiceController@getPdf');
     Route::get('/invoice/pay/{txref}', 'InvoiceController@pay');
-    Route::get('/invoice/review', function() {
-        return view('reviewinvoice');
-    });
-<<<<<<< HEAD
     Route::get('/invoice', function () {
         return view('invoice_view');
     });
@@ -303,7 +309,6 @@ Route::group(['middleware' => 'auth:web'], function() {
     });
     
     
-=======
     // Route::get('/invoice', function () {
     //     return view('invoice_view');
     // });
@@ -316,7 +321,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     // Route::get('/client-doc-view', function () {
     //     return view('client-doc-view');
     // });
->>>>>>> edfd93372f8b11ee98530c8c55436e1c6954b444
+
 
 
     //Proposals
