@@ -149,7 +149,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Select Collaborator: </label>
+                                    <label for="recipient-name" class="col-form-label">Add Collaborator: </label>
                                     <select required class="form-control" name="user_id" id="selectProject">
                                         <option> Add Collaborator </option>
                                         @foreach($users as $user)

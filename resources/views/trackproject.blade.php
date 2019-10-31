@@ -133,35 +133,30 @@
 <div class="logo"> <a href="https://lancers.app/"> Lan<span>c</span>ers </a></div><br>  
 <div class="container">
 
-      <div class="row">
+    <div class="row">
 
-          <div class="col-sm-3"></div>
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
 
-          <div class="col-sm-6">
-
-  <div class="box">
-      <div class="box2">
-          <h2> Track your Project</h2>
-          <h4>Track your project's code to continue</h4>
-          <form action="">
-              <div class="box3">
-                  <label for="">Project Code</label><br>
-                  <input type="text"><br><br>
-              </div>
+            <div class="box">
+                <div class="box2">
+                    <h2> Track your Project</h2>
+                    <h4>Track your project's code to continue</h4>
+                    <form method="post" action="/guest/track/project">
+                        @csrf
+                        <div class="box3">
+                            <label for="">Project Code</label><br>
+                            <input type="text" name="projectid" id="projectid"><br><br>
+                        </div>
   
-      <button class="viewproject">
-          View Project
-      </button>
-
-      <p> Or sign in to view your projects</p>
-
-          </form>
-      </div>
-      <div class="col-sm-3"></div>
-  </div>
+                        <input type="submit" class="viewproject" value="View Project"/>
+                        <p> Or sign in to view your projects</p>
+                    </form>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-
 
 @endsection

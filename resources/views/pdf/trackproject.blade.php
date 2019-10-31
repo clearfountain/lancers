@@ -1,30 +1,31 @@
 @extends('layouts.app')
 
 @section('styles')
-  <style>
+  <style> 
+      
+      #page-container {
+        position: relative;
+        min-height: 100vh;
+      }
 
+      #content-wrap {
+        padding-bottom: 2.5rem;    /* Footer height */
+      }
 
-    /*header*/
-    .header {
-      grid-column: 2 / -1;
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: center;
-      background-color: #ffffff;
-      padding-left: 26px;
-    }
-    .header-nav-item {
-      margin: 0px 40px;
-      font-size: 1.3rem;
-      padding: 30px 0;
-      cursor: pointer;
-      color: #000;
-    }
-    .header-nav-item-left {border-bottom: 4px solid #0ABAB5;}
-    .header-nav-item:hover, .header-nav-item:active {
-      border: none;
-      border-bottom: 4px solid #0ABAB5;
-    }
+      #footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 2.5rem;            /* Footer height */
+      }
+      
+      
+      .top-left {left: -20px; top: 50px; position: fixed; font-size: 15px !important;}
+      .top-right {right: 0px; left: 550px; top:-10px; position: fixed;}
+      
+      .bill-left {right: 0px; left: 0px; top: 250px; position: fixed; width: 30%; overflow-wrap: break-word;}
+      .bill-mid {right: 0px; left: 300px; top: 240px; position: fixed; font-size: 15px !important; width: 30%; overflow-wrap: break-word;}
+      .bill-right {right: 0px; left: 400px; top: 240px; position: fixed; width: 30%; overflow-wrap: break-word;}
       
       a {
           text-decoration : none !important;
@@ -36,10 +37,9 @@
       
       .main-color:hover {
           text-decoration:none;
-          color: #000;
+          color: #FFF;
       }
 
-    /*content*/
     .content {
       grid-column: 2 / -1;
       margin-left: 65px;
@@ -50,7 +50,7 @@
       justify-content: space-between;
     }
     .lanclient-buttons>.left>button {
-      border: 2px solid #0ABAB5; border-radius: 5px; padding: 10px; margin-right: 1.5em; background: #fff; font-size: 16px; font-weight: bold; color: #0ABAB5;
+      border: 2px solid #0ABAB5; border-radius: 5px; padding: 10px; margin-right: 1.5em; background: #fff; font-size: 15px; font-weight: bold; color: #0ABAB5;
     }
     .lanclient-buttons>.left>button:hover {
       background-color: #000000;
@@ -74,8 +74,12 @@
     }
     .invoice-banner-txt {
       color: #546067;
-      font-size: 3rem;
-      margin: 0;
+      right : 100px !important;
+      left: -20px !important;
+        top: -10px !important;
+        bottom: 10px !important;
+        position: fixed !important;
+        font-size: 25px !important;
     }
 
     .lanclient-invoice-logo { margin-top: 0; display: flex; justify-content: space-between;
@@ -90,31 +94,35 @@
     .lanclient-billing { margin: 20px 0 0 10px; display: flex; justify-content: space-between;
     }
 
-    p.billing-clhead { color: #a6a6a6 !important; font-size: 18px;
+    p.billing-clhead { color: #a6a6a6 !important; font-size: 15px !important;
     }
 
     div.bills-descrip { color: #000; margin-top: 10px;
     }
 
-    div.bills-descrip>p { padding-bottom: 7px; font-size: 18px;
+    div.bills-descrip>p { padding-bottom: 7px; font-size: 15px;
     }
 
     div.last-child-billing { margin-right: 2em; text-align: right;
     }
 
-    .top-mid-bill-details>p:nth-child(2), .top-last-bill-details>p:nth-child(2) { padding-top: 10px; color: #000; font-size: 18px;
+    .top-mid-bill-details>p:nth-child(2), .top-last-bill-details>p:nth-child(2) { padding-top: 10px; color: #000; font-size: 15px;
     }
 
     .bottom-mid-bill-details, .bottom-last-bill-details { margin-top: 2.0em;
     }
 
-    .bottom-mid-bill-details>p:nth-child(2), .bottom-last-bill-details>p:nth-child(2) { color: #000; padding-top: 10px; font-size: 18px;
+    .bottom-mid-bill-details>p:nth-child(2), .bottom-last-bill-details>p:nth-child(2) { color: #000; padding-top: 10px; font-size: 15px;
     }
 
     .bottom-last-bill-details>p:nth-child(2) { font-weight: 600;
     }
 
-    section.billing-data-table { margin-top: 3em;
+    section { top: 500px !important; bottom: -500px !important; left:0px !important; right:0px !important;
+        position: absolute !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        height: 2.5rem !important; 
     }
 
     .billing-data-table>table { width: 100%; margin: auto; border-collapse: separate; border-spacing: 0;
@@ -131,10 +139,14 @@
       font-family: 'Ubuntu', sans-serif;
     }
 
-    tfoot>tr { text-align: right;
+    tfoot>tr { text-align: left;
+    }
+      
+    tbody {
+        text-align: left;
     }
 
-    thead { background-color: #0ABAB5; color: #fff; font-size: 14px; text-align : center;
+    thead { background-color: #0ABAB5; color: #fff; font-size: 14px; text-align : left;
     }
       
       .bg-primary{
@@ -251,93 +263,71 @@
 @endsection
 
 @section('content')
-    <div class="main-cont">
-      <div class="header" id="top">
-        <!--<div class="mobile-nav-btn" onclick="bars()" id="nav-btn">
-          <span class="nav-span"></span>
-          <span class="nav-span"></span>
-          <span class="nav-span"></span>
-        </div> -->
-        <a href="#"><h4 class="header-nav-item header-nav-item-left main-color">Project Info</h4></a>
-        <a href="#"><h4 class="header-nav-item">Documents</h4></a>
-      </div>
-
-      <div class="content">
-
-        <div class="lanclient-buttons" id="top-buttons">
-          <div class="left">
-            <button onclick="printdata()">Print</button>
-            <button onclick="location.href='/guest/track/{{ $docData['trackCode'] }}/dynamic_pdf'">Download as PDF</button>
-          </div>
-            <div class="right">
-            <button type="button">Make Payment</button>
-          </div>
-        </div>
-
-        
+      <div class="content"> 
         <div class="invoice-cont">
+          <h5 class="invoice-banner-txt"><b>Invoice</b></h5>
           <div class="lanclient-invoice-logo">
-            <div class="right-invy">
-              <h3 class="invoice-banner-txt">Invoice</h3>
-              <p><strong>Project:&nbsp;</strong>{{ $docData['projectName'] }}</p>
-              <p><strong>Lancer:&nbsp;</strong>{{ $docData['lancerName'] }}</p>
-              <p><strong>Email:&nbsp;</strong>{{ $docData['lancerMail'] }}</p>
-              <p>
-                  @if(array_key_exists('lancerAddress', $docData))
+            <div class="right-invy top-left">
+              <p><strong>Project:&nbsp;</strong>{{ $projectName }}</p>
+              <p><strong>Lancer:&nbsp;</strong>{{ $lancerName }}</p>
+              <p><strong>Email:&nbsp;</strong>{{ $lancerMail }}</p>
+                <p>
+                  @if(isset($lancerAddress))
                     @php echo "<strong>Address:&nbsp;</strong>"; @endphp
-                    {{ $docData['lancerAddress']}}
+                    {{ $lancerAddress }}
                   @else
-                     @if(array_key_exists('lancerStreetNum', $docData))
-                        @php echo "<strong>Address:&nbsp;</strong>"; @endphp                  
-                        {{ $docData['lancerStreetNum'].", " }}
+                     @if(isset($lancerStreetNum))
+                        @php echo "<strong>Address:&nbsp;</strong>"; @endphp
+                        {{ $lancerStreetNum.", " }}
                      @endif
-                     @if(array_key_exists('lancerStreet', $docData))
-                        {{ $docData['lancerStreet']." Street, "}}
+                     @if(isset($lancerStreet))
+                        {{ $lancerStreet." Street, "}}
                      @endif
-                     @if(array_key_exists('lancerCity',$docData))
-                        {{ $docData['lancerCity'].", " }}
+                     @if(isset($lancerCity))
+                        {{ $lancerCity.", " }}
                      @endif
-                     @if(array_key_exists('lancerState', $docData))
-                        {{ $docData['lancerState'].", " }}
+                     @if(isset($lancerState))
+                        {{ $lancerState.", " }}
                      @endif
-                     @if(array_key_exists('lancerCountry', $docData))
-                        {{ $docData['lancerCountry'].", " }}
+                     @if(isset($lancerCountry))
+                        {{ $lancerCountry.", " }}
                      @endif
                   @endif
-              </p>
+                </p>
             </div>
-            <div class="left-invy-logo">
+            <span class="left-invy-logo top-right">
               <img src="https://res.cloudinary.com/abisalde/image/upload/v1570566026/My_Logo_-_Black.png" alt="Lancer-Logo">
-            </div>
+            </span>
           </div>
 
           <div class="lanclient-billing">
-              <div> <p class="billing-clhead">Bill to</p>
-                     <div class="bills-descrip"> <p class="bills-description">{{ $docData['clientName'] }}</p> <p class="bills-description">{{ $docData['clientMail'] }}</p>
+              <div class="bill-left"> 
+                    <p class="billing-clhead">Bill to</p>
+                     <div class="bills-descrip"> <p class="bills-description">{{ $clientName }}</p> <p class="bills-description">{{ $clientMail }}</p>
                             <p>
-                                    @if(array_key_exists('clientStreetNum', $docData))
-                                        {{ $docData['clientStreetNum'] }}
+                                    @if(isset($clientStreetNum))
+                                        {{ $clientStreetNum }}
                                     @endif
-                                    @if(array_key_exists('clientStreet',$docData))
-                                        {{ $docData['clientStreet']." Street, " }}
+                                    @if(isset($clientStreet))
+                                        {{ $clientStreet." Street, " }}
                                     @endif
-                                    @if(array_key_exists('clientCity', $docData))
-                                        {{ $docData['clientCity'].", " }}
+                                    @if(isset($clientCity))
+                                        {{ $clientCity.", " }}
                                     @endif
-                                    @if(array_key_exists('clientState', $docData))
-                                        {{ $docData['clientState'].", " }}
+                                    @if(isset($clientState))
+                                        {{ $clientState.", " }}
                                     @endif
-                                    @if(array_key_exists('clientCountry', $docData))
-                                        {{ $docData['clientCountry']." " }}
+                                    @if(isset($clientCountry))
+                                        {{ $clientCountry." " }}
                                     @endif
                             </p>
                      </div>
               </div>
-                        <div>
+                        <div class="bill-mid">
                               <div class="top-mid-bill-details"> <p class="billing-clhead">Issue Date</p>
                                <p class="bills-description">
                                    @php
-                                    $issuetime = strtotime($docData['issueDate']);
+                                    $issuetime = strtotime($issueDate);
                                     $issuetime = date("jS M Y", $issuetime);
                                     echo htmlspecialchars($issuetime);
                                    @endphp
@@ -347,7 +337,7 @@
                                <p class="billing-clhead">Due Date</p>
                                <p class="bills-description">
                                    @php
-                                    $duetime = strtotime($docData['dueDate']);
+                                    $duetime = strtotime($dueDate);
                                     $duetime = date("jS M Y", $duetime);
                                     echo htmlspecialchars($duetime);
                                    @endphp
@@ -355,15 +345,16 @@
                                     </div>
                           </div>
 
-             <div class="last-child-billing">
+             <div class="last-child-billing bill-right">
                      <div class="top-last-bill-details"> <p class="billing-clhead">Hourly Rate</p> <p class="bills-description" id = "hourly-rateN">N/A</p>
                      </div>
-                          <div class="bottom-last-bill-details"> <p class="billing-clhead">Amount Due</p> <p class="bills-description">{{ $docData['currencySymbol'] }}{{ $docData['amount'] }}</p>
+                          <div class="bottom-last-bill-details"> <p class="billing-clhead">Amount Due</p> <p class="bills-description">{{ $currencySymbol }}{{ $amount }}</p>
                            </div>
             </div>
           </div>
-
-          <section class="billing-data-table">
+        </div>
+      </div>
+<section class="billing-data-table">
             <table>
               <thead class="bg-primary">
                 <tr>
@@ -376,26 +367,26 @@
               <tbody>
                 <tr>
                   <td>Base Charge</td>
-                  <td>{{ $docData['time'] }}</td>
-                  <td>{{ $docData['pricePerHour'] }}</td>
+                  <td>{{ $time }}</td>
+                  <td>{{ $pricePerHour }}</td>
                   <td>
                       @php
-                        echo $docData['time'] * $docData['pricePerHour'];
+                        echo ((int)$time * (int)$pricePerHour);
                       @endphp
                   </td>
                 </tr>
                 <tr>
                   <td>Equipment Cost</td>
                   <td>1</td>
-                  <td>{{ $docData['equipmentCost'] }}</td>
-                  <td>{{ $docData['equipmentCost'] }}</td>
+                  <td>{{ $equipmentCost }}</td>
+                  <td>{{ $equipmentCost }}</td>
                 </tr>
-                @if(array_key_exists('subContractorCost',$docData))  
+                @if(null !== $subContractorCost)  
                 <tr>
                         <td>Sub-contractors</td>
                         <td>1</td>
-                        <td>{{ $docData['subContractorCost'] }}</td>    
-                        <td>{{ $docData['subContractorCost'] }}</td>
+                        <td>{{ $subContractorCost }}</td>    
+                        <td>{{ $subContractorCost }}</td>
                     </tr>
                 @endif
               </tbody>
@@ -403,7 +394,7 @@
                 <tr>
                   <td colspan="2" class= "no-border-table"></td>
                   <td class= "no-border-table" >Total</td>
-                  <td class= "no-border-table" >{{ $docData['currencySymbol'] }}{{ $docData['amount'] }}</td>
+                  <td class= "no-border-table" >{{ $currencySymbol }} {{ $amount }}</td>
                 </tr>
                 <tr>
                   <td colspan="2" class= "no-border-table"></td>
@@ -412,47 +403,21 @@
                 <tr>
                   <td colspan="2" class= "no-border-table"></td>
                   <td class= "no-border-table">Amount Due</td>
-                  <td class= "no-border-table">{{ $docData['currencySymbol'] }}{{ $docData['amount'] }}</td>
+                  <td class= "no-border-table">{{ $currencySymbol }} {{ $amount }}</td>
                 </tr>
               </tfoot>
             </table>
 
-          </section>
 
           <div class="lanclient-footer-tab">
             <p class ="light-head"><strong>Notes</strong></p>
             <p>
-                @if(array_key_exists('projectDescription', $docData))
-                    {{ $docData['projectDescription'] }}
+                @if(isset($projectDescription))
+                    {{ $projectDescription }}
                 @else
                 <i>No notes</i>
                 @endif
             </p>
-            <!--<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor</p>
-            <p>laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi</p>-->
           </div>
-
-        </div>
-      </div>
-@endsection
-        
-@section('script')
-    <script type="text/javascript">
-        function printdata() {
-            var x = document.getElementById("top");
-            var y = document.getElementById("top-buttons");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-            if (y.style.display === "none") {
-                y.style.display = "block";
-            } else {
-                y.style.display = "none";
-            }
-            window.print();
-            location.reload();
-        }
-    </script>
+          </section>
 @endsection
