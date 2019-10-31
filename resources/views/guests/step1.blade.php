@@ -39,7 +39,8 @@
         </div>
         <div class="row ml-auto box justify-content-center mt-20" style="margin-top: 20px;">
             <div class="col-sm-4">
-                <input class="disabled" id="extL" type="submit" value="NEXT">
+                <!-- <input class="disabled" id="ext" type="submit" value="NEXT"> -->
+                <button class="btn" name="next_btn">NEXT</button>
             </div>
         </div>
     </form>
