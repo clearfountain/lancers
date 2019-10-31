@@ -401,14 +401,12 @@ table.project-table thead tr th {
                     <img src="https://lancer-app.000webhostapp.com/images/svg/customer.svg" height="20" width="auto"> <span> Client</span>
                 </a>
             </li>
-
             <li class="@if(request()->path() == 'projects/status') active @endif">
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><img src="https://lancer-app.000webhostapp.com/images/svg/lightbulb.svg" height="20" width="auto"> <span> Projects</span></a>
                 <ul class="collapse list-unstyled " id="homeSubmenu">
                     <li>
                         <a href="{{url('project/status')}}" class="pl-4"><i class="fas fa-dot-circle"></i> Status</a>
                     </li>
-
                     <!-- <li>
                         <a href="{{url('project/overview')}}" class="pl-4"><i class="fas fa-dot-circle"></i> Overview</a>
                     </li> -->

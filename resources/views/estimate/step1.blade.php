@@ -115,26 +115,21 @@
         let bt = document.getElementById('btne');
 
 
+        console.log('here:' + newProjectName);
         
-        if (createProject.value !== "" && createProject.value.length >= 4 ) {
-             a_next.style.background = '#0ABAB5';
-             next.style.background = '#0ABAB5';
-              bt.disabled = false;
+        if (newProjectName != "" && newProjectName.length >= 4 ) {
+            console.log('here:' + newProjectName);
 
+document.querySelectorAll('#ext')[0].style.background = '#0ABAB5';
 
-            document.querySelector('.a-next').classList.remove('disabled');
-            document.querySelector('.next').classList.remove('disabled');
+            document.querySelectorAll('#ext')[1].style.background = '#0ABAB5';
+           
         } else {
 
             //console.log('here works');
-            document.querySelector('.next').style.background = 'rgba(207, 204, 204, 0.4)';
-            document.querySelector('.next').classList.add('disabled');
-            document.querySelector('.a-next').style.background = 'rgba(207, 204, 204, 0.4)';
-            document.querySelector('.a-next').classList.add('disabled');
-             bt.disabled = true;
-              bt.preventDefault();
-            
-            
+            document.querySelectorAll('#ext')[0].style.background = '';
+            document.querySelectorAll('#ext')[1].style.background = '';
+   
              
         }
     }
