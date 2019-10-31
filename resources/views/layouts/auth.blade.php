@@ -494,7 +494,21 @@ table.project-table thead tr th {
                             <img  src="{{ asset(Auth::user()->profile_picture) }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
                             @endif
                             @if(Auth::user()->profile_picture == 'user-default.png')
-                            <img  src="{{ asset('images/user-default.jpg') }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
+                            <!--<img  src="{{ asset('images/user-default.jpg') }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">-->
+                            <div name="no-img" style="width: 30px; height: 30px; line-height: 30px; border-radius: 50%; pointer: finger; background-color: #ff9000; color: #fff; text-align: center; vertical-align: middle; " alt="Profile Image">
+                                @php
+                                    $count = 0;
+                                    $name = auth()->user()->name;
+                                    $nameArr = explode(' ',$name);
+                                    if(strlen($nameArr[0]) > 1){
+                                        $initials = strtoupper($nameArr[0][0]).strtolower($nameArr[0][1]);
+                                    }
+                                    else{
+                                        $initials = strtoupper($nameArr[0][0]);
+                                    }
+                                    echo $initials;
+                                @endphp
+                            </div>
                             @endif
                             </a>
                             <!-- <a class="nav-link border-left p-3" href="/dashboard/profile/settings"><span class="border rounded-circle p-1 font-weight-bold">
