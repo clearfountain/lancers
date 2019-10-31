@@ -202,11 +202,6 @@ class ProfileController extends Controller
     {
       //check user provided input
       $validateAll = $this->validator($request->all());
-<<<<<<< HEAD
-   
-=======
-
->>>>>>> e9373dbc6847e1ef2b6bcc1556faa5d54ac7b42b
         if((!$validateAll->fails()))
       {
 
@@ -320,11 +315,6 @@ class ProfileController extends Controller
           $errorString[] = implode("<br/>", $validateAll->messages()->all());
       }
 
-<<<<<<< HEAD
-      
-=======
-
->>>>>>> e9373dbc6847e1ef2b6bcc1556faa5d54ac7b42b
 
         return redirect('/dashboard/profile/settings')->with('editErrors',$errorString);
 

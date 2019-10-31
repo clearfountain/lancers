@@ -99,8 +99,8 @@
 
 
 @section('others')
-<button class="btn btn-secondary text-white rounded-circle" id="add-something">
-    <i class="fas fa-plus"></i>
+<a href="#"><button class="btn btn-secondary text-white rounded-circle" id="add-something">
+    <i class="fas fa-plus"></i></a>
 </button>
 @endsection
 
