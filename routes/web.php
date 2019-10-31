@@ -33,7 +33,7 @@ Route::get('/', function () {
 
 Route::get('/pricing', "SubscriptionController@showSubscriptions")->name('subscriptions'); //THIS IS THE CORRECT ROUTE
 
-//Email subscription    
+//Email subscription
 Route::post('/submailinglist', 'MailSubscriptionController@mailStore');
 
 
@@ -152,7 +152,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/projects', 'ProjectController@listGet');
     Route::get('/project/status', 'ProjectController@listGet');
     Route::get('/project/track', function(){ return view('trackproject'); });
-    
+
     // Task Routes
     Route::get('/project/tasks', 'TaskController@getAllTasks');
     Route::post('/project/task/create', 'TaskController@store');
@@ -295,6 +295,20 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/invoice/review', function() {
         return view('reviewinvoice');
     });
+    Route::get('/invoice', function () {
+        return view('invoice_view');
+    });
+    Route::get('/invoice_sent', function () {
+        return view('invoice_sent');
+    });
+    Route::get('/invoice-view', function () {
+        return view('invoice-view');
+    });
+    Route::get('/client-doc-view', function () {
+        return view('client-doc-view');
+    });
+
+
     // Route::get('/invoice', function () {
     //     return view('invoice_view');
     // });

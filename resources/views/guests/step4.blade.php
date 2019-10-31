@@ -3,7 +3,7 @@
 
 @section('styles')
 <link rel="stylesheet" type="text/css" href="{{asset('css/add_client.css')}}" />
-<style> 
+<style>
     * {
         margin: 0;
         padding: 0;
@@ -119,12 +119,12 @@
         height: 29px;
         overflow: hidden;
         width: 80%;
-    } 
+    }
 
     main section:last-child{
         width: 200px;
-        margin: 0 auto;         
-        margin-top: 30px;        
+        margin: 0 auto;
+        margin-top: 30px;
         font-size: 2rem;
     }
 
@@ -143,7 +143,7 @@
         }
         .content .form-group {
             grid-template-columns: 1fr 3fr;
-        }  
+        }
         .country {
             height: 29px;
             overflow: hidden;
@@ -365,20 +365,20 @@
 
     <header style="border-bottom: 2px solid rgb(223, 223, 223);">
         <nav style="display: flex; ">
-            <a href="{{ url('/') }}"   class="column-1">
+            <a href="{{ url('/') }}"   class="column-1" id="closeForm" >
                 <img
                     src="https://res.cloudinary.com/mide358/image/upload/v1570621469/clear_24px_rasbwc.png"
                     alt="navIcon"
                     />
             </a>
-            <a href="{{ redirect()->getUrlGenerator()->previous() }}"  class="column-1">
+            <a href="{{ redirect()->getUrlGenerator()->previous() }}"  class="column-1" id="moveBack">
                 <img
                     src="https://res.cloudinary.com/mide358/image/upload/c_scale,h_27,w_13/v1570621434/Vector_ag4hnv.png"
                     alt="navIcon"
                     />
             </a>
             <div class="column-2">client</div>
-            <a href="#" @click.prevent="next" class="column-3">NEXT</a>
+            <a href="#" @click.prevent="next" id="step4UpperButton" class="column-3">NEXT</a>
         </nav>
     </header>
 
@@ -393,7 +393,7 @@
 
             @if(session()->has('message.alert'))
             <div class="text-center">
-                <button class=" alert alert-{{ session('message.alert') }}"> 
+                <button class=" alert alert-{{ session('message.alert') }}">
                     {!! session('message.content') !!}
                 </button>
             </div>
@@ -442,7 +442,7 @@
                 </div>
             </section>
             <section>
-                <button type="submit">Next</button>
+                <button id="step4LowerButton" type="submit">Next</button>
             </section>
         </form>
     </main>
@@ -453,6 +453,29 @@
 
 @section('script')
 <script type="text/javascript">
+
+    //use jquery to handle next buttons
+    $("#step4UpperButton").on("click", function() {
+        $("#step4LowerButton").trigger("click");
+      });
+
+      $("#moveBack").on("click", function() {
+    window.history.back();
+
+    });
+
+    $("#Cname").on("input", function() {
+       $("#step4UpperButton").css( "background-color", "#0ABAB5");
+       $("#step4LowerButton").css( "background-color", "#0ABAB5");
+      });
+
+//handle form close
+$("#closeForm").on("click", function() {
+    let path = "@php echo session("path") @endphp";
+    window.location = path;
+
+});
+
     let count = 1;
 	window.addEventListener('load', function() {
 		addContact();
@@ -464,7 +487,7 @@
         newElement.innerHTML = `
             <label for="company_name_${count}">Contact name</label>
             <input type="text" name="contact[${count}]['name']" id="contact_name${count}" placeholder="e.g Ben Davies">
-            
+
             <label for="company_email">Contact email</label>
             <input type="email" name="contact[${count}]['email']" id="email_${count}" placeholder="e.g email@domain.com">
         `;
