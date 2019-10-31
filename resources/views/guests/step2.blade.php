@@ -23,7 +23,7 @@
         <div class="section1">
 
             <div id="glac">
-                <h1>Lancers</h1>
+                <h2 class="pull-left">{{$project}}</h2>
                 <hr />
             </div>
             <hr />
