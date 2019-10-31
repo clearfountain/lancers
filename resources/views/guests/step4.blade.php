@@ -3,7 +3,7 @@
 
 @section('styles')
 <link rel="stylesheet" type="text/css" href="{{asset('css/add_client.css')}}" />
-<style> 
+<style>
     * {
         margin: 0;
         padding: 0;
@@ -119,12 +119,12 @@
         height: 29px;
         overflow: hidden;
         width: 80%;
-    } 
+    }
 
     main section:last-child{
         width: 200px;
-        margin: 0 auto;         
-        margin-top: 30px;        
+        margin: 0 auto;
+        margin-top: 30px;
         font-size: 2rem;
     }
 
@@ -143,7 +143,7 @@
         }
         .content .form-group {
             grid-template-columns: 1fr 3fr;
-        }  
+        }
         .country {
             height: 29px;
             overflow: hidden;
@@ -393,7 +393,7 @@
 
             @if(session()->has('message.alert'))
             <div class="text-center">
-                <button class=" alert alert-{{ session('message.alert') }}"> 
+                <button class=" alert alert-{{ session('message.alert') }}">
                     {!! session('message.content') !!}
                 </button>
             </div>
@@ -453,6 +453,29 @@
 
 @section('script')
 <script type="text/javascript">
+
+//use jquery to handle next buttons
+$("#step3UpperButton").on("click", function() {
+        $("#step3LowerButton").trigger("click");
+      });
+
+      $("#moveBack").on("click", function() {
+    window.history.back();
+
+    });
+
+    $("#client").on("onChange", function() {
+       $("#step3UpperButton").css( "background-color", "#0ABAB5");
+       $("#step3LowerButton").css( "background-color", "#0ABAB5");
+      });
+
+//handle form close
+$("#closeForm").on("click", function() {
+    let path = "@php echo session("path") @endphp";
+    window.location = path;
+
+});
+
     let count = 1;
 	window.addEventListener('load', function() {
 		addContact();
@@ -464,7 +487,7 @@
         newElement.innerHTML = `
             <label for="company_name_${count}">Contact name</label>
             <input type="text" name="contact[${count}]['name']" id="contact_name${count}" placeholder="e.g Ben Davies">
-            
+
             <label for="company_email">Contact email</label>
             <input type="email" name="contact[${count}]['email']" id="email_${count}" placeholder="e.g email@domain.com">
         `;

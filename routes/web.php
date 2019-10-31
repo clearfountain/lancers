@@ -33,7 +33,7 @@ Route::get('/', function () {
 
 Route::get('/pricing', "SubscriptionController@showSubscriptions")->name('subscriptions'); //THIS IS THE CORRECT ROUTE
 
-//Email subscription    
+//Email subscription
 Route::post('/submailinglist', 'MailSubscriptionController@mailStore');
 
 
@@ -152,7 +152,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/projects', 'ProjectController@listGet');
     Route::get('/project/status', 'ProjectController@listGet');
     Route::get('/project/track', function(){ return view('trackproject'); });
-    
+
     // Task Routes
     Route::get('/project/tasks', 'TaskController@getAllTasks');
     Route::post('/project/task/create', 'TaskController@store');
@@ -295,7 +295,6 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/invoice/review', function() {
         return view('reviewinvoice');
     });
-<<<<<<< HEAD
     Route::get('/invoice', function () {
         return view('invoice_view');
     });
@@ -308,9 +307,8 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/client-doc-view', function () {
         return view('client-doc-view');
     });
-    
-    
-=======
+
+
     // Route::get('/invoice', function () {
     //     return view('invoice_view');
     // });
@@ -323,7 +321,6 @@ Route::group(['middleware' => 'auth:web'], function() {
     // Route::get('/client-doc-view', function () {
     //     return view('client-doc-view');
     // });
->>>>>>> edfd93372f8b11ee98530c8c55436e1c6954b444
 
 
     //Proposals
