@@ -123,7 +123,6 @@ class GuestController extends Controller {
             'end' => $request->end
         ];
 
-
         $request->session()->put('guestestmate', $data);
 
 

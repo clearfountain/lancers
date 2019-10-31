@@ -45,7 +45,8 @@ class EstimateController extends Controller {
     }
 
     public function step3(Request $request) {
-        $estimate = $request->all();
+        $estimate = $request->except(['next_btn', 'next_page']);
+        // $estimate = $request->all();
         $clients = Client::where('user_id', Auth::user()->id)->select('id', 'name')->get();
         session(['estimate' => $estimate]);
 
