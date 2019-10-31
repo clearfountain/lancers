@@ -246,7 +246,7 @@
                                     <option value="">Select a country</option>
                                     @if($data != null)
                                     @foreach($data[0] as $dataCountry)
-                                    <option value={{ $dataCountry[id] }}>{{ $dataCountry['name'] }}</option>
+                                    <option value={{ $dataCountry['id'] }}>{{ $dataCountry['name'] }}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -257,7 +257,7 @@
                                     <option value="">Select State</option>
                                     @if($data != null)
                                     @foreach($data[2] as $dataState)
-                                    <option value={{ $dataState[id] }}>{{ $dataState['name'] }}</option>
+                                    <option value={{ $dataState['id'] }}>{{ $dataState['name'] }}</option>
                                     @endforeach
                                     @endif
                                 </select>
