@@ -14,10 +14,14 @@
     <!-- This is the navbar for small screens -->
     <header class="container-a menuForSmallScreens">
             <div class="box-1" style="max-width: 50px">
-                    <i class="fa fa-times" aria-hidden="true"></i>
+                <a class="icon-btn" id="icon-close">
+                    <span><i class="icon-btn fa fa-times" aria-hidden="true"></i></span>
+                </a>
             </div>
             <div class="box-2" style="max-width: 50px">
-                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                <a class="icon-btn" id="icon-back">
+                    <span><i class="icon-btn fa fa-chevron-left" aria-hidden="true"></i></span>
+                </a>
             </div>
     
             <div class="box-3">
@@ -38,12 +42,16 @@
     <header class="container-a menuForLargeScreens">
             <!-- <header> -->
             <div class="box-1" style="max-width: 50px">
-                    <i class="fa fa-times" aria-hidden="true"></i>
+                <a class="icon-btn" id="icon-close">
+                    <span><i class="icon-btn fa fa-times" aria-hidden="true"></i></span>
+                </a>
             </div>
             <div class="box-2" style="max-width: 50px">
-                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                <a class="icon-btn" id="icon-back">
+                    <span><i class="icon-btn fa fa-chevron-left" aria-hidden="true"></i></span>
+                </a>
             </div>
-    
+            
             <div class="box-3" style="max-width: 150px">
                 Save and Close
             </div>

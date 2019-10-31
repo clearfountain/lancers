@@ -40,7 +40,7 @@
         <div class="row ml-auto box justify-content-center mt-20" style="margin-top: 20px;">
             <div class="col-sm-4">
                 <!-- <input class="disabled" id="ext" type="submit" value="NEXT"> -->
-                <button class="btn" name="next_btn">NEXT</button>
+                <button class="btn" id="extL" name="next_btn">NEXT</button>
             </div>
         </div>
     </form>
@@ -53,23 +53,20 @@
 
 <script>
 //use jquery to handle next buttons
-        $("#ext").on("click", function() {
+    $("#ext").on("click", function() {
         $("#extL").trigger("click");
-      });
+    });
 
-      $("#name_of_project").on("input", function() {
-       $("#extL").css( "background-color", "#0ABAB5");
-       $("#ext").css( "background-color", "#0ABAB5");
-      });
+    $("#name_of_project").on("input", function() {
+        $("#extL").css( "background-color", "#0ABAB5");
+        $("#ext").css( "background-color", "#0ABAB5");
+    });
 
-//handle form close
-$("#closeForm").on("click", function() {
-    let path = "@php echo session("path") @endphp";
-    window.location = path;
-
-});
-
-
+    //handle form close
+    $("#closeForm").on("click", function() {
+        let path = "@php echo session("path") @endphp";
+        window.location = path;
+    });
 
     let createProject = document.getElementById('createProject');
 

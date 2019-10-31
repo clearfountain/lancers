@@ -41,11 +41,15 @@
     <div id="container">
 
         <div class=" text-center">
-            <span><i class="fa fa-times"></i></span>
+            <a class="icon-btn" id="icon-close">
+                <span><i class="icon-btn fa fa-times"></i></span>
+            </a>
         </div>
 
         <div class="text-center">
-            <span><i class="fa fa-chevron-left"></i></span>
+            <a class="icon-btn" id="icon-back">
+                <span><i class="icon-btn fa fa-chevron-left"></i></span>
+            </a>
         </div>
 
         <div class="text-center">
