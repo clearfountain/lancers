@@ -152,7 +152,12 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/projects', 'ProjectController@listGet');
     Route::get('/project/status', 'ProjectController@listGet');
     Route::get('/project/track', function(){ return view('trackproject'); });
-
+    Route::get('/edit-project/{id}', 'ProjectController@edit');
+    Route::post('/edit-project-save/{id}', 'ProjectController@update');
+    Route::get('/view-project/{id}', 'ProjectController@view');
+    Route::post('/completed-project/{id}', 'ProjectController@complete');
+    Route::post('/pending-project/{id}', 'ProjectController@pending');
+     Route::post('/delete-project/{id}', 'ProjectController@delete');
     // Task Routes
     Route::get('/project/tasks', 'TaskController@getAllTasks');
     Route::post('/project/task/create', 'TaskController@store');
@@ -295,6 +300,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/invoice/review', function() {
         return view('reviewinvoice');
     });
+
     Route::get('/invoice', function () {
         return view('invoice_view');
     });
@@ -307,8 +313,8 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/client-doc-view', function () {
         return view('client-doc-view');
     });
-
-
+    
+    
     // Route::get('/invoice', function () {
     //     return view('invoice_view');
     // });
@@ -321,6 +327,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     // Route::get('/client-doc-view', function () {
     //     return view('client-doc-view');
     // });
+
 
 
     //Proposals
