@@ -75,12 +75,12 @@
 
                 <div class="hour">
                     <p id="proj">How many similar projects have you done before <i class="fa fa-question-circle" aria-hidden="true"></i></p>
-                    <input type="number" required name="similar_projects" id="similar_projects" placeholder="0" style="width: 30% !important;">
+                    <input type="number"  min="0" max="10" maxlength="2"  required name="similar_projects" id="similar_projects" placeholder="0" style="width: 30% !important;">
                 </div>
 
                 <div class="hour">
                     <p id="rate">How would you rate your experience level in executing this project <i class="fa fa-question-circle" aria-hidden="true"></i><p>
-                    <input required type="number" maxlength="5" name="rating" id="rating" placeholder="0" style="width: 30% !important;"> /5
+                    <input required type="number" min="0" max="5" maxlength="1" name="rating" id="rating" placeholder="0" style="width: 30% !important;"> /5
                 </div>
 
             </div>
