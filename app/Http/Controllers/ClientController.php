@@ -21,14 +21,16 @@ class ClientController extends Controller {
 
     public function store(Request $request) {
         $contacts = [];
+
+        // dd($request->contact);
         if ($request->contact) {
             foreach ($request->contact as $contact) {
-                array_push($contacts, ["name" => $contact["'name'"], "email" => $contact["'email'"]]);
+                array_push($contacts, ["name" => $contact["name"], "email" => $contact["email"]]);
             }
-            $contacts = $contacts;
         }
         if (!empty($contacts[0]['email'])) {
             $emailcontact = $contacts[0]['email'];
+            $contacts = json_encode($contacts);
         } else {
             $emailcontact = null;
         }
@@ -47,6 +49,7 @@ class ClientController extends Controller {
             if (gettype($contacts) == 'string') {
                 $client->contacts = $contacts;
             };
+
             if ($client->save()) {
                 return back()->with('success', 'New client created');
                 // return $this->SUCCESS('New client created', $data);
@@ -57,29 +60,19 @@ class ClientController extends Controller {
         }
     }
 
-    public function update(Request $request) {
-        $data = $request->all();
-        $client = Client::find($request->id);
-        try {
-            if ($client) {
-                // dd($client);
-                $client->update($data);
-                logger('Client record modified successfully - ' . $client->name);
-                return $this->SUCCESS('Client record modified successfully - ' . $client->name);
-            }
-            return $this->ERROR('No record found for specified client');
-        } catch (\Throwable $e) {
-            return $this->ERROR('Unable to update client', $e);
-        }
-    }
 
-    public function delete(Request $request) {
-        if ($client = Client::find($request->client_id)) {
+    public function delete($client) {
+        $client = Client::findOrFail($client);
+
+        $user_id = auth()->id();
+
+        if($client->user_id !== $user_id){
+            return back()->with('error', 'You are not authorized to delete this client');
+        }else{
             $client->delete();
-            logger('Client Deleted - ' . $client->name);
-            return $this->SUCCESS('Client Deleted - ' . $client->name);
+
+            return back()->with('success', 'Client deleted');
         }
-        return $this->ERROR('Client creation failed');
     }
 
     public function listGet(Request $request) {
@@ -103,6 +96,71 @@ class ClientController extends Controller {
     public function view($client_id) {
         $client = Client::where(['id' => $client_id, 'user_id' => Auth::user()->id])->first();
         return $client !== null ? $this->SUCCESS('Client retrieved', $client) : $this->SUCCESS('No client found');
+    }
+
+    public function edit($client)
+    {
+        $client = Client::findOrFail($client);
+
+
+        return view('clients.edit')->with('client', $client);
+    }
+
+    public function update(Request $request) {
+
+        $this->validate($request, [
+            'client_id' => 'numeric|required',
+            'name' => 'required|string',
+            'street' => 'nullable|string',
+            'street_number' => 'nullable|numeric',
+            'city' => 'nullable|string',
+            'country_id' => 'nullable|numeric',
+            'state_id' => 'nullable|numeric',
+            'zipcode' => 'nullable|numeric',
+            'contact' => 'required|array',
+            'contact.0.email' => 'required|email',
+            'contact.0.name' => 'required|string',
+        ]);
+
+        $client = Client::findOrFail($request->client_id);
+
+        $inputs = $request->input();
+
+        $contacts = [];
+        if ($request->contact) {
+            foreach ($request->contact as $contact) {
+                array_push($contacts, ["name" => $contact["name"], "email" => $contact["email"]]);
+            }
+        }
+        if (!empty($contacts[0]['email'])) {
+            $emailcontact = $contacts[0]['email'];
+            $inputs['email'] = $emailcontact;
+
+            $contacts = json_encode($contacts);
+            $inputs['contacts'] = $contacts;
+        } else {
+            $emailcontact = null;
+        }
+
+
+        $data = ['name', 'email', 'street', 'street_number', 'city', 'country_id', 'state_id', 'zipcode', 'contacts'];
+
+        $to_save = [];
+
+        foreach ($data as $value) {
+            if(isset($inputs[$value]) && !empty($inputs[$value])){
+                $to_save[$value] = $inputs[$value];
+            }
+        }
+
+        try {
+
+            $client->update($to_save);
+            return back()->with('success', 'Client details updated');
+        } catch (\Throwable $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
     }
 
 }
