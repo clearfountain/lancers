@@ -21,6 +21,8 @@
                 &nbsp;  <a href="{{url('clients/add')}}">    <button class='create-invoice' style="height:40px!important;border-radius: 4px 4px "> <span class="fa fa-plus"> </span> Add New Client</button> </a>
 
             </div>
+                        @if(session('success'))<br> <h6><span class="alert alert-success">{{session('success')}}</span></h6>
+            @elseif(session('error'))<br> <h6><span class="alert alert-danger">{{session('error')}}</span></h6> @endif
             <div class="table-responsive">
                 <table class="table project-table table-borderless">
                     <thead>
@@ -75,12 +77,16 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item text-success" href="#"><i class="fas fa-binoculars"></i> View</a>
-                                        <a class="dropdown-item text-secondary" href="#"><i class="fas fa-edit"></i> Edit</a>
-                                        <a class="dropdown-item text-danger" href="#"><i class="fas fa-trash-alt"></i> Delete</a>
+                                        <a class="dropdown-item text-success" href="/clients/view/{{$client->id}}"><i class="fas fa-binoculars"></i> View</a>
+                                        <a class="dropdown-item text-secondary" href="/clients/{{$client->id}}/edit"><i class="fas fa-edit"></i> Edit</a>
+                                            <a href="" data-id="{{$client->id}}" class="dropdown-item text-danger delete-btn"><i class="fas fa-trash-alt"></i> Delete</a>
                                     </div>
                                 </div>
                             </td>
+                            <form action="/clients/{{$client->id}}/delete" method="post" id="delete-{{$client->id}}">
+                                @csrf
+                                @method('delete')
+                            </form>
                         </tr>
 
 
@@ -120,5 +126,14 @@
             if(selectStatus.value == 'all') window.location.href="/clients";
             else window.location.href="/clients?filter="+selectStatus.value;
         }, false)
-    </script>
+
+        $(".delete-btn").on('click', e => {
+            e.preventDefault();
+
+            let id = e.target.dataset.id;
+
+            $(`#delete-${id}`).submit();
+        });
+        
+            </script>
 @endsection
