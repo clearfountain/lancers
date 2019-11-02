@@ -50,7 +50,7 @@
      }
 
      .box2 h4 {
-         color: ##262626;
+         color: #262626;
          text-align: left;
          font-size: 18px;
          line-height: 21px;
@@ -62,12 +62,15 @@
      }
 
      form {
+         /*display: flex;*/
+         justify-content: center;
+         align-items: center;
          position: relative;
          top: 30px;
          max-width: 500px;
          margin: auto;
          padding-bottom: 30px;
-         display: grid;
+         /*display: grid;*/
          grid-template-areas:
             'input1'
             'View Project';
@@ -90,6 +93,7 @@
        border-radius: 4px;
        height: 45px;
        margin-top: 10px;
+       /*box-sizing: border-box;*/
      }
 
      label {
@@ -97,7 +101,8 @@
      }
 
      .viewproject {
-       background-color: #1aedd4;
+       width: 100%;
+       background-color: #0ABAB5;
        color: #ffffff;
        padding: 10px;
        outline: none;
@@ -107,10 +112,11 @@
        font-family: 'open sans';
        cursor: pointer;
        border-radius: 5px;
+       box-sizing: border-box;
      }
 
 
-      .viewprojec:active{
+      .viewproject:active{
       opacity: 0.6;
      }
 
@@ -119,10 +125,19 @@
          font-size: 16px;
          font-family: 'ubuntu'
          font-weight: normal;
-         margin-left: 270px;
-         margin-top: 5px;
+         margin-left: 20%;
+         margin-top: 30px;
      }
-
+    
+    a{
+        color : #0ABAB5;
+        text-decoration : none;
+    }
+    
+    a:hover{
+        text-decoration : none;
+    }
+    
 
 </style>
 <!--Internal CSS Ends -->
@@ -150,7 +165,7 @@
                         </div>
   
                         <input type="submit" class="viewproject" value="View Project"/>
-                        <p> Or sign in to view your projects</p>
+                        <p> Or <b><a href="{{ route('login') }}">sign in</a></b> to view your projects</p>
                     </form>
                 </div>
                 <div class="col-sm-3"></div>
