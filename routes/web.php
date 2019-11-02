@@ -187,6 +187,7 @@ Route::group(['middleware' => 'auth:web'], function() {
          return view('addclients');
     });
 
+    Route::get('/clients/view/{id}', 'ClientController@viewClient')->name('viewClient');
     Route::get('/clients/{client}/edit', 'ClientController@edit');
     Route::put('/clients/edit', 'ClientController@update');
     Route::delete('/clients/{client}/delete', 'ClientController@delete');
@@ -267,6 +268,9 @@ Route::group(['middleware' => 'auth:web'], function() {
 
     // Task Routes
     Route::get('/tasks', 'TaskController@getAllTasks');
+    Route::get('/task/edit/{id}', 'TaskController@edit');
+    Route::post('/task/update/{id}', 'TaskController@update');
+    Route::get('/task/remove/{id}', 'TaskController@delete');
     Route::get('/tasks/{id}', 'TaskController@getTask');
     Route::post('/tasks', 'TaskController@createTask');
     Route::put('/tasks/{id}', 'TaskController@updateTask');
