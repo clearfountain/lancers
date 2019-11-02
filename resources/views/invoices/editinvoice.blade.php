@@ -70,12 +70,12 @@
               </button>
             </div>
                     <section class="modal-body seperate">
-                        <article>
-                                <h5>Logo</h5>
+                        <article class="seperate-margin">
+                                <h5 class="seperate-margin">Logo</h5>
                                 <div class='logoContainer'></div>
                         </article>
-                        <article>
-                            <div class='colorContainer'>
+                        <article class="seperate-margin seperate-margin">
+                            <div class='colorContainer seperate-margin'>
                                 <h5>Brand Color</h5>
                                 <select></select>
                             </div>
@@ -456,6 +456,9 @@
                 .seperate{
                     justify-items: auto;
                     align-items: center;
+                }
+                .seperate-margin{
+                    margin: 30px 0 30px 0;
                 }
 
         /* Media Queries to make things look better on mobile devices including switching the navbar to a more mobile friendly version */
