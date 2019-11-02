@@ -75,17 +75,17 @@
                         @csrf
                         @method('PUT')
 							<div class="py-3">
-								<h6 class="small-head-text">Auto Responds Invoice Message</h6>
+								<h6 class="small-head-text">Auto Respond Invoice Message</h6>
 								<textarea name="invoice" id="" cols="30" rows="3" class="message-con p-4">
                                 {{ $invoiceMessage }}	</textarea>
 							</div>
 							<div class="py-3">
-								<h6 class="small-head-text">Auto Responds Proposal Messsage</h6>
+								<h6 class="small-head-text">Auto Respond Proposal Messsage</h6>
 								<textarea name="proposal" id="" cols="30" rows="3" class="message-con p-4">
                                 {{ $proposalMessage }}	</textarea>
 							</div>
 							<div class="py-3">
-								<h6 class="small-head-text">Auto Responds Agreement Messsage</h6>
+								<h6 class="small-head-text">Auto Respond Agreement Messsage</h6>
 								<textarea name="agreement" id="" cols="30" rows="3" class="message-con p-4">
                                 {{ $agreementMessage }}	</textarea>
 							</div>
