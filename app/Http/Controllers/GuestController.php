@@ -82,6 +82,7 @@ class GuestController extends Controller {
 
         if ($data) {
             $project = Session::get('project');
+            // dd($project);
             $request->session()->put('project', $project);
             return view('guests/step2')->with(['project' => $project, 'currencies' => $currencies]);
         }
@@ -122,7 +123,6 @@ class GuestController extends Controller {
             'start' => $request->start,
             'end' => $request->end
         ];
-
 
         $request->session()->put('guestestmate', $data);
 
@@ -192,6 +192,7 @@ class GuestController extends Controller {
     }
 
     public function savestep4(Request $request) {
+        // Called on submission of registeration
         $data = [];
         $session_project = $request->session()->get('project');
 
@@ -226,8 +227,7 @@ class GuestController extends Controller {
                     'password' => $password
         ]);
         Auth::login($user);
-
-
+        
         $clients = new Client;
         $clients->user_id = $user->id;
         $clients->name = session('client')['name'];
@@ -240,7 +240,7 @@ class GuestController extends Controller {
         $clients->zipcode = session('client')['zipcode'];
         $clients->contacts = $session_contacts;
         $clients->save();
-
+        
         $estimate = Estimate::create(array_merge(session('guestestmate'), ['estimate' => $data['total'], 'user_id' => $user->id]));
 
         $project = Project::create([
@@ -255,9 +255,12 @@ class GuestController extends Controller {
         ]);
         $project->save();
 
+        $request->session()->flush();
+        $request->session()->put('new_estimate_id', $estimate->id);
+        
+        return redirect('invoice/review');
 
-
-        return view('addclients')->with('estimate', $estimate->id);
+        // return view('addclients')->with('estimate', $estimate->id);
     }
 
 }

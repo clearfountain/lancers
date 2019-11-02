@@ -53,6 +53,7 @@ class InvoiceController extends Controller {
             return back()->withInputs()->withError('Unable to save your input');
         }
     }
+
     public function delete($id)
     {
         $object = Invoice::whereId($id)->first();
@@ -68,11 +69,36 @@ class InvoiceController extends Controller {
         $this->middleware('auth');
     }
 
+    public function review(Request $request){
+        $estimate_id = session('new_estimate_id');
+        // dd($estimate_id);
+        
+        if($estimate_id && is_int($estimate_id)){
+            $estimate = Estimate::find($estimate_id);
+            if($estimate){
+                $pre_invoice = Invoice::whereEstimate_id($request->estimate_id)->first();
+                if (is_object($pre_invoice)) {
+                    $pre_invoice->update(['amount' => $estimate->estimate]);
+                    $invoice = Invoice::whereId($pre_invoice->id)->with('estimate')->first();
+                }else{
+                    $createinvoice = Invoice::create(['user_id' => Auth::user()->id, 'issue_date' => $estimate->start, 'due_date' => $estimate->end, 'estimate_id' => $estimate->id, 'amount' => $estimate->estimate, 'currency_id' => $estimate->currency_id]);
+                    $invoice = Invoice::whereId($createinvoice->id)->with('estimate')->first();
+                }
+        
+                return view('invoices.reviewinvoice')->with('invoice', $invoice);
+            }else return redirect('estimate/create');
+        }else{
+            return redirect('estimate/create');
+        }
+
+        return redirect('estimate/create');
+    }
+
     public function send($id) {
         return view('invoice_sent');
     }
 
-    public function index() {
+    public function index() { 
         $user = Auth::user();
 
         // return $user->projects;
@@ -179,7 +205,6 @@ class InvoiceController extends Controller {
     public function sendinvoice(Request $request) {
         $invoice_id = $request->invoice;
 
-
         $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
 
         $project_name = $invoice->estimate->project->title;
@@ -202,6 +227,7 @@ class InvoiceController extends Controller {
                         'project' => $project_name
             ]));
         } catch (\Throwable $e) {
+            // dd($e->getMessage());
             session()->flash('message.alert', 'danger');
             session()->flash('message.content', "Error We Are Unable to Send This Invoice Now, Please Try Back Later ");
             return back();

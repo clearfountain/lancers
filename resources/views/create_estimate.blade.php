@@ -492,7 +492,7 @@ button {
                       <div class="dropdown mr-1">
                          <select class="dropbtn" name="" onmouseout="verifyPath()" id="projectSelect">
                              <option value="select" selected="disabled">Select Project</option>
-                             <a href=""><option value="app" class="dropdown-item">Glacier Fintech App</option></a>
+                             <a href=""><option value="app" class="dropdown-item">Lancers</option></a>
                              <a href=""><option value="branding" class="dropdown-item">AB Technology Solutions Branding</option></a>
                          </select>  
                          <i class="fa fa-caret-down"></i>                           

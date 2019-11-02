@@ -2,583 +2,182 @@
 <!-- Select Project -->
 
 @section('styles')
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<style>
-    body {
-        font-family: 'Roboto', sans-serif;
-        overflow: auto;
-    }
-
-    h1 {
-        margin-top: 5%;
-        margin-left: 18%;
-        color: #262626;
-    }
-
-    h5 {
-        font-weight: bold;
-        color: #262626;
-    }
-
-    p {
-        padding-bottom: 40px;
-    }
-
-    .box {
-        margin-top: 5%;
-
-    }
-
-    .card-body:hover {
-        border: 2px solid #0ABAB5;
-        box-sizing: border-box;
-    }
-
-    .btn-on {
-        width: 100%;
-        background: gray;
-        border: 1px solid rgba(145, 145, 145, 0.4);
-        box-sizing: border-box;
-
-        text-align: left;
-        color: #091429;
-        height: 50px;
-    }
-
-    .btn-on:hover {
-        color: #E4E4E4;
-        background: #0ABAB5 !important;
-    }
-
-    .dark {
-        margin-top: 40px;
-        margin-left: 40%;
-        width: 20%;
-        height: 60px;
-        border: 1px solid gray;
-        background: #0ABAB5 !important;
-        color: white;
-
-    }
-
-    .dark:hover {
-
-        background: #0ABAB5!important;
-        color: white;
-    }
-
-    #name {
-        padding: 10px;
-        width: 100%;
-        height: 50px;
-        font-size: 20px;
-        border: 1px solid rgba(145, 145, 145, 0.4);
-    }
-
-    #container {
-        display: grid;
-        grid-template-columns: 1fr 5fr 1fr;
-
-    }
-
-    #container div {
-        border: 1px solid black;
-        height: 50px;
-    }
-
-    #container p {
-        justify-content: center;
-        margin-top: 15px;
-        font-style: normal;
-        font-weight: bold;
-
-
-        color: #323A43;
-    }
-
-    #ext {
-        justify-content: center;
-        border: none;
-        background: gray !important;
-        color: white;
-        width: 100%;
-        height: 50px;
-    }
-
-
-    #ext:hover {
-
-        background:  #091429 !important;
-
-    }
-
-    #cnc {
-        cursor: pointer;
-    }
-
-    .dropbtn, .project {
-        /* margin-top: 37px; */
-        width: 100%;
-        height: 50px;
-        padding: 10px;
-        border: 1px solid rgba(145, 145, 145, 0.4);
-        /* box-sizing: border-box; */
-    }
-    option, select {
-        font-size: 20px;
-        background: rgba(207, 204, 204, 0.4);
-    }
-
-    a:hover{cursor: pointer;}
-
-
-
-
-
-    body {
-        box-sizing: border-box;
-        margin: 0px;
-        font-family: ubuntu !important;
-    }
-
-    .con-div {
-        background-color: #FFFFFF;
-        width: 100%;
-        margin: auto;
-    }
-
-    .top-divs {
-        display: flex;
-        margin: 0 auto;
-        width: 100%;
-        background-color: #FFFFFF;
-        font-family: Roboto;
-    }
-
-    .ctrl-div {
-        width: 8%;
-        text-align: center;
-        border: 1px solid #919191;
-    }
-
-    .ctrl-btn {
-        width: 100%;
-        background-color: #FFFFFF;
-        border: none;
-    }
-
-    .inv-div {
-        width: 60%;
-        text-align: center;
-        border: 1px solid #919191;
-    }
-
-    #inv-btn {
-        width: 100%;
-        border: none;
-        padding: 0.5em;
-        font-weight: 500;
-        font-size: 28px;
-        background-color: #FFFFFF;
-    }
-
-    .send-div {
-        width: 32%;
-        text-align: center;
-        border: 1px solid #919191;
-    }
-
-    #send-btn {
-        width: 100%;
-        border: none;
-        padding: 0.5em;
-        color: #FFF;
-        font-size: 28px;
-        background-color:  rgba(196, 196, 196, 0.4);
-    }
-
-    .cli-info {
-        width:75%;
-        height:80vh;
-        background-color:#FFFFFF;
-        margin: auto
-    }
-
-    .cli-box {
-        display: flex;
-        justify-content:space-around;
-    }
-
-    .sub-box {
-        width: 30%;
-        padding: 2em 1em;
-        margin: 2em;
-        background-color:#FFF;
-        text-align:center;
-        border: 1px solid #919191;
-        border-radius: 2px
-    }
-
-    .sub-box:hover {
-        border: 3px solid gray;
-    }
-
-    .select-project {
-        width: 90%;
-        padding: 1em;
-        border: 1px solid #919191;
-    }
-
-    .cli-text {
-        padding-top: 1.5em;
-    }
-
-    .my-icon {
-        width: 100%;
-        margin: 0.6em 0;
-        color: #c4c4c4;
-        background-color: #FFFFFF;
-    }
-
-    .what-cli {
-        padding: 1.5em 1em !important;
-        margin: 0;
-        font-size: 42px !important;
-        font-weight: bold !important;
-        color: #323232;
-    }
-
-    .txt {
-        margin: 2em 0;
-    }
-    .column-1 {
-        width: 5%;
-        border-right: 2px solid rgb(223, 223, 223);
-        padding: 1em;
-        text-align: center;
-        color: black;
-        text-decoration: none;
-    }
-    .column-2 {
-        width: 75%;
-        text-align: center;
-        align-items: center;
-        padding: 0.8em;
-        color: black;
-        text-decoration: none;
-        font-size: 1.5em;
-        font-weight: bold;
-    }
-    .column-3 {
-        width: 15%;
-        border-left: 2px solid rgb(223, 223, 223);
-        padding: 0.8em;
-        text-align: center;
-        background-color: rgba(196, 196, 196, 0.4);
-        color: white;
-        text-decoration: none;
-        font-size: 1.5em;
-        font-weight: bold;
-    }
-
-    @media screen and (max-width: 500px) {
-        .cli-box {
-            display: block;
-        }
-
-        .sub-box {
-            width: 90%;
-            margin: 2em 0em;
-        }
-
-        option {
-            width: 80%;
-        }
-
-        .what-cli {
-            font-size: 1.3em;
-        }
-    }
-    @media (max-width: 575.98px) {
-        .column-1 {
-            width: 15%;
-            padding: 0;
-        }
-        .column-2 {
-            width: 75%;
-            padding-top: 0.6em;
-            font-size: 0.9em;
-        }
-        .column-3 {
-            width: 25%;
-            padding-top: 0.7em;
-            font-size: 0.8em;
-        }
-        img {
-            height: 20px;
-            width: 10px;
-            padding-top: 0.6em;
-        }
-    }
-
-    @media (min-width: 576px) and (max-width: 767px) {
-        .column-1 {
-            width: 10%;
-        }
-        img {
-            height: 15px;
-            width: 10px;
-        }
-    }
-    @media (min-width: 768px) and (max-width: 991.98px) {
-        .column-1 {
-            width: 9%;
-        }
-    }
-
-
-
-
-</style>
-
+    <link rel="stylesheet" href="{{asset('css/step2.css')}}"/>
 @endsection
 
 
 @section('content')
-<div class="contaner">
+<form id="form" onsubmit="submitEvent(event)" method="post" action="/estimate/create/step3">
+    @csrf
+    
+    @include('partials.header_stage2')
 
-    <header style="border-bottom: 2px solid rgb(223, 223, 223);">
-        <nav style="display: flex; ">
-            <a href="{{url('/dashboard')}}"  @click.prevent="$router.push('/estimate')" class="column-1">
-                <img
-                    src="https://res.cloudinary.com/mide358/image/upload/v1570621469/clear_24px_rasbwc.png"
-                    alt="navIcon"
-                    /> 
-            </a>
-            <a href="{{url('/estimate/create/step1')}}" @click.prevent="previous" class="column-1">
-                <img
-                    src="https://res.cloudinary.com/mide358/image/upload/c_scale,h_27,w_13/v1570621434/Vector_ag4hnv.png"
-                    alt="navIcon"
-                    />
-            </a>
-            <div class="column-2">Create Estimate</div>
-            <a href="#" @click.prevent="next" id="upperNext" class="column-3 float-right" style="border: 1px solid gray;
-               background: #0ABAB5 !important;">NEXT</a>
-        </nav>
-    </header>
+    <div class="container-fluid main-section">
 
-    <!--@Ezeko -->
-    <div class="container">
-        <div class="clearrfix"></div>
-        <br/> <br/>
-        <div class="card-title">
-            <h2 class="">Evaluation</h2>
-            <h6>Please Input the required fields in the form below</h6>
+        <div id="word">
+            <h1>Evaluation</h1>
+            <h5>Please Input the required fields in the form below</h5>
+            <br>
         </div>
-        <style>
-            .my-hr-line {
-                position: relative;
-                left: -20px;
-                width: calc(100% + 40px);
-                border: 1px solid #ddd;
-            }
-            .hiddeinput {
-                color: grey!important;
-                background: linear-gradient(to right, #808080, #808080) 5px calc(100% - 5px)/calc(100% - 10px) 2px no-repeat;
-                /* <5px calc(100% - 5px)> : position of the gradient [5px from left and 5px from bottom  */
-                /* <calc(100% - 10px) 2px> : size of the gradient [width:100%-10px height:2px] */
-                background-color: #fcfcfc;
-                border: hidden;
-                padding: 3px;
-            }
-            .icon {
-                color: grey!important;
-                padding: 3px;
-            }
-            .hiddeselect {
-                color: #000!important;
-                background: linear-gradient(to right, #000, #000) 5px calc(100% - 5px)/calc(100% - 10px) 2px no-repeat;
-                /* <5px calc(100% - 5px)> : position of the gradient [5px from left and 5px from bottom  */
-                /* <calc(100% - 10px) 2px> : size of the gradient [width:100%-10px height:2px] */
-                background-color: #fcfcfc;
-                border: hidden;
-                padding: 3px;
-            }
-        </style>
-        <div class="clearfix"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 mx-auto">
-                    <div id="pay-invoice" class="card">
-                        <div class="card-body">
-                            <div class="card-title">
-                                <h2 class="pull-left">{{$project}}</h2>
-                            </div>
-                            <hr>
-                            <div class="clearrfix"></div>
-                            <br/>
 
-                            <hr class="my-hr-line">
-                            <form method="post" action="/estimate/create/step3">
-                                @csrf
+        <div class="section1">
 
-                                <div class="">
-                                    <label>  <h3>Billing</h3></label>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label">How long (in hours) will it take you to complete this project?</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control col-md-4 col-sm-10" required name="time" placeholder="Hours" />
-                                        </div>
-                                    </div>
-                                </div>
+            <div id="glac">
+                <h2 class="pull-left">{{$project}}</h2>
+                <hr />
+            </div>
+            <hr />
 
-                                <!-- <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label">How much  do you charge per hour?</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control col-md-4 col-sm-10" required name="price_per_hour" placeholder="NGN 0.00" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <br/> -->
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label">Project starts/ends</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <i class="icon fa fa-calendar"></i>&nbsp;
-                                            <input class="hiddeinput col-md-4 col-sm-3" type="text" required onfocus="(this.type = 'date'); (this.name = 'start')" name="start" placeholder=" Set start date" />
-                                            <i class="icon fa fa-calendar"></i>
-                                            <input type="text" class="hiddeinput col-md-4 col-sm-3"  required onfocus="(this.type = 'date'); (this.name = 'end')" name="end" placeholder="Set end date" />
-                                        </div>
-                                    </div>
-                                </div>
+            <div id="bill">
+                <h3>Billing</h3>
 
-                                <hr class="my-hr-line">
-                                <div class="">
-                                    <label>  <h3>Expenses</h3></label>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label"> How much would it cost you to power your devices or equipment for this project?</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control col-md-4 col-sm-10" required name="equipment_cost" id="est1" placeholder="NGN 0.00" />
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="hour">
+                    <p>How long (in hours) will it take you to complete this project <i class="fa fa-question-circle" aria-hidden="true"></i></p>
+                    <input required type="number" maxlength="10000" name="time" placeholder="Hours" style="width: 83% !important;" />
+                </div>
+                <div class="hour" style="display: none;">
+                    <p>How much do you charge per hour <i class="fa fa-question-circle" aria-hidden="true"></i></p>
+                    <input type="number" maxlength="10000000" value="5000" name="price_per_hour" placeholder="NGN 0.00" style="width: 83% !important;" />
+                </div>
 
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label">Are you subcontracting to anyone?</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <select class="form-control col-md-6 col-sm-10" required name="sub_contractors" id="est2" placeholder="E.g. Illustrator, Consulting..." >
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="hours">
+                    <p>Project starts/ends</p>
+                    <i class="fa fa-calendar start"><input required type="text" onfocus="(this.type='date')" name="start" placeholder=" Set start date" /></i>
+                    <i class="fa fa-calendar end"><input required type="text" onfocus="(this.type='date')" name="end" placeholder="Set end date" /></i>
+                </div>
 
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label">How much would they be paid?</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control col-md-4 col-sm-10" required name="sub_contractors_cost" id="est3" placeholder="NGN 0.00" />
-                                        </div>
-                                    </div>
-                                </div>
+            </div>
 
+            <hr />
+            <div>
+                <h3>Expenses</h3>
+                <div class="hour">
+                    <p id="cost">
+                        How much would it cost you to power your devices or equipment for this project <i class="fa fa-question-circle" aria-hidden="true"></i>
+                    </p>
+                    <input type="number" required name="equipment_cost" id="equipment_cost" placeholder="NGN 0.00" style="width: 83% !important;" />
+                </div>
 
-                                <div class="">
-                                    <label>  <h3>Expertise</h3></label>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label"> How many similar projects have you done before?</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control col-md-4 col-sm-10" required name="similar_projects" id="exp1">
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="hour">
+                    <p id="sub">Sub contractors (If any)</p>
+                    <input type="text" required name="sub_contractors" id="sub_contractors" style="width: 83% !important;" placeholder="E.g. Illustrator, Consulting..." class="sub" />
+                </div>
+                <br />
 
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="cc-exp" class="control-label">Out of 5 how would you rate your experience level in executing this project?</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <input class="form-control col-md-6 col-sm-10" type="number" required name="rating" id="exp2"> /5
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr class="my-hr-line">
-                                <div class="">
-                                    <label>  <h3>Currency:
-
-                                            <select class="hiddeselect" name="currency_id" required>
-                                                <option value="">Select Currency</option>
-                                                @foreach($currencies as $currency)
-                                                <option value="{{$currency->id}}">{{$currency->code}}</option>
-                                                @endforeach
-                                            </select>
-
-                                        </h3></label>
-                                </div>
-
-
-
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <br/>
-                    <div>
-                        <div class="text-center">
-                        <button  type="submit" class="btn" style="border: 1px solid gray;
-                                 background: #0ABAB5 !important; height: 70px; width: 200px;color:#fff!important">NEXT
-
-                        </button>
-                        </div>
-                    </div>
-                    </form>
+                <div class="hour">
+                    <p id="pay">How much would they be paid <i class="fa fa-question-circle" aria-hidden="true"></i></p>
+                    <input type="number" required name="sub_contractors_cost" id="sub_contractors_cost" placeholder="NGN 0.00" style="width: 83% !important;" />
                 </div>
             </div>
+            <br>
+            <div>
+                <h3>Expertise</h3>
+
+                <div class="hour">
+                    <p id="proj">How many similar projects have you done before <i class="fa fa-question-circle" aria-hidden="true"></i></p>
+                    <input type="number" required name="similar_projects" id="similar_projects" placeholder="0" style="width: 30% !important;">
+                </div>
+
+                <div class="hour">
+                    <p id="rate">How would you rate your experience level in executing this project <i class="fa fa-question-circle" aria-hidden="true"></i><p>
+                    <input required type="number" maxlength="5" name="rating" id="rating" placeholder="0" style="width: 30% !important;"> /5
+                </div>
+
+            </div>
+            <hr />
+
+            <div id="currency">
+                Currency:
+                <select class="hiddeselect" name="currency_id" required>
+                    <option value="">Select Currency</option>
+                    @foreach($currencies as $currency)
+                    <option {{$currency->code == 'NGN' ? 'selected' : ''}} value="{{$currency->id}}">{{$currency->code}}</option>
+                    @endforeach
+                </select>
+
+            </div>
+
+        </div class="nex">
+        
+        <!-- <button class="btn">NEXT</button> -->
+        <div class="row ml-auto box justify-content-center mt-20" style="margin-top: 20px;">
+            <div class="col-sm-6">
+                <button class="btn" name="next_btn">NEXT</button>
+                <!-- <input class="disabled" id="ext" type="submit" value="NEXT"> -->
+            </div>
         </div>
+    </div>
 
+    </div>
+</form>
+@endsection
 
+@section('script')
+<script>
+    
+    let form = document.querySelector('#form');
+    let form_children = {};
+    ['next_page', 'next_btn', 'time', 'start', 'end', 'rating', 'currency_id', 'similar_projects', 'sub_contractors_cost', 'sub_contractors', 'equipment_cost']
+    .forEach(e=>form_children[e] = document.querySelector(`[name="${e}"]`));
+    let {next_btn, start, end, next_page, time, rating, currency_id, similar_projects, sub_contractors_cost, sub_contractors, equipment_cost} = form_children;
 
-        @endsection
+    if(typeof(form_children['start']) !== 'undefined' &&  typeof(form_children['end']) !== 'undefined'){
+        form_children['end'].addEventListener('change', function(e){
+            if(form_children['start'].value > form_children['end'].value ){
+                next_page.disabled = true;
+                next_btn.disabled = true;
+                next_page.classList.remove('validated');
+                next_btn.classList.remove('validated');
+                alert('Start date cannot be greater than end date')
+                form_children['end'].value = '';
+                return; // remove the validated toggle
+            }
+        });
+        form_children['start'].addEventListener('change', function(e){
+            if(form_children['end'].value !== '' && form_children['start'].value > form_children['end'].value ){
+                next_page.disabled = true;
+                next_btn.disabled = true;
+                next_page.classList.remove('validated');
+                next_btn.classList.remove('validated');
+                alert('Start date cannot be greater than end date')
+                form_children['end'].value = '';
+                return; // remove the validated toggle
+            }
+        });
+    }
+    
 
-        @section('script')
+    window.onload=function(){
+        ['keyup', 'click']
+        .forEach(e=>{form.addEventListener(e, validate)});
+    }
 
-        @endsection
+    function validate(){
+        for(let i in form_children){
+            if(form_children[i] !== next_btn && form_children[i] !== next_page && falsy(form_children[i])) {
+                // console.log(form_children[i])
+                next_page.disabled = true;
+                next_btn.disabled = true;
+                next_page.classList.remove('validated');
+                next_btn.classList.remove('validated');
+                return; // remove the validated toggle
+            }
+        }
+        next_page.disabled = false;
+        next_btn.disabled = false;
+        next_page.classList.add('validated');
+        next_btn.classList.add('validated');
+    }
+    
+    function falsy(el){
+        if(typeof el.selected !== 'undefined'){
+            if(el.selected != '' && el.selected == null) return false;
+        }else if(typeof el.value !== 'undefined'){
+            if(el.value !== '' && el.value !== null) return false;
+        }
+        return true;
+    }
+    
+
+</script>
+@endsection

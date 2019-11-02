@@ -1,0 +1,280 @@
+
+  body {
+    font-family: 'Ubuntu', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+  }
+  
+  /* nav */
+  
+  #container {
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr 5fr 1fr;
+  }
+  
+  #container div {
+    box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.1);
+    height: 60px;
+  }
+  
+  #container i {
+    padding-top: 20px;
+    color: #C4C4C4;
+    font-size:1.3em;
+  }
+  
+  #container p {
+    justify-content: center;
+    margin-top: 20px;
+    font-style: normal;
+    font-size:1.3em;
+    font-weight: bold;
+    color: #323A43;
+  }
+  
+  .cnc {
+    border: none;
+    background: #e4e4e4;
+    height: 60px;
+    width: 100%;
+    color: white;
+    font-size:1.5em;
+  }
+  
+  /* .cnc:hover{
+      background: #0ABAB5;
+  } */
+  
+  /* main section */
+  
+  .main-section {
+    margin: 50px auto;
+    width: 60%;
+  }
+  
+  .section1 {
+    border: 1px solid #919191;
+    box-sizing: border-box;
+  }
+  
+  .section1 div {
+    padding: 5px 20px;
+  }
+  
+  #word h1 {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 48px;
+    color: #262626;
+  }
+  
+  #word h5 {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    color: #262626;
+  }
+  
+  #glac h1 {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.8rem;
+    line-height: 41px;
+    color: #262626;
+    padding-top: 30px;
+    margin-left: 50px;
+  }
+  
+  div h3 {
+    font-family: Ubuntu;
+    font-style: bold;
+    font-weight: bold;
+    font-size: 1.4rem;
+    line-height: 41px;
+    color: #262626;
+  }
+  
+  .bill p {
+    font-size: 1em;
+    padding-top: 10px;
+    color: #262626;
+  }
+  
+  .hour {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-left: 0px !important;
+  }
+  
+  .hours {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding-left: 0px !important;
+  }
+  
+  input {
+    height: 30px;
+    width: 50%;
+    text-align: center;
+    border: 1px solid;
+  }
+  
+  .start {
+    margin-left: 120px;
+    width: 100%;
+  }
+  
+  .end {
+    margin-left: 50px;
+    width: 100%;
+  }
+  
+  i input {
+    border: none;
+    border-bottom: 1px solid;
+    text-decoration: underline;
+  }
+  
+  .sub {
+    width: 90%;
+  }
+  
+  #currency {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 28px;
+    color: #262626;
+    padding-bottom: 20px;
+  }
+  
+  select {
+    border: none;
+    border-bottom: 1px solid;
+  }
+  
+  .btn {
+    border: 1px solid #e4e4e4;
+    background: #e4e4e4;
+    margin-top: 40px;
+    margin-left: 30%;
+    width: 40%;
+    height: 60px;
+    color: white;
+  }
+  
+  .active:hover{
+      background: #0ABAB5;
+      color:white;
+  }
+  
+  @media screen and (max-width: 1400px) {
+    input {width: 10px; margin-left: 0px}
+    
+    .end {
+      margin-left: 65px;
+      width: 50%;
+    }
+
+    .start{
+      margin-left: 160px;
+      width: 60%;
+    }
+    /* .end {
+        margin-left: 50px;
+        width: 100%;
+    } */
+  }
+  
+  @media screen and (max-width: 1102px) {
+    .hours {
+      display: grid;
+      grid-template-columns: 0.5fr 1fr 1fr;
+    }
+  }
+  
+  @media screen and (min-width: 1102px) {
+    /* .end {
+      margin-left: 5px;
+      width: 50%;
+    }
+
+    .start{
+      margin-left: 10px;
+      width: 60%;
+    } */
+    /* .hours {
+      display: grid;
+      grid-template-columns: 0.5fr 1fr 1fr;
+    } */
+  }
+  
+  
+  @media (max-width: 976px) {
+  
+  .cnc{
+      font-size: 15px;
+  }
+  }
+  
+  @media (max-width: 948px) {
+    .hour, .hours {
+      display: block;
+    }
+    .start {
+      margin-left: 0px;
+      width: 100%;
+    }
+    .end {
+      margin-left: 0px;
+      width: 100%;
+    }
+  }
+  
+  
+  @media (min-width: 600px) {
+  
+    .main-section {
+      margin: 50px auto;
+      width: 60%;
+    }
+    input {
+      margin-left: 0px;
+      width: 80%;
+    }
+    
+    /* .start {
+      margin-left: 0px;
+      width: 100%;
+    }
+    .end {
+      margin-left: 0px;
+      width: 100%;
+    } */
+  }
+  @media (max-width: 600px) {
+    
+    .main-section {
+      margin: 50px auto;
+      width: 80%;
+    }
+    
+    input {
+      height: 30px;
+      width: 80%;
+      text-align: center;
+      border: 1px solid;
+    }
+    
+  #glac h1{
+      text-align: left;
+      font-size: 1.5em;;
+  }
+  }
