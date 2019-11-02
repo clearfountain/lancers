@@ -19,6 +19,86 @@
 											</div>
 									</div>
 							</div>
+
+							<div class="d-flex flex-column align-items-center">
+								<div class="d-flex flex-column">
+									<a href="/dashboard/profile/settings" class="nav-option py-3">Profile Settings</a>
+									<a href="/dashboard/emails/settings" class="nav-option active-nav py-3"
+										>Email Settings</a>
+										<a href="/pricing" class="nav-option py-3">Subscription</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-8">
+						<div class="email-con container p-4">
+							<h3 class="head-text">Default Auto Message</h3>
+                            @if(($status == "success") && ($data != null ))
+
+                                @php
+                                $invoiceMessage = $data['auto_invoice_message'];
+                                $proposalMessage = $data['auto_approval_message'];
+                                $agreementMessage = $data['auto_agreement_message'];
+
+                                @endphp
+                        @endif
+
+                        @if(($status == "failure") && ($data == null ))
+                            @php
+                            $invoiceMessage = '';
+                            $proposalMessage = '';
+                            $agreementMessage = '';
+
+                            @endphp
+                     @endif
+
+                     @if(session('editErrors'))
+                        <div class="alert alert-fail" role="alert">
+                            <h5><strong>Error:</strong></h5>
+                            @foreach(session('editErrors') as $error)
+                                        <i style="color: red;">{{ $error }} </i></br>
+                            @endforeach
+                            </div>
+                    @endif
+
+                    @if(session('editSuccess') != null)
+                    <div class="alert alert-fail" role="alert">
+                        <h5><strong>Success:</strong></h5>
+
+                        <i style="color: green;">{{ session('editSuccess') }} </i></br>
+
+                        </div>
+                    @endif
+
+                    @if(session('editFailure') != null)
+                    <div class="alert alert-fail" role="alert">
+                        <h5><strong>Error:</strong></h5>
+
+                        <i style="color: red;">{{ session('editFailure') }} </i></br>
+
+                        </div>
+                    @endif
+                     <form method="POST" action="{{ route('SET-EMAIL') }}">
+                        @csrf
+                        @method('PUT')
+							<div class="py-3">
+								<h6 class="small-head-text">Auto Respond Invoice Message</h6>
+								<textarea name="invoice" id="" cols="30" rows="3" class="message-con p-4">
+                                {{ $invoiceMessage }}	</textarea>
+							</div>
+							<div class="py-3">
+								<h6 class="small-head-text">Auto Respond Proposal Messsage</h6>
+								<textarea name="proposal" id="" cols="30" rows="3" class="message-con p-4">
+                                {{ $proposalMessage }}	</textarea>
+							</div>
+							<div class="py-3">
+								<h6 class="small-head-text">Auto Respond Agreement Messsage</h6>
+								<textarea name="agreement" id="" cols="30" rows="3" class="message-con p-4">
+                                {{ $agreementMessage }}	</textarea>
+							</div>
+							<div class="d-flex justify-content-center">
+								<button class="green-btn">Update</button>
+                
 							<div class="col">
 									<div class="container-fluid">
 											
@@ -114,13 +194,11 @@
 																					<textarea rows="5" id="autoResponseThree" name="autoResponseThree" class="form-control mt-2" placeholder="Enter Auto Response">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution  It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more Thanks..</textarea>
 																			</div>
 																	</div>
--->
 
 																	<div class="row"><button class="btn btn-primary  ml-auto mr-auto mt-4" id="updateButton">Update</button></div>
 
 															</form>
 
-<!--
 															<form class="mt-5 card card-body" id="companyForm">
 																	<div class="row">
 																			<div class="form-group formContainer col-12 col-sm-6">
@@ -179,7 +257,6 @@
 
 																	<div class="row"><button class="btn btn-primary  ml-auto mr-auto mt-4" id="updateButton">Update</button></div>
 															</form>
--->
 															
 															
 													</div>
