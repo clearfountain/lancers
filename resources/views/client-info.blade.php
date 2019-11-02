@@ -859,7 +859,7 @@ tbody, .bold {
 
             $(`#delete-${id}`).submit();
           });
-         {{-- $(function() {
+          $(function() {
             $('.toggleNav').on('click',function() {
               $('#sidebar-wrapper').slideToggle();
             });
@@ -870,7 +870,7 @@ tbody, .bold {
                   $('#sidebar-wrapper').slideToggle();
                 });
               });
-          --}}
+          
     </script>
 </body>
 
