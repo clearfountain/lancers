@@ -506,7 +506,7 @@ table.project-table thead tr th {
                                     else{
                                         $initials = strtoupper($nameArr[0][0]);
                                     }
-                                    echo $initials;
+                                    echo htmlspecialchars($initials);
                                 @endphp
                             </div>
                             @endif
