@@ -1,8 +1,8 @@
 <div id="container">
     <div>
-        <button class="close navM" name="previous_page"><span>
-                <i class="fa fa-times"></i>
-            </span></button>
+        <button class="close navM icon-btn" id="icon-close" name="previous_page" >
+            <span><i class="fa fa-times"></i></span>
+        </button>
     </div>
     <div>
         <p class="nav cEstimate" name="create_estimate" id="cre">Create Estimate</p>

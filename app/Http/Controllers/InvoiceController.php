@@ -53,6 +53,7 @@ class InvoiceController extends Controller {
             return back()->withInputs()->withError('Unable to save your input');
         }
     }
+
     public function delete($id)
     {
         $object = Invoice::whereId($id)->first();
@@ -203,7 +204,6 @@ class InvoiceController extends Controller {
 
     public function sendinvoice(Request $request) {
         $invoice_id = $request->invoice;
-
 
         $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
 
