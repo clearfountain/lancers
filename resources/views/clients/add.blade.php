@@ -48,6 +48,10 @@
                             </select>
 
                             <select required name="state_id" class="country">
+
+{{--                                 @foreach(getStates(1) as $key => $state)
+                                    <option value="{{$state['id']}}" selected>{{$state['name']}}</option>
+                                @endforeach --}}
                                 <option value="" selected>Select State</option>
                             </select>
                             <!-- <input required type="text" name="state" id="state" placeholder="state"> -->
@@ -69,7 +73,7 @@
 
 @section('script')
 <script type="text/javascript">
-    let count = 1;
+    let count = 0;
 	window.addEventListener('load', function() {
         addContact();
     })
@@ -79,16 +83,16 @@
         newElement.classList.add('form-group');
         newElement.innerHTML = `
             <label for="company_name_${count}">Contact name</label>
-            <input type="text" class="form-control" name="contact[${count}]['name']" id="contact_name${count}" placeholder="e.g Ben Davies">
+            <input type="text" ${count == 0 ? 'required' : ''} class="form-control" name="contact[${count}][name]" id="contact_name${count}" placeholder="e.g Ben Davies">
             
             <label for="company_email">Contact email</label>
-            <input class="form-control" type="email" name="contact[${count}]['email']" id="email_${count}" placeholder="e.g email@domain.com">
+            <input class="form-control" ${count == 0 ? 'required' : ''} type="email" name="contact[${count}][email]" id="email_${count}" placeholder="e.g email@domain.com">
         `;
         element.appendChild(newElement);
         count+=1;
     }
 
-    $(document).ready(function() {
+        $(document).ready(function() {
     $('select[name="country_id"]').on('change', function() {
         let countryID = $(this).val();
             if(countryID) {
@@ -109,5 +113,6 @@
             }
         });
     });
+
 </script>
 @endsection
