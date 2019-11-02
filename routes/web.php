@@ -263,6 +263,9 @@ Route::group(['middleware' => 'auth:web'], function() {
 
     // Task Routes
     Route::get('/tasks', 'TaskController@getAllTasks');
+    Route::get('/task/edit/{id}', 'TaskController@edit');
+    Route::post('/task/update/{id}', 'TaskController@update');
+    Route::get('/task/remove/{id}', 'TaskController@delete');
     Route::get('/tasks/{id}', 'TaskController@getTask');
     Route::post('/tasks', 'TaskController@createTask');
     Route::put('/tasks/{id}', 'TaskController@updateTask');
