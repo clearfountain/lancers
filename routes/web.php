@@ -307,6 +307,11 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/client-doc-view', function () {
         return view('client-doc-view');
     });
+
+    Route::get('/invoice_view', function () {
+        // return view('invoices.reviewinvoice');
+        return view('invoice_view');
+    });
     
     
     // Route::get('/invoice', function () {
