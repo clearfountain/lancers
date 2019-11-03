@@ -62,6 +62,7 @@
       <!-- Modal -->
       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
+        <form action="/invoices/editinvoice">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalCenterTitle">Branding Options</h5>
@@ -72,7 +73,9 @@
                     <section class="modal-body seperate">
                         <article class="seperate-margin">
                                 <h5 class="seperate-margin">Logo</h5>
-                                <div class='logoContainer'></div>
+                                <div class='logoContainer'>
+                                Select an Image for your logo: <input type="file" accept='image/*' name="myFile">
+                                </div>
                         </article>
                         <article class="seperate-margin seperate-margin">
                             <div class='colorContainer seperate-margin'>
@@ -87,9 +90,10 @@
                         
                     </section>
             <div class="modal-footer" id='footer-container'>
-                    <button id="saveSettingsButton" type="button" data-dismiss="modal">SAVE SETTINGS</button>
+            <button id="saveSettingsButton" type="submit" >SAVE SETTINGS</button>
             </div>
           </div>
+</form>
         </div>
       </div>
         <div class="ml-auto">
