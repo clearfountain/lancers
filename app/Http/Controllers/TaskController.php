@@ -118,26 +118,59 @@ class TaskController extends Controller
         return $this->ERROR('Task not Found');
     }
 
-    public function update(Request $request, Task $task){
+    public function update(Request $request, $id){
+
         $request->validate([
-            'name' => 'required|string',
-            'progress' => 'nullable|numeric',
-            'team' => 'nullable|string',
-            'due_date' => 'nullable|date',
-            'start_date' => 'nullable|date',
+            'title' => 'required|string',
+            'user_id' => 'required|numeric',
+            'start_date' => 'required|date',
+            'due_date' => 'required|date',
             'project_id' => 'required|numeric',
-            'status' => 'nullable|string'
+            'team' => 'nullable|string',
+            'status' => 'nullable|string',
+            'progress' => 'nullable|numeric',
         ]);
 
-        $task = Task::where('project_id', $request->input('project_id'))->first();
+
+
+        // $task = Task::where('project_id', $request->input('project_id'))->first();
+        $task = Task::whereId($id)->FirstOrFail();
 
         if ($task) {
             $task->update($request->all());
-            return $this->SUCCESS("task updated",$task);
+            return back()->withSuccess('Update Successful');
+        }else{
+            // $request->session()->flash('errors', 'Collaborator addtion failed!');
+            return back()->withInputs()->withError('Unable to update task');
         }
-
-        return $this->ERROR('Task not found');
+        // return $this->ERROR('Task not found');
     }
+
+    public function edit($id){
+
+        $task = Task::whereId($id)->FirstOrFail();
+
+        $projects = Project::where('user_id', Auth::user()->id)->get(['id', 'title']);
+        $users = User::all(['id', 'name']);
+        $status = ['pending' =>'Pending', 'in-progress' =>'In Progress', 'completed' => 'Completed'];
+
+        return view('projects.task-edit')->withStatuses($status)->withTask($task)->withProjects($projects)->withUsers($users);
+
+    }
+
+    public function delete($id){
+
+        $object = Task::whereId($id)->first();
+       if($object){
+        $object->delete();
+        return redirect()->back()->with('success','Task have been deleted');
+       }
+       else{
+        return redirect()->back()->with('error','An error occur');
+       }    
+
+    }
+
     
     public function destroy(Request $request, Task $task){
         $this->authorize('destroy', $task);

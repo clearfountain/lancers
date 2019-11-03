@@ -1,120 +1,194 @@
 @extends('layouts.settings_email')
 
 @section('main-content')
-	<main class="py-4">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-sm-12 col-md-8 offset-md-4">
-						<h3 class="head-text">EMAIL SETTING</h3></div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 d-none d-md-block">
-						<div class="side-nav">
-							<div class="logo-con">
-								<p class="logo text-center py-2">Lan<span>c</span>ers</p>
+<div class="wrapper">
+	<!-- Sidebar Holder -->
+	
+	<!-- Page Content Holder -->
+	<div id="content">
+			<section class="container-fluid">
+					<div class="row mt-4 ml-auto mr-auto" id="overallMainContentWrapper">
+							<div class="col-md-4 mt-4 pt-2 mb-4">
+									<div class="card settingsNavDiv mt-4">
+										 <div class="settingsNavDivImg">
+												 <div class="text-center p-1"><img class="mt-2"  src="https://res.cloudinary.com/nxcloud/image/upload/v1571934958/Lancer/Lancers_1_xfqglr.svg" alt="Lancer Logo" width="100px"></div></div>
+											<div class="card-body">
+													<p class="text-center"><a href="/dashboard/profile/settings">Profile Settings</a></p>
+													<p class="text-center"><a href="#" style="color: #0ABAB5;">Email Notification</a></p>
+													<p class="text-center"><a href="/users/subscriptions">Subscription</a></p>
+											</div>
+									</div>
 							</div>
-							<div class="d-flex flex-column align-items-center">
-								<div class="d-flex flex-column">
-									<a href="/dashboard/profile/settings" class="nav-option py-3">Profile Settings</a>
-									<a href="/dashboard/emails/settings" class="nav-option active-nav py-3"
-										>Email Settings</a>
-										<a href="/pricing" class="nav-option py-3">Subscription</a>
-								</div>
+							<div class="col">
+									<div class="container-fluid">
+											
+											<div class="formSection mb-5" style="min-width: 90%">
+													<div class="formsContainer mr-auto pt-2">
+														 <p class="mt-0 text-primary font-weight-bold" style="font-size: 1.2em">EMAIL SETTINGS</p>
+															<form class="card card-body mt-4" id="userInfoForm">
+																 <div class="row pl-3 pr-4">
+																		 <p class="card-title font-weight-bold  col" style="font-size: 1.3em">Default Auto Message</p>
+																 <div class="text-center" id="add-something col">
+																			<button class="btn btn-secondary text-white rounded-circle" >
+																					<i class="fas fa-plus"></i>
+																			</button>
+																	</div>
+																 </div>
+																	<div class="row mt-3 pl-3 pr-3">
+																			<div class="form-group formContainer col">
+																					<label for="autoResponseOne" class="font-weight-bold">Auto Response Invoice Message</label>
+																					<textarea rows="5" id="autoResponseOne" name="autoResponseOne" class="form-control mt-2" placeholder="Enter Auto Response" >It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution  It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more Thanks..</textarea>
+																			</div>
+																	</div>
+
+																	<div class="row mt-4 pl-3 pr-3">
+																			<div class="form-group formContainer col">
+																					<label for="autoResponseTwo" class="font-weight-bold">Auto Response Invoice Message</label>
+																					<textarea rows="5" id="autoResponseTwo" name="autoResponseTwo" class="form-control mt-2" placeholder="Enter Auto Response">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution  It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more Thanks..</textarea>
+																			</div>
+																	</div>
+																	
+																	<div class="row mt-4 pl-3 pr-3">
+																			<div class="form-group formContainer col">
+																					<label for="autoResponseThree" class="font-weight-bold">Auto Response Invoice Message</label>
+																					<textarea rows="5" id="autoResponseThree" name="autoResponseThree" class="form-control mt-2" placeholder="Enter Auto Response">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution  It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more Thanks..</textarea>
+																			</div>
+																	</div>
+
+																	<div class="row"><button class="btn btn-primary  ml-auto mr-auto mt-4" id="updateButton">Update</button></div>
+
+															</form>
+															
+															<form class="card card-body mt-4" id="defaultAutoMessage">
+																 <p class="card-title font-weight-bold pl-3 pr-3" style="font-weight: bold">Default Auto Message</p>
+																 
+																 <div class="form-check ml-3 mr-3 mt-2">
+																		<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+																		<label class="form-check-label" for="exampleRadios1">
+																			It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+																		</label>
+																	</div>
+																	<div class="form-check ml-3 mr-3 mt-2">
+																		<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+																		<label class="form-check-label" for="exampleRadios2">
+																			It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+																		</label>
+																	</div>
+																	<div class="form-check ml-3 mr-3 mt-2">
+																		<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+																		<label class="form-check-label" for="exampleRadios2">
+																			It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+																		</label>
+																	</div>
+																	<div class="form-check ml-3 mr-3 mt-2">
+																		<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+																		<label class="form-check-label" for="exampleRadios2">
+																			It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+																		</label>
+																	</div>
+																	<div class="form-check ml-3 mr-3 mt-2">
+																		<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+																		<label class="form-check-label" for="exampleRadios2">
+																			It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+																		</label>
+																	</div>
+																	
+<!--
+																	<div class="row mt-3 pl-3 pr-3">
+																			<div class="form-group formContainer col">
+																					<label for="autoResponseOne" class="font-weight-bold">Auto Response Invoice Message</label>
+																					<textarea rows="5" id="autoResponseOne" name="autoResponseOne" class="form-control mt-2" placeholder="Enter Auto Response" >It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution  It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more Thanks..</textarea>
+																			</div>
+																	</div>
+
+																	<div class="row mt-4 pl-3 pr-3">
+																			<div class="form-group formContainer col">
+																					<label for="autoResponseTwo" class="font-weight-bold">Auto Response Invoice Message</label>
+																					<textarea rows="5" id="autoResponseTwo" name="autoResponseTwo" class="form-control mt-2" placeholder="Enter Auto Response">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution  It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more Thanks..</textarea>
+																			</div>
+																	</div>
+																	
+																	<div class="row mt-4 pl-3 pr-3">
+																			<div class="form-group formContainer col">
+																					<label for="autoResponseThree" class="font-weight-bold">Auto Response Invoice Message</label>
+																					<textarea rows="5" id="autoResponseThree" name="autoResponseThree" class="form-control mt-2" placeholder="Enter Auto Response">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution  It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more Thanks..</textarea>
+																			</div>
+																	</div>
+-->
+
+																	<div class="row"><button class="btn btn-primary  ml-auto mr-auto mt-4" id="updateButton">Update</button></div>
+
+															</form>
+
+<!--
+															<form class="mt-5 card card-body" id="companyForm">
+																	<div class="row">
+																			<div class="form-group formContainer col-12 col-sm-6">
+																					<label for="companyName">Company Name</label>
+																					<input type="text" id="companyName" name="companyName" class="form-control" placeholder="Company Name"  />
+																			</div>
+
+																			<div class="form-group col-12 col-sm-6">
+																					<label for="companyEmail">Company Email</label>
+																					<input type="email" id="companyEmail" name="companyEmail" class="form-control" placeholder="foodie@gmail.com"  />      
+																			</div>
+																	</div>
+
+																	<p class="mb-4 mt-4" id="addressSettingToggle">
+																		<a class="" data-toggle="collapse" href="#multiCollapseExample2" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
+																		<span class="up"><i class="fas fa-chevron-up"></i></span> 
+																		<span class="down"><i class="fas fa-chevron-down"></i></span> &nbsp; Address Setting</a>
+
+																	</p>
+																	<div class="row">
+																		<div class="col">
+																			<div class="collapse multi-collapse" id="multiCollapseExample2">
+																					 <div class="row">
+																							 <div class="form-group col">
+																									<label for="companyAddress">Company Address</label>
+																									<input type="text" id="companyAddress" name="companyAddress" class="form-control" placeholder=""  />      
+																							</div>
+																					 </div>
+																				<div class="row">
+																					<div class="form-group col-12 col-sm-6">
+																							<label for="state">State</label>
+																							<input type="" id="state" name="state" class="form-control" placeholder="State" />      
+																					</div>
+
+																					<div class="form-group col-12 col-sm-6">
+																							<label for="country">Country</label>
+																							<input type="" id="country" name="country" class="form-control" placeholder="Country"/>      
+																					</div>
+																			</div>
+
+																			<div class="row">
+																					<div class="form-group col-12 col-sm-6">
+																							<label for="currency">Currency</label>
+																							<input type="" id="currency" name="currency" class="form-control" placeholder="Currency" />      
+																					</div>
+
+																					<div class="form-group col-12 col-sm-6">
+																							<label for="timeZone">Time Zone</label>
+																							<input type="" id="timeZone" name="timeZone" class="form-control" placeholder="Time Zone"/>      
+																					</div>
+																			</div>
+																			</div>
+																		</div>
+
+																	</div>
+
+																	<div class="row"><button class="btn btn-primary  ml-auto mr-auto mt-4" id="updateButton">Update</button></div>
+															</form>
+-->
+															
+															
+													</div>
+											</div>
+									</div>
 							</div>
-						</div>
 					</div>
-					<div class="col-sm-12 col-md-8">
-						<div class="email-con container p-4">
-							<h3 class="head-text">Default Auto Message</h3>
-                            @if(($status == "success") && ($data != null ))
+			</section>
+	</div>
 
-                                @php
-                                $invoiceMessage = $data['auto_invoice_message'];
-                                $proposalMessage = $data['auto_approval_message'];
-                                $agreementMessage = $data['auto_agreement_message'];
-
-                                @endphp
-                        @endif
-
-                        @if(($status == "failure") && ($data == null ))
-                            @php
-                            $invoiceMessage = '';
-                            $proposalMessage = '';
-                            $agreementMessage = '';
-
-                            @endphp
-                     @endif
-
-                     @if(session('editErrors'))
-                        <div class="alert alert-fail" role="alert">
-                            <h5><strong>Error:</strong></h5>
-                            @foreach(session('editErrors') as $error)
-                                        <i style="color: red;">{{ $error }} </i></br>
-                            @endforeach
-                            </div>
-                    @endif
-
-                    @if(session('editSuccess') != null)
-                    <div class="alert alert-fail" role="alert">
-                        <h5><strong>Success:</strong></h5>
-
-                        <i style="color: green;">{{ session('editSuccess') }} </i></br>
-
-                        </div>
-                    @endif
-
-                    @if(session('editFailure') != null)
-                    <div class="alert alert-fail" role="alert">
-                        <h5><strong>Error:</strong></h5>
-
-                        <i style="color: red;">{{ session('editFailure') }} </i></br>
-
-                        </div>
-                    @endif
-                     <form method="POST" action="{{ route('SET-EMAIL') }}">
-                        @csrf
-                        @method('PUT')
-							<div class="py-3">
-								<h6 class="small-head-text">Auto Responds Invoice Message</h6>
-								<textarea name="invoice" id="" cols="30" rows="3" class="message-con p-4">
-                                {{ $invoiceMessage }}	</textarea>
-							</div>
-							<div class="py-3">
-								<h6 class="small-head-text">Auto Responds Proposal Messsage</h6>
-								<textarea name="proposal" id="" cols="30" rows="3" class="message-con p-4">
-                                {{ $proposalMessage }}	</textarea>
-							</div>
-							<div class="py-3">
-								<h6 class="small-head-text">Auto Responds Agreement Messsage</h6>
-								<textarea name="agreement" id="" cols="30" rows="3" class="message-con p-4">
-                                {{ $agreementMessage }}	</textarea>
-							</div>
-							<div class="d-flex justify-content-center">
-								<button class="green-btn">Update</button>
-							</div>
-                            </form>
-						</div>
-					</div>
-				</div>
-				<!--<div class="row mt-5">
-					<div class="col-sm-12 col-md-8 offset-md-4">
-						<div class="email-con container p-4 cntr	">
-							<h6 class="small-head-text"> Auto Responds Invoice Message</h6>
-							<div class="radio mt-3">
-									<input id="radio-1" name="radio" type="radio" checked>
-									<label for="radio-1" class="radio-label">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</label>
-								</div>
-
-								<div class="radio">
-									<input id="radio-2" name="radio" type="radio">
-									<label  for="radio-2" class="radio-label">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</label>
-								</div>
-							<div class="d-flex justify-content-center">
-									<button class="green-btn">Update</button>
-								</div>
-						</div>
-					</div>
-				</div> -->
-			</div>
-		</main>
-        @endsection
+</div> 	
+@endsection

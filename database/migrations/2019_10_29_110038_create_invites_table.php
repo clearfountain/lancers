@@ -17,6 +17,9 @@ class CreateInvitesTable extends Migration
             $table->bigIncrements('id');
             $table->string('email');
             $table->string('token',16)->unique();
+            $table->unsignedBigInteger('project_id');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('role')->nullable();
             $table->timestamps();
         });
     }
