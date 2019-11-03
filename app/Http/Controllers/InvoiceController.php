@@ -32,7 +32,7 @@ class InvoiceController extends Controller {
         $invoice = Invoice::where('id', $id)->first();
         $projects = Project::where('user_id', Auth::user()->id)->get(['id', 'title']);
         $users = User::all(['id', 'name']);
-        return view('invoices.editinvoice')->withInvoice($invoice)->withProjects($projects)->withUsers($users);
+        return view('invoices.reviewinvoice')->withInvoice($invoice)->withProjects($projects)->withUsers($users);
     }
     public function update(Request $request, $id)
     {
@@ -189,17 +189,6 @@ class InvoiceController extends Controller {
 		//dd($data);
         return view('invoices.list', $data);
     }
-    // public function listGet(Request $request) {
-    //     if ($request->filter == 'paid') {
-    //         $invoices = Invoice::whereUser_id(Auth::user()->id)->whereStatus('paid')->with('estimate')->with('currency')->get();
-    //     } elseif ($request->filter == 'unpaid') {
-    //         $invoices = Invoice::whereUser_id(Auth::user()->id)->whereStatus('unpaid')->with('estimate')->with('currency')->get();
-    //     } else {
-    //         $invoices = Invoice::whereUser_id(Auth::user()->id)->with('estimate')->with('currency')->get();
-    //     }
-	// 	dd($invoices);
-    //     return view('invoices.list', $invoices);
-    // }
 
     public function getPdf($invoice) {
         $invoice = Invoice::findOrFail($invoice);
