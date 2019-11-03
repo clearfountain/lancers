@@ -91,26 +91,11 @@ class GuestController extends Controller {
     }
 
     public function savestep2(Request $request) {
-
+        if(($request->time >= 0) && ($request->cost_per_hour >= 0) && ($request->equipment_cost >= 0) && ($request->sub_contractors_cost >= 0) && ($request->similar_projects >= 0) && (($request->rating >= 0) && ($request->rating <= 5)))
+        {
         $project = Session::get('project');
         $request->session()->put('project', $project);
 
-        // $validator = Validator::make($request->all(), [
-        //     // 'project_id' => 'required|numeric',
-        //     'time' => 'required|numeric',
-        //     'price_per_hour' => 'required|numeric',
-        //     'equipment_cost' => 'nullable|numeric',
-        //     'sub_contractors' => 'nullable|string',
-        //     'sub_contractors_cost' => 'nullable|numeric',
-        //     'similar_projects' => 'required|numeric',
-        //     'rating' => 'required|numeric',
-        //     'currency_id' => 'required',
-        //     'start' => 'required|date',
-        //     'end' => 'required|date'
-        // ]);
-        // if ($validator->fails()) {
-        //     return back()->withErrors($validator)->withInput();
-        // } else {
         $data = [
             'time' => $request->time,
             'price_per_hour' => $request->cost_per_hour,
@@ -130,7 +115,30 @@ class GuestController extends Controller {
         // $ddata = Session::all();
         //  dd($data);
         return redirect('guest/create/step3');
-        // }
+        }
+        else
+        {   $currencies = Currency::all('id', 'code');
+            $project = session('project');
+
+            $errorArray = [];
+
+                if($request->time < 0) $errorArray[] = "Duration for project completion cannot be a negative value";
+
+                if($request->cost_per_hour < 0) $errorArray[] = "Amount collected per hour cannot be a negative value";
+
+                if($request->equipment_cost < 0) $errorArray[] = "Equipment cost cannot be a negative value";
+
+                if($request->sub_contractors_cost < 0) $errorArray[] = "Number of sub contractors value cannot be a negative value";
+
+                if($request->similar_projects < 0) $errorArray[] = "Similar projects value cannot be a negative value";
+
+                if(($request->rating < 0)  && ($request->rating > 5)) $errorArray[] = "The rating for your experience level must be greater than -1 and less than or equal to 5";
+
+               // default: $errorArray[] = "All numeric inputs must be greater than zero and rating must not be greater than 5";
+
+            return view('guests/step2')->with(['errors' => $errorArray, 'project' => $project, 'currencies' => $currencies]);
+            //return redirect('/estimate/create/step2')->withProject($project['project'])->withCurrencies($currencies);
+        }
     }
 
     public function createstep3(Request $request) {
@@ -227,7 +235,7 @@ class GuestController extends Controller {
                     'password' => $password
         ]);
         Auth::login($user);
-        
+
         $clients = new Client;
         $clients->user_id = $user->id;
         $clients->name = session('client')['name'];
@@ -240,7 +248,7 @@ class GuestController extends Controller {
         $clients->zipcode = session('client')['zipcode'];
         $clients->contacts = $session_contacts;
         $clients->save();
-        
+
         $estimate = Estimate::create(array_merge(session('guestestmate'), ['estimate' => $data['total'], 'user_id' => $user->id]));
 
         $project = Project::create([
@@ -257,7 +265,7 @@ class GuestController extends Controller {
 
         $request->session()->flush();
         $request->session()->put('new_estimate_id', $estimate->id);
-        
+        session(["projectObject" => $project]);
         return redirect('invoice/review');
 
         // return view('addclients')->with('estimate', $estimate->id);
