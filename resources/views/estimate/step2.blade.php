@@ -44,11 +44,11 @@
 
                 <div class="hour">
                     <p>How long (in hours) will it take you to complete this project <i class="fa fa-question-circle" aria-hidden="true"></i></p>
-                    <input required type="number" maxlength="10000" name="time" placeholder="Hours" style="width: 83% !important;" />
+                    <input required type="number" min="0" maxlength="10000" name="time" placeholder="Hours" style="width: 83% !important;" />
                 </div>
                 <div class="hour" style="display: none;">
                     <p>How much do you charge per hour <i class="fa fa-question-circle" aria-hidden="true"></i></p>
-                    <input type="number" maxlength="10000000" value="5000" name="price_per_hour" placeholder="NGN 0.00" style="width: 83% !important;" />
+                    <input type="number" min="0" maxlength="10000000" value="5000" name="price_per_hour" placeholder="NGN 0.00" style="width: 83% !important;" />
                 </div>
 
                 <div class="hours">
@@ -66,7 +66,7 @@
                     <p id="cost">
                         How much would it cost you to power your devices or equipment for this project <i class="fa fa-question-circle" aria-hidden="true"></i>
                     </p>
-                    <input type="number" required name="equipment_cost" id="equipment_cost" placeholder="NGN 0.00" style="width: 83% !important;" />
+                    <input type="number" min="0" required name="equipment_cost" id="equipment_cost" placeholder="NGN 0.00" style="width: 83% !important;" />
                 </div>
 
                 <div class="hour">
@@ -77,7 +77,7 @@
 
                 <div class="hour">
                     <p id="pay">How much would they be paid <i class="fa fa-question-circle" aria-hidden="true"></i></p>
-                    <input type="number" required name="sub_contractors_cost" id="sub_contractors_cost" placeholder="NGN 0.00" style="width: 83% !important;" />
+                    <input type="number" min="0" required name="sub_contractors_cost" id="sub_contractors_cost" placeholder="NGN 0.00" style="width: 83% !important;" />
                 </div>
             </div>
             <br>
@@ -86,12 +86,12 @@
 
                 <div class="hour">
                     <p id="proj">How many similar projects have you done before <i class="fa fa-question-circle" aria-hidden="true"></i></p>
-                    <input type="number" required name="similar_projects" id="similar_projects" placeholder="0" style="width: 30% !important;">
+                    <input type="number" min="0" max="10" maxlength="2" required name="similar_projects" id="similar_projects" placeholder="0" style="width: 30% !important;">
                 </div>
 
                 <div class="hour">
                     <p id="rate">How would you rate your experience level in executing this project <i class="fa fa-question-circle" aria-hidden="true"></i><p>
-                    <input required type="number" maxlength="5" name="rating" id="rating" placeholder="0" style="width: 30% !important;"> /5
+                    <input required type="number" min="0" max="5" maxlength="1" name="rating" id="rating" placeholder="0" style="width: 30% !important;"> /5
                 </div>
 
             </div>

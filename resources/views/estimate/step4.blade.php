@@ -2,7 +2,7 @@
 <!-- Select Project -->
 
 @section('styles')
-    <link rel="stylesheet" href="{{asset('css/step4.css')}}"/>
+<link rel="stylesheet" href="{{asset('css/step4.css')}}" />
 @endsection
 
 
@@ -36,12 +36,14 @@
 
     <div class="container-fluid main-section">
 
-    <main>
-        <h2>Client Information</h2>
-        <br>
-            {{--  <h2>Client Information</h2><br>  --}}
-            @if(session('success'))<br> <h6><span class="alert alert-success">{{session('success')}}</span></h6>
-            @elseif(session('error'))<br> <h6><span class="">{{session('error')}}</span></h6> @endif
+        <main>
+            <h2>Client Information</h2>
+            <br>
+            {{-- <h2>Client Information</h2><br>  --}}
+            @if(session('success'))<br>
+            <h6><span class="alert alert-success">{{session('success')}}</span></h6>
+            @elseif(session('error'))<br>
+            <h6><span class="">{{session('error')}}</span></h6> @endif
 
             @if(session()->has('message.alert'))
             <div class="text-center">
@@ -63,13 +65,13 @@
                         <label for="Str_Num">Street & Number</label>
                         <span>
                             <input required type="text" name="street" id="street" placeholder="Street">
-                            <input required type="number" name="street_number" id="number" placeholder="Number">
+                            <input required type="number" min="0" name="street_number" id="number" placeholder="Number">
                         </span>
 
                         <label for="city_Zcode">City & Zip Code</label>
                         <span>
                             <input required type="text" name="city" id="city" placeholder="City">
-                            <input required type="number" name="zipcode" id="Zcode" placeholder="Zip code">
+                            <input required type="number" min="0" name="zipcode" id="Zcode" placeholder="Zip code">
                         </span>
 
                         <label for="Country_state">Country & State</label>
@@ -124,9 +126,10 @@ $("#Cname").on("input", function() {
 
 
     let count = 1;
-	window.addEventListener('load', function() {
-		addContact();
-	})
+    window.addEventListener('load', function() {
+        addContact();
+    })
+
     function addContact() {
         let element = document.querySelector('#contacts')
         let newElement = document.createElement('div');
@@ -142,18 +145,18 @@ $("#Cname").on("input", function() {
         count += 1;
     }
 
-    $(document).ready(function () {
-        $('select[name="country_id"]').on('change', function () {
+    $(document).ready(function() {
+        $('select[name="country_id"]').on('change', function() {
             let countryID = $(this).val();
             if (countryID) {
                 $.ajax({
                     url: '/states/' + encodeURI(countryID),
                     type: "GET",
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         $('select[name="state_id"]').empty();
                         $('select[name="state_id"]').append('<option selected value="">Select State</option>');
-                        $.each(data.data, function (key, value) {
+                        $.each(data.data, function(key, value) {
                             $('select[name="state_id"]').append('<option value="' + value.id + '">' + value.name + '</option>');
                         });
                     }
