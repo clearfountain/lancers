@@ -76,12 +76,12 @@
                         </article>
                         <article class="seperate-margin seperate-margin">
                             <div class='colorContainer seperate-margin'>
-                                <h5>Brand Color</h5>
-                                <select></select>
+                                <h5 class="brand-title" >Brand Color</h5>
+                                <select class="mdb-select md-form colorful-select dropdown-primary"></select>
                             </div>
                             <div class='sampleContainer'>
-                                <p>Sample Title</p>
-                                <p>Sample Button</p>
+                                <p class='sampleItems'>Sample Title</p>
+                                <p class='sampleItems'>Sample Button</p>
                             </div>
                         </article>
                         
@@ -447,6 +447,11 @@
                 .sampleContainer{
                    background-color: #B1B1B1;
                    min-height: 110px;
+                   justify-content: center;
+                   align-items: center;
+                }
+                .sampleItems{
+                    margin: 0 10% 0 10%;
                 }
                 .logoContainer {
                     min-height: 80px;
@@ -458,7 +463,7 @@
                     align-items: center;
                 }
                 .seperate-margin{
-                    margin: 30px 0 30px 0;
+                    margin: 5% 0 5% 0;
                 }
                 #footer-container{
                     align-content: center;
@@ -466,6 +471,9 @@
                 }
                 #saveSettingsButton{
                     min-width: 100%;
+                }
+                .brand-title{
+                    margin-right: 40%;
                 }
 
         /* Media Queries to make things look better on mobile devices including switching the navbar to a more mobile friendly version */
