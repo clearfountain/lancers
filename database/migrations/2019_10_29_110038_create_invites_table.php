@@ -16,7 +16,13 @@ class CreateInvitesTable extends Migration
         Schema::create('invites', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('email');
+            $table->enum('status', ['pending', 'completed'])->nullable();
             $table->string('token',16)->unique();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('project_id');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('role')->nullable();
             $table->timestamps();
         });
     }

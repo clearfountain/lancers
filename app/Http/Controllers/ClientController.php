@@ -30,27 +30,28 @@ class ClientController extends Controller {
         }
         if (!empty($contacts[0]['email'])) {
             $emailcontact = $contacts[0]['email'];
-            $contacts = json_encode($contacts);
         } else {
             $emailcontact = null;
         }
 
         try {
-            $client = new Client;
-            $client->user_id = Auth::user()->id;
-            $client->name = $request->name;
-            $client->email = $emailcontact;
-            $client->street = $request->street;
-            $client->street_number = $request->street_number;
-            $client->city = $request->city;
-            $client->country_id = $request->country_id;
-            $client->state_id = $request->state_id;
-            $client->zipcode = $request->zipcode;
-            if (gettype($contacts) == 'string') {
-                $client->contacts = $contacts;
-            };
+            // $client = new Client;
+            // $client->user_id = Auth::user()->id;
+            // $client->name = $request->name;
+            // $client->email = $emailcontact;
+            // $client->street = $request->street;
+            // $client->street_number = $request->street_number;
+            // $client->city = $request->city;
+            // $client->country_id = $request->country_id;
+            // $client->state_id = $request->state_id;
+            // $client->zipcode = $request->zipcode;
+            // if (gettype($contacts) == 'string') {
+            //     $client->contacts = $contacts;
+            // };
 
-            if ($client->save()) {
+            $client = Auth::user()->clients()->create(['name' => $request->name, 'email' => $emailcontact, 'street' => $request->street, 'street_number' => $request->street_number, 'city' => $request->city, 'country_id' => $request->country_id, 'state_id' => $request->state_id, 'zipcode' => $request->zipcode, 'contacts' => $contacts]);
+
+            if ($client) {
                 return back()->with('success', 'New client created');
                 // return $this->SUCCESS('New client created', $data);
             }
@@ -71,7 +72,7 @@ class ClientController extends Controller {
         }else{
             $client->delete();
 
-            return back()->with('success', 'Client deleted');
+            return redirect('/clients')->with('success', 'Client deleted');
         }
     }
 
@@ -116,12 +117,12 @@ class ClientController extends Controller {
                 $clientData += compact("clientState");
                 
             }
-            return view('client-info')->with('clientData',$clientData);
+            return view('clients.client-info')->with('clientData',$clientData);
             //return $clientData;
         } else {
             $error = "User not found";
             $clientData += compact("error");
-            return view('client-info')->with('clientData',$clientData);
+            return view('clients.client-info')->with('clientData',$clientData);
         }
     }
 
@@ -163,7 +164,7 @@ class ClientController extends Controller {
             $emailcontact = $contacts[0]['email'];
             $inputs['email'] = $emailcontact;
 
-            $contacts = json_encode($contacts);
+
             $inputs['contacts'] = $contacts;
         } else {
             $emailcontact = null;

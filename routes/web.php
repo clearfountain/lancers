@@ -315,11 +315,6 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/client-doc-view', function () {
         return view('client-doc-view');
     });
-
-    Route::get('/invoice_view', function () {
-        // return view('invoices.reviewinvoice');
-        return view('invoice_view');
-    });
     
     
     // Route::get('/invoice', function () {
@@ -364,15 +359,17 @@ Route::group(['middleware' => 'auth:web'], function() {
     });
 });
 
-//Invite new user to collaborate
-Route::get('invite', 'ProjectController@invite')->name('invite');
-//Process the form submission
-Route::post('invite', 'InviteController@process')->name('process');
-// Accept the invitation. {token} is a required parameter that will be exposed to us in the controller method
-Route::get('accept/{token}', 'InviteController@accept')->name('accept');
+    //Invite new user to collaborate . Form submission
+    Route::get('project/invite', 'InviteController@invite')->name('invite');
+    //Process the form submission and send the invitation
+    Route::post('project/invite/send', 'InviteController@process')->name('process');
+    //Create account
+    Route::get('register/{token}', 'InviteController@register');
+    // Accept the invitation. {token} is a required parameter that will be exposed to us in the controller method
+    Route::post('accept/{token}', 'InviteController@accept')->name('accept');
 
 
-Route::get('/run/{command}', function ($command) {
-    $test = \Artisan::call($command);
-    dd($test);
-});
+    Route::get('/run/{command}', function ($command) {
+        $test = \Artisan::call($command);
+        dd($test);
+    });

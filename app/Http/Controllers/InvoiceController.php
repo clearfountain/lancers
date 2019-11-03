@@ -32,7 +32,7 @@ class InvoiceController extends Controller {
         $invoice = Invoice::where('id', $id)->first();
         $projects = Project::where('user_id', Auth::user()->id)->get(['id', 'title']);
         $users = User::all(['id', 'name']);
-        return view('invoices.editinvoice')->withInvoice($invoice)->withProjects($projects)->withUsers($users);
+        return view('invoices.reviewinvoice')->withInvoice($invoice)->withProjects($projects)->withUsers($users);
     }
     public function update(Request $request, $id)
     {
@@ -71,10 +71,12 @@ class InvoiceController extends Controller {
 
     public function review(Request $request){
         $estimate_id = session('new_estimate_id');
-        // dd($estimate_id);
-        
+        $projectObject = session("projectObject");
+
+
         if($estimate_id && is_int($estimate_id)){
             $estimate = Estimate::find($estimate_id);
+
             if($estimate){
                 $pre_invoice = Invoice::whereEstimate_id($request->estimate_id)->first();
                 if (is_object($pre_invoice)) {
@@ -83,8 +85,10 @@ class InvoiceController extends Controller {
                 }else{
                     $createinvoice = Invoice::create(['user_id' => Auth::user()->id, 'issue_date' => $estimate->start, 'due_date' => $estimate->end, 'estimate_id' => $estimate->id, 'amount' => $estimate->estimate, 'currency_id' => $estimate->currency_id]);
                     $invoice = Invoice::whereId($createinvoice->id)->with('estimate')->first();
+                    $projectObject->invoice_id = $createinvoice->id;
+                    $projectObject->save();
                 }
-        
+
                 return view('invoices.reviewinvoice')->with('invoice', $invoice);
             }else return redirect('estimate/create');
         }else{
@@ -98,7 +102,7 @@ class InvoiceController extends Controller {
         return view('invoice_sent');
     }
 
-    public function index() { 
+    public function index() {
         $user = Auth::user();
 
         // return $user->projects;
@@ -173,7 +177,7 @@ class InvoiceController extends Controller {
         // dd($invoice);
 
         $invoice = Project::where('invoice_id', $invoice)->select('id', 'title', 'estimate_id', 'client_id', 'invoice_id')->with(['estimate', 'invoice', 'client'])->first();
-	
+
     // return $invoice;
         return view('invoices.viewinvoice')->with('invoice', $invoice);
     }
@@ -189,17 +193,6 @@ class InvoiceController extends Controller {
 		//dd($data);
         return view('invoices.list', $data);
     }
-    // public function listGet(Request $request) {
-    //     if ($request->filter == 'paid') {
-    //         $invoices = Invoice::whereUser_id(Auth::user()->id)->whereStatus('paid')->with('estimate')->with('currency')->get();
-    //     } elseif ($request->filter == 'unpaid') {
-    //         $invoices = Invoice::whereUser_id(Auth::user()->id)->whereStatus('unpaid')->with('estimate')->with('currency')->get();
-    //     } else {
-    //         $invoices = Invoice::whereUser_id(Auth::user()->id)->with('estimate')->with('currency')->get();
-    //     }
-	// 	dd($invoices);
-    //     return view('invoices.list', $invoices);
-    // }
 
     public function getPdf($invoice) {
         $invoice = Invoice::findOrFail($invoice);
@@ -241,10 +234,10 @@ class InvoiceController extends Controller {
             // dd($e->getMessage());
             session()->flash('message.alert', 'danger');
             session()->flash('message.content', "Error We Are Unable to Send This Invoice Now, Please Try Back Later ");
-            return back();
+            return redirect("/invoices");
         }
 
-        
+
         return view('invoices.invoicesent');
     }
 

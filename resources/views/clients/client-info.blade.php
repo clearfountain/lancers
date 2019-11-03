@@ -685,9 +685,9 @@ tbody, .bold {
             <div class="col-12">
                 <section>
                     <button type="button" class="btn btn-lg top-buttons" onclick="location.href='/clients/{{$clientData['id']}}/edit'"><b>Edit</b></button>
-                    <button type="button" class="btn btn-lg top-buttons delete-btn" data-id="{{$clientData['id']}}"><b>Delete</b></button>
-                    {{--<button type="button" class="btn btn-lg top-buttons" data-id="{{$client->id}}" onclick="location.href='/clients/{{$clientData['id']}}/delete'"><b>Delete</b></button> --}}
-                    <form action="/clients/{{$clientData['id']}}/delete" method="post" id="delete-{{$clientData['id']}}">
+                    {{--<a class="delete-btn" href="" data-id="{{$clientData['id']}}"><button type="button" class="btn btn-lg top-buttons" data-id="{{$clientData['id']}}"><b>Delete</b></button></a>--}}
+                    <button type="button" class="btn btn-lg top-buttons" data-id="{{$clientData['id']}}" onclick="document.getElementById('delete').submit();"><b>Delete</b></button>
+                    <form action="/clients/{{$clientData['id']}}/delete" method="post" name="delete-form" id="delete">
                         @csrf
                         @method('delete')
                     </form>
@@ -782,7 +782,7 @@ tbody, .bold {
           <h2>More</h2>
       </div>
       <table class="table-responsive ml-5">
-          @if( count($clientData['contacts']) < 1 )
+          @if( count($clientData['contacts'] ?? []) < 1 )
             <thead>
               <tr>
                   <th> N/A</th>   
@@ -797,7 +797,7 @@ tbody, .bold {
                     </tr>
             </thead>
             <tbody>
-                @foreach($clientData['contacts'] as $contact)
+                @foreach($clientData['contacts'] ?? [] as $contact)
             
                     <tr>
                         <td>
@@ -848,17 +848,17 @@ tbody, .bold {
         crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>
-          window.onload
+          
           var form = document.getElementsByClassName("form-inline")[0];
           form.style.display = "none";
         
-          $(".delete-btn").on('click', e => {
+         {{-- $(".delete-btn").on('click', e => {
             e.preventDefault();
 
             let id = e.target.dataset.id;
 
             $(`#delete-${id}`).submit();
-          });
+          }); --}}
           $(function() {
             $('.toggleNav').on('click',function() {
               $('#sidebar-wrapper').slideToggle();
