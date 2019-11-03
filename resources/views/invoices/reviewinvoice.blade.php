@@ -20,10 +20,10 @@
                 Invoice
             </div>
             <div class="box-5">
-                <form method="POST" action="/invoices/send">
+                <form method="POST" action="/invoice/send">
                     @csrf
                     <input type="text" style="display: none;" name="invoice" value="{{$invoice->id}}">
-                    <a href="#"><button class="sendInvoice">SEND</button></a>
+                    <button type="submit" class="sendInvoice">SEND</button>
                 </form>
             </div>
         </header>
@@ -45,10 +45,10 @@
                 Invoice
             </div>
             <div class="box-5" style="max-width: 150px">
-                <form method="POST" action="/invoices/send">
+                <form method="POST" action="/invoice/send">
                     @csrf
                     <input type="text" style="display: none;" name="invoice" value="{{$invoice->id}}">
-                    <a href="#"><button class="sendInvoice">SEND INVOICE</button></a>
+                    <button type="submit" class="sendInvoice">SEND INVOICE</button>
                 </form>
             </div>
         </header>
@@ -66,10 +66,16 @@
                         </div>
                     </div>
                 </section> --}}
-
+                
+                @if(session()->has('message.alert'))
+                <div class="text-center">
+                    <button class=" alert alert-{{ session('message.alert') }}"> 
+                        {!! session('message.content') !!}
+                    </button>
+                </div>
+                @endif
                 <section class="mainContentBelowLogo">
                     <section>
-
                         <div class="addressAndPayment row">
                             <div class="card addressCard" style="font-weight: normal">
                                 <div style="font-weight: bold">{{$invoice->estimate->project->client->name}}</div>

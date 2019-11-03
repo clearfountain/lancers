@@ -65,9 +65,9 @@
             outline: none;
             /*added outline none*/
         }
-        div>#ext:hover {
+        /* div>#ext:hover {
             background: #0ABAB5;
-        }
+        } */
         div>.close {
             outline: none;
         }

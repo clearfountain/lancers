@@ -70,9 +70,9 @@
             outline: none;
             /*added outline none*/
         }
-        div>#ext:hover {
+        /* div>#ext:hover {
             background: rgb(9, 206, 199);
-        }
+        } */
         /*changed this from clear to close*/
         div>.close {
             outline: none;

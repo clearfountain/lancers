@@ -2,241 +2,9 @@
 <!-- Preview Invoice -->
 
 @section('styles')
+<link rel="stylesheet" href="{{asset('css/step5.css')}}"/>
     <style> 
-        @import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
         
-        *{
-            font-family: 'Ubuntu', sans-serif;
-            font-weight: bold;
-            margin: 0;}
-        
-        body{
-            background-color: #F2F3F3;;
-        }
-        .container-a{
-            display:flex;
-            background: white;
-            font-size: 0.8em !important;
-            height: 50px;
-            align-items: center;
-        }
-
-        .container-a > div{
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-            font-size: 1rem;
-            height: 50px;
-        }
-        .box-1{
-            color: #C4C4C4;
-            flex-flow: column wrap;
-            flex-grow: 1;
-            color: #C4C4C4;
-        }
-        
-        .container-a>.box-2{
-            flex:1;
-            color: #C4C4C4;
-            
-        }
-        
-        .container-a>.box-3{
-            flex:2;
-            cursor: pointer;
-            
-        }
-        .container-a>.box-4{
-            flex:4;
-            
-        }
-        .box-1:hover, .box-2:hover, .box-3:hover {
-            background:#0ABAB5;
-            transition: all 0.3s ease 0s;
-            border-color: #0ABAB5;
-            color: white;
-            cursor: pointer;
-
-        }
-        .container-a>.box-5{
-            flex:2; 
-            background: #0ABAB5;
-            cursor: pointer;
-            border: none;
-        }
-        .container-a>.box-5:hover{
-            background:  rgb(5, 128, 123);
-            transition: all 0.3s ease 0s;
-        }
-
-        .sendInvoice {
-            color: white;
-            border: none;
-            background:none;
-            height: 100%;
-            cursor: pointer;
-        }
-
-        img:hover{
-            color: white;
-        }
-
-        .card {
-            border: 0px
-        }
-        
-        .mainContent {
-            margin-left: 20px;
-            margin-right: 20px;
-            margin: auto;
-            margin-top: 100px;
-            max-width: 550px;
-            position: relative;
-            background: #FFFFFF;
-            /* Secondary blue */
-
-            border: 5px solid #0ABAB5;
-            box-sizing: border-box;
-        }
-        
-        .mainContentBelowLogo {
-            margin-left: 20px;
-            margin-right: 20px;
-            margin-top: 200px;
-        }
-        
-        .topMenu {
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 15px
-        }
-
-        .editInvoice {
-            background-color: #00FFA3;
-            color: #333333;
-            font-weight: 700;
-            border: none;
-            border-radius: 0%;
-            font-size: 0.8rem;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            max-width: 200px;
-        }
-
-        .editInvoice:hover {
-            background-color: #03E493;
-            color: #333333;
-        }
-
-        .invoiceSettings{
-            color: #B1B1B1;
-            font-size: 0.8em;
-        }
-
-        .invoiceSettings p{
-            margin-top: auto;
-            margin-bottom: auto;
-        }
-        
-        .addressAndPayment{
-            margin: auto;
-            font-size: 0.8em;
-            margin-top: 30px;
-        }
-        
-        .address {
-            width: 99px;
-            height: 77px;
-            margin: auto;
-
-        }
-        
-        .payment {
-            max-width: 300px;
-            font-weight: bold;
-        }
-        
-        .issueDate {
-            margin-right: 30px;
-        }
-        
-        .paymentButton {
-            font-style: normal;
-            font-weight: bold;
-            font-size: 1em;
-            border: 0px;
-            border-radius: 0px;
-            line-height: 32px;
-            text-align: center;
-            background-color: #0ABAB5;
-            color: #FFFFFF;
-            padding: 2px;
-        }
-        
-        .invoiceDetails {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-
-        th, td {
-            padding-left: 0px !important;
-            padding-right: 28px !important;
-        }
-
-        .table-card {
-            width: 100%;
-        }
-
-        .card-body {
-            margin: 0px;
-            padding: 0px !important;
-            width: 100%
-        }
-
-        .bottomSpace{
-            margin-bottom: 50px;
-        }
-
-        .address{
-            margin-right: 30px;
-        }
-
-        .menuForSmallScreens {
-                display: none;
-            }
-
-        /* Media Queries to make things look better on mobile devices including switching the navbar to a more mobile friendly version */
-        @media only screen and (max-width: 600px) {
-            .mainContent{
-                margin-top: 50px;
-            }
-
-            .addressCard{
-                display: none;
-            }
-
-            .addressAndPayment.row {
-                padding: 0% !important;
-            }
-            .payment{
-                margin-left: auto !important;
-                margin-right: auto !important;
-                margin-bottom: 20px !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                
-            }
-
-            .menuForLargeScreens {
-                display: none;
-            }
-
-            .menuForSmallScreens {
-                display: flex;
-            }
-        }
-        a:hover{cursor: pointer;}
     </style>
 @endsection
 
@@ -246,10 +14,14 @@
     <!-- This is the navbar for small screens -->
     <header class="container-a menuForSmallScreens">
             <div class="box-1" style="max-width: 50px">
-                    <i class="fa fa-times" aria-hidden="true"></i>
+                <a class="icon-btn" id="icon-close">
+                    <span><i class="icon-btn fa fa-times" aria-hidden="true"></i></span>
+                </a>
             </div>
             <div class="box-2" style="max-width: 50px">
-                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                <a class="icon-btn" id="icon-back">
+                    <span><i class="icon-btn fa fa-chevron-left" aria-hidden="true"></i></span>
+                </a>
             </div>
     
             <div class="box-3">
@@ -270,12 +42,16 @@
     <header class="container-a menuForLargeScreens">
             <!-- <header> -->
             <div class="box-1" style="max-width: 50px">
-                    <i class="fa fa-times" aria-hidden="true"></i>
+                <a class="icon-btn" id="icon-close">
+                    <span><i class="icon-btn fa fa-times" aria-hidden="true"></i></span>
+                </a>
             </div>
             <div class="box-2" style="max-width: 50px">
-                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                <a class="icon-btn" id="icon-back">
+                    <span><i class="icon-btn fa fa-chevron-left" aria-hidden="true"></i></span>
+                </a>
             </div>
-    
+            
             <div class="box-3" style="max-width: 150px">
                 Save and Close
             </div>
@@ -334,7 +110,7 @@
             <section class="invoiceDetails row">
                 <div class=" table-card" style="margin-top: 10px">
                     <div class="">
-                        Invoice <span style="font-weight: bold; font-size: 0.6em; color: #B1B1B1">No. {{$data['invoice_no']}}</span> <p class="serviceRendered" style="margin-top: 10px">Glacier Fintech App</p>
+                        Invoice <span style="font-weight: bold; font-size: 0.6em; color: #B1B1B1">No. {{$data['invoice_no']}}</span> <p class="serviceRendered" style="margin-top: 10px">Lancers</p>
                     </div>
                     <div class="tableSection" style="font-size: 0.8em; width: 100%; overflow-x: scroll">
                         <table class="table">

@@ -147,7 +147,7 @@ select {
   height: 60px;
   color: white;
 }
-.btn:hover{
+.active:hover{
     background: #0ABAB5;
     color:white;
 }
@@ -244,7 +244,7 @@ input {
 <div class="section1">
 
   <div id="glac">
-    <h1>Glacier Fintech App</h1>
+    <h1>Lancers</h1>
     <hr />
   </div>
   <hr />

@@ -276,8 +276,8 @@ font-weight: bold;
                             </tr>
                             <tr>
                                 <td>2</td>
-                                <td>Gracier Inc</td>
-                                <td>Glacier Fintech App</td>
+                                <td>Lancers Inc</td>
+                                <td>Lancers</td>
                                 <td>02/10/19</td>
                                 <td><span class="badge badge-button badge-primary"> Sent </span></td>
                                 <td style="width:40%"class="alignleft">US$8,800.00</td>

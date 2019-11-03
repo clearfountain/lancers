@@ -431,7 +431,7 @@
 <section class="invoice-body m-auto">
     <div class="container">
         <div class="mt-5 px-3">
-            <form method="POST" action="/invoices/send" style="display: inline-block;">
+            <form method="POST" action="/invoice/send" style="display: inline-block;">
                 @csrf
                 <input type="text" style="display: none;" name="invoice" value="{{$invoice->invoice->id}}">
                 <button type="submit" class="btn btn-outline-dark ">Send Invoice</button>

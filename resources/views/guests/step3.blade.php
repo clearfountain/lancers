@@ -293,12 +293,12 @@ $("#step3UpperButton").on("click", function() {
        $("#step3LowerButton").css( "background-color", "#0ABAB5");
       });
 
-//handle form close
-$("#closeForm").on("click", function() {
-    let path = "@php echo session("path") @endphp";
-    window.location = path;
+    //handle form close
+    $("#closeForm").on("click", function() {
+        let path = "@php echo session("path") @endphp";
+        window.location = path;
 
-});
+    });
 
     function next(e){
         let form = document.querySelector('#form');

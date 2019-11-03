@@ -22,7 +22,18 @@
 
     <!-- Styles -->
     {{--  <link href="{{ asset('css/app.css') }}" rel="stylesheet">  --}}
+    <style>
+        .validated{
+            background: #0ABAB5 !important;
+            color:white;
+        }
 
+        .icon-btn:hover{
+            cursor: pointer;
+            color: rgb(10, 186, 181) !important;
+            /* background: red; */
+        }
+    </style>
 
    {{--  //inline styles  --}}
 
@@ -52,7 +63,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-
+<!-- 
     <script>
     //image picker jquery
       $("#image_selecter").on("click", function() {
@@ -90,10 +101,18 @@
 
     </script>
 
-   {{--  // inline scrpt  --}}
+   {{--  // inline scrpt  --}} -->
 
    @yield('script')
 <script type="text/javascript">
+        
+        // window.onload=function(){
+            let back = document.querySelector('#icon-back');
+            let close = document.querySelector('#icon-close');
+            if(back !== null) back.addEventListener('click', function(e){e.preventDefault(); window.history.back()});
+            if(close !== null) close.addEventListener('click', function(e){e.preventDefault(); window.location.href='/dashboard'});
+        // }
+        
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
