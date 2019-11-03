@@ -8,6 +8,17 @@ class Invite extends Model
 {
     //
     protected $fillable = [
-        'email', 'token',
+        'email', 'token','project_id','role'
     ];
+
+    /**
+ * A user has a referrer.
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+ */
+public function project()
+{
+    return $this->belongsTo(Project::class, 'project_id', 'id');
+}
+
 }

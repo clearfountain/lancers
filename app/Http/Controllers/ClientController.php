@@ -98,6 +98,33 @@ class ClientController extends Controller {
         $client = Client::where(['id' => $client_id, 'user_id' => Auth::user()->id])->first();
         return $client !== null ? $this->SUCCESS('Client retrieved', $client) : $this->SUCCESS('No client found');
     }
+    
+    public function viewClient($client_id) {
+        $clientData = [];
+        if(Client::where(['id' => $client_id, 'user_id' => Auth::user()->id])->first()){
+            $clientData = Client::where(['id' => $client_id, 'user_id' => Auth::user()->id])->first()->toArray();
+            if(isset($clientData['country_id'])){
+                $country_id = $clientData['country_id'];
+                $country = Country::where('id',$country_id)->get('name')->toArray();
+                $clientCountry = $country[0]['name'];
+                $clientData += compact("clientCountry");
+            }
+            
+            if(isset($clientData['state_id'])){
+                $state_id = $clientData['state_id'];
+                $state = State::where(['id'=>$state_id,'country_id'=>$country_id])->get('name');
+                $clientState = $state[0]['name'];
+                $clientData += compact("clientState");
+                
+            }
+            return view('client-info')->with('clientData',$clientData);
+            //return $clientData;
+        } else {
+            $error = "User not found";
+            $clientData += compact("error");
+            return view('client-info')->with('clientData',$clientData);
+        }
+    }
 
     public function edit($client)
     {

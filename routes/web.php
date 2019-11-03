@@ -187,6 +187,7 @@ Route::group(['middleware' => 'auth:web'], function() {
          return view('addclients');
     });
 
+    Route::get('/clients/view/{id}', 'ClientController@viewClient')->name('viewClient');
     Route::get('/clients/{client}/edit', 'ClientController@edit');
     Route::put('/clients/edit', 'ClientController@update');
     Route::delete('/clients/{client}/delete', 'ClientController@delete');
@@ -267,6 +268,9 @@ Route::group(['middleware' => 'auth:web'], function() {
 
     // Task Routes
     Route::get('/tasks', 'TaskController@getAllTasks');
+    Route::get('/task/edit/{id}', 'TaskController@edit');
+    Route::post('/task/update/{id}', 'TaskController@update');
+    Route::get('/task/remove/{id}', 'TaskController@delete');
     Route::get('/tasks/{id}', 'TaskController@getTask');
     Route::post('/tasks', 'TaskController@createTask');
     Route::put('/tasks/{id}', 'TaskController@updateTask');
@@ -356,9 +360,9 @@ Route::group(['middleware' => 'auth:web'], function() {
 });
 
 //Invite new user to collaborate
-Route::get('invite', 'ProjectController@invite')->name('invite');
+Route::get('project/invite', 'InviteController@invite')->name('invite');
 //Process the form submission
-Route::post('invite', 'InviteController@process')->name('process');
+Route::post('project/invite', 'InviteController@process')->name('process');
 // Accept the invitation. {token} is a required parameter that will be exposed to us in the controller method
 Route::get('accept/{token}', 'InviteController@accept')->name('accept');
 
