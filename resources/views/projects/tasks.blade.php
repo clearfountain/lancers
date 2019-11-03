@@ -98,13 +98,13 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item text-success" href="{{url('#')}}"><i
+                                            {{--  <a class="dropdown-item text-success" href="{{url('#')}}"><i
                                                 class="fas fa-binoculars"></i> View
+                                            </a>  --}}
+                                             <a class="dropdown-item text-secondary" href="{{ url('/')}}/task/edit/{{ $task->id }}"><i
+                                                class="fas fa-edit"></i> Edit  
                                             </a>
-                                            <a class="dropdown-item text-secondary" href="{{url('#')}}"><i
-                                                class="fas fa-edit"></i> Edit
-                                            </a>
-                                            <a class="dropdown-item text-danger" href="{{url('#')}}"><i
+                                            <a class="dropdown-item text-danger" href="{{ url('/')}}/task/remove/{{ $task->id }}"><i
                                                 class="fas fa-trash-alt"></i> Delete
                                             </a>
                                         </div>
