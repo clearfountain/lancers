@@ -29,7 +29,7 @@
         </div>
 
         <div class="">
-            <input class="text-center cnc" value="NEXT" type="button">
+            <input class="text-center cnc" id="step4UpperButton" value="NEXT" type="button">
         </div>
 
     </div>
@@ -97,10 +97,10 @@
                 <button class="btn">NEXT</button>
             </section> -->
     </main>
-    
-    <button class="btn" type="submit">NEXT</button>
+
+    <button class="btn" id="step4LowerButton" type="submit">NEXT</button>
     </div>
-        
+
     </div>
 </form>
 @endsection

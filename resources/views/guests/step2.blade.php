@@ -9,7 +9,7 @@
 @section('content')
 <form id="form" onsubmit="submitEvent(event)" method="post" action="/guest/save/step2">
     @csrf
-    
+
     @include('partials.header_stage2')
 
     <div class="container-fluid main-section">
@@ -21,7 +21,20 @@
         </div>
 
         <div class="section1">
+        <p style="color:red;">@if(null !== session('error')) {{session('error')}} @endif</p>
 
+    <div class="section1">
+            @php
+                if(!empty($errors))
+                {
+                    foreach($errors as $error)
+                    {
+                        echo'<p style="color:red;">'.$error.'</p>';
+                    }
+
+
+                }
+            @endphp
             <div id="glac">
                 <h2 class="pull-left">{{$project['project_name']}}</h2>
                 <hr />
@@ -114,7 +127,7 @@
 
 @section('script')
 <script>
-    
+
     let form = document.querySelector('#form');
     let form_children = {};
     ['next_page', 'next_btn', 'time', 'start', 'end', 'rating', 'currency_id', 'similar_projects', 'sub_contractors_cost', 'sub_contractors', 'equipment_cost']
@@ -145,7 +158,7 @@
             }
         });
     }
-    
+
 
     window.onload=function(){
         ['keyup', 'click']
@@ -163,7 +176,7 @@
                 return; // remove the validated toggle
             }
         }
-        
+
         // if(form_children['start'].value > form_children['end'].value ){
         //     console.log('ggg')
         //     next_page.disabled = true;
@@ -179,7 +192,7 @@
         next_page.classList.add('validated');
         next_btn.classList.add('validated');
     }
-    
+
     function falsy(el){
         if(typeof el.selected !== 'undefined'){
             if(el.selected != '' && el.selected == null) return false;
@@ -188,7 +201,7 @@
         }
         return true;
     }
-    
+
 
 </script>
 @endsection
