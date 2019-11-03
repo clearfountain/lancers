@@ -86,7 +86,7 @@
                         </article>
                         
                     </section>
-            <div class="modal-footer">
+            <div class="modal-footer" id='footer-container'>
                     <button id="saveSettingsButton" type="button" data-dismiss="modal">SAVE SETTINGS</button>
             </div>
           </div>
@@ -394,7 +394,7 @@
             margin-right: 30px;
         }
 
-        .paymentButton {
+        #saveSettingsButton,.paymentButton {
             font-style: normal;
             font-weight: bold;
             font-size: 1em;
@@ -446,7 +446,7 @@
                 }
                 .sampleContainer{
                    background-color: #B1B1B1;
-                   min-height: 80px;
+                   min-height: 110px;
                 }
                 .logoContainer {
                     min-height: 80px;
@@ -459,6 +459,13 @@
                 }
                 .seperate-margin{
                     margin: 30px 0 30px 0;
+                }
+                #footer-container{
+                    align-content: center;
+                    align-items: center;
+                }
+                #saveSettingsButton{
+                    min-width: 100%;
                 }
 
         /* Media Queries to make things look better on mobile devices including switching the navbar to a more mobile friendly version */
