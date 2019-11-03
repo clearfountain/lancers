@@ -782,7 +782,7 @@ tbody, .bold {
           <h2>More</h2>
       </div>
       <table class="table-responsive ml-5">
-          @if( count($clientData['contacts']) < 1 )
+          @if( count($clientData['contacts'] ?? []) < 1 )
             <thead>
               <tr>
                   <th> N/A</th>   
@@ -797,7 +797,7 @@ tbody, .bold {
                     </tr>
             </thead>
             <tbody>
-                @foreach($clientData['contacts'] as $contact)
+                @foreach($clientData['contacts'] ?? [] as $contact)
             
                     <tr>
                         <td>
