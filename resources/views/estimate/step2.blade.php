@@ -9,7 +9,7 @@
 @section('content')
 <form id="form" onsubmit="submitEvent(event)" method="post" action="/estimate/create/step3">
     @csrf
-
+    
     @include('partials.header_stage2')
 
     <div class="container-fluid main-section">
@@ -19,19 +19,10 @@
             <h5>Please Input the required fields in the form below</h5>
             <br>
         </div>
-        <p style="color:red;">@if(null !== session('error')) {{session('error')}} @endif</p>
 
         <div class="section1">
-        @php
-        if(isset($errors))
-        {
-            array_map(function($error){
-                  echo'<p style="color:red;">'.$error.'</p>';
-            },$errors);
-        }
-        @endphp
-            <div id="glac">
 
+            <div id="glac">
                 <h2 class="pull-left">{{$project}}</h2>
                 <hr />
             </div>
@@ -107,7 +98,7 @@
             </div>
 
         </div class="nex">
-
+        
         <!-- <button class="btn">NEXT</button> -->
         <div class="row ml-auto box justify-content-center mt-20" style="margin-top: 20px;">
             <div class="col-sm-6">
@@ -123,7 +114,7 @@
 
 @section('script')
 <script>
-
+    
     let form = document.querySelector('#form');
     let form_children = {};
     ['next_page', 'next_btn', 'time', 'start', 'end', 'rating', 'currency_id', 'similar_projects', 'sub_contractors_cost', 'sub_contractors', 'equipment_cost']
@@ -154,7 +145,7 @@
             }
         });
     }
-
+    
 
     window.onload=function(){
         ['keyup', 'click']
@@ -177,7 +168,7 @@
         next_page.classList.add('validated');
         next_btn.classList.add('validated');
     }
-
+    
     function falsy(el){
         if(typeof el.selected !== 'undefined'){
             if(el.selected != '' && el.selected == null) return false;
@@ -186,7 +177,7 @@
         }
         return true;
     }
-
+    
 
 </script>
 @endsection
