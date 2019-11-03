@@ -106,7 +106,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary modal-save">Save changes</button>
-                        <a href="" class="btn btn-primary" >Back</a>
+                        <a href="{{ url('/') }}/project/tasks" class="btn btn-primary" >Back</a>
                     </div>
                 </form>
 
