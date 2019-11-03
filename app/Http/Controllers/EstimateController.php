@@ -45,40 +45,12 @@ class EstimateController extends Controller {
     }
 
     public function step3(Request $request) {
-
-        if(($request->time >= 0) && ($request->price_per_hour >= 0) && ($request->equipment_cost >= 0) && ($request->sub_contractors_cost >= 0) && ($request->similar_projects >= 0) && (($request->rating >= 0) && ($request->rating <= 5)))
-        {
         $estimate = $request->except(['next_btn', 'next_page']);
-
         // $estimate = $request->all();
         $clients = Client::where('user_id', Auth::user()->id)->select('id', 'name')->get();
         session(['estimate' => $estimate]);
 
         return view('estimate.step3')->withClients($clients);
-        }
-        else
-        {   $currencies = Currency::all('id', 'code');
-            $project = session('project')['project'];
-            $errorArray = [];
-
-                if($request->time < 0) $errorArray[] = "Duration for project completion cannot be a negative value";
-
-                if($request->price_per_hour < 0) $errorArray[] = "Amount collected per hour cannot be a negative value";
-
-                if($request->equipment_cost < 0) $errorArray[] = "Equipment cost cannot be a negative value";
-
-                if($request->sub_contractors_cost < 0) $errorArray[] = "Number of sub contractors value cannot be a negative value";
-
-                if($request->similar_projects < 0) $errorArray[] = "Similar projects value cannot be a negative value";
-
-                if(($request->rating < 0)  && ($request->rating > 5)) $errorArray[] = "The rating for your experience level must be greater than -1 and less than or equal to 5";
-
-               // default: $errorArray[] = "All numeric inputs must be greater than zero and rating must not be greater than 5";
-
-
-            return view('estimate.step2')->with(['errors' => $errorArray, 'project' => $project, 'currencies' => $currencies]);
-            //return redirect('/estimate/create/step2')->withProject($project['project'])->withCurrencies($currencies);
-        }
     }
 
     public function step4(Request $request) {
@@ -100,7 +72,7 @@ class EstimateController extends Controller {
             $data['equipment_cost'] = session('estimate')['equipment_cost'];
             $data['sub_contractors_cost'] = session('estimate')['sub_contractors_cost'];
             $data['total'] = $data['workmanship'] + $data['equipment_cost'] + $data['sub_contractors_cost'];
-
+			
             $estimate = Estimate::create(array_merge(session('estimate'), ['estimate' => $data['total'], 'user_id' => Auth::user()->id]));
 			//dd($estimate->id);
             $project = Project::create([
@@ -114,7 +86,7 @@ class EstimateController extends Controller {
                         'status' => 'pending'
             ]);
             $project->save();
-
+            
             // $request->session()->flush();
 
             $request->session()->put('new_estimate_id', $estimate->id);
@@ -154,7 +126,7 @@ class EstimateController extends Controller {
             else{
                 $emailcontact = null;
             }
-
+    
 
             $data['project'] = session('project')['project'];
             $data['company'] = session('client')['name'];
@@ -169,7 +141,7 @@ class EstimateController extends Controller {
             $data['equipment_cost'] = session('estimate')['equipment_cost'];
             $data['sub_contractors_cost'] = session('estimate')['sub_contractors_cost'];
             $data['total'] = $data['workmanship'] + $data['equipment_cost'] + $data['sub_contractors_cost'];
-
+            
             $clients = new Client;
             $clients->user_id = Auth::user()->id;
             $clients->name = session('client')['name'];
@@ -185,7 +157,7 @@ class EstimateController extends Controller {
 
             // Estimate ID set to 1 because an estimate must not have a project
             $estimate = Estimate::create(array_merge(session('estimate'), ['estimate' => $data['total'], 'user_id' => Auth::user()->id]));
-
+			
             $project = Project::create([
                         'title' => $data['project'],
                         'user_id' => Auth::user()->id,
@@ -211,7 +183,7 @@ class EstimateController extends Controller {
             // $data['invoice_no'] = $invoice->id;
             // $invoice->save();
             DB::commit();
-
+            
             // $request->session()->flush();
             $request->session()->put('new_estimate_id', $estimate->id);
             return redirect('invoice/review');
