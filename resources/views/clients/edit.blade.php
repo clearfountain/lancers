@@ -71,7 +71,7 @@
 
                     <h5>Contact Information</h5>
                     <span id="contacts">
-                        @foreach(json_decode($client->contacts, true) ?? [] as $key => $contact)
+                        @foreach($client->contacts ?? [] as $key => $contact)
                             <div class="form-group">                                
                                 <label for="company_name_{{$key}}">Contact name</label>
                                 <input type="text" value="{{$contact['name']}}" class="form-control" name="contact[{{$key}}][name]" id="contact_name{{$key}}" placeholder="e.g Ben Davies">
