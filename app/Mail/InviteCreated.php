@@ -11,6 +11,7 @@ use App\Invite;
 class InviteCreated extends Mailable
 {
     use Queueable, SerializesModels;
+    public $invite;
 
     /**
      * Create a new message instance.
