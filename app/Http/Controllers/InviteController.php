@@ -111,7 +111,7 @@ public function process(Request $request)
 
 public function register($token){
 
-    $invite = Invite::where('token', $token)->first();
+    $invite = Invite::where('token', $token)->where('status','pending')->first();
     // Look up the invite
     if (!$invite ) {
         //if the invite doesn't exist do something more graceful than this
@@ -159,13 +159,16 @@ public function accept($token)
         Auth::login($user);
 
         $query = Collaborator::updateOrCreate(
-            ['user_id'=>$user->, 'role'=>$request->role, 'project_id'=>$request->project_id], 
-            $request->all()
+            ['user_id'=>$user->id, 'role'=>$invite->role, 'project_id'=> $invite->project_id]
+           
         );
+        //send notification
 
-    // delete the invite so it can't be used again
+    // change  the invite status so it can't be used again
     $invite->status = 'completed';
     $invite->save();
+
+
 
     return redirect('/dashboard');
 
