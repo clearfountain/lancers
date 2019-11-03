@@ -121,9 +121,9 @@ public function register($token){
     return view('projects/register')->withInvite($invite);
 }
 
-public function accept($token)
+public function accept( Request $request, $token)
 {
-    $invite = Invite::where('token', $token)->first();
+    $invite = Invite::where('token', $token)->where('status','pending')->first();
     // Look up the invite
     if (!$invite ) {
         //if the invite doesn't exist do something more graceful than this
