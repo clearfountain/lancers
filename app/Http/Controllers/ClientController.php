@@ -117,12 +117,12 @@ class ClientController extends Controller {
                 $clientData += compact("clientState");
                 
             }
-            return view('client-info')->with('clientData',$clientData);
+            return view('clients.client-info')->with('clientData',$clientData);
             //return $clientData;
         } else {
             $error = "User not found";
             $clientData += compact("error");
-            return view('client-info')->with('clientData',$clientData);
+            return view('clients.client-info')->with('clientData',$clientData);
         }
     }
 

@@ -1,5 +1,5 @@
 @extends('layouts.auth')
-
+@section('title', 'Edit Contact')
 
 
 @section('main-content')
@@ -94,7 +94,7 @@
 
 @section('script')
 <script type="text/javascript">
-    let count = {{count(json_decode($client->contacts, true))}};
+    let count = {{count($client->contacts ?? [])}};
 	window.addEventListener('load', function() {
         //{{--addStates({{$client->country_id}}) --}}
     })
