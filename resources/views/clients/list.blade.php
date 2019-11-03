@@ -102,7 +102,7 @@
 
 
 @section('others')
-<button class="btn btn-secondary text-white rounded-circle" id="add-something">
+<button class="btn btn-secondary text-white rounded-circle" id="add-something" onclick="location.href='{{url('clients/add')}}'">
     <i class="fas fa-plus"></i>
 </button>
 @endsection

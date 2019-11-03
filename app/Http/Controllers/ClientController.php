@@ -72,7 +72,7 @@ class ClientController extends Controller {
         }else{
             $client->delete();
 
-            return back()->with('success', 'Client deleted');
+            return redirect('/clients')->with('success', 'Client deleted');
         }
     }
 
