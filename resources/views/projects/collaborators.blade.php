@@ -44,7 +44,7 @@
                             </select>
                         </form>
                     </div>
-                    
+
                     <table class="table project-table table-borderless">
                         <thead>
                             <tr>
@@ -56,13 +56,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                        
-                            @if(isset($collabo) && count($collabo) < 1)
+
+                            @if(isset($collaborators) && count($collaborators) < 1)
                             <tr class="py-2">
                                 <td scope="row" class="rounded-left border border-right-0" colspan="5">No Collaborators found for your projects</td>
                             </tr>
-                            @elseif(isset($collabo))
-                            @foreach($collabo as $collabo)
+                            @elseif(isset($collaborators))
+                            @foreach($collaborators as $collabo)
                             <tr class="py-2">
                                 <td  class="rounded-left border border-right-0">
                                     @if(Auth::user()->profile_picture !== 'user-default.png')
@@ -92,9 +92,9 @@
                                               --}}
 
                                             <a class="dropdown-item text-secondary" href="{{ url('/')}}/project/collaborator/edit/{{ $collabo->id }}"><i
-                                                class="fas fa-edit"></i> Edit  
+                                                class="fas fa-edit"></i> Edit
                                             </a>
-                                            <a class="dropdown-item text-danger" href="{{ url('/')}}/project/collaborator/remove/{{ $collabo->id }}"><i
+                                            <a class="dropdown-item text-danger" data-id="{{ $collabo->name }}" href=""><i
                                                 class="fas fa-trash-alt"></i> Delete
                                             </a>
 
@@ -117,7 +117,7 @@
     <button class="btn btn-secondary text-white rounded-circle" id="add-something">
         <i class="fas fa-plus"></i>
     </button>
-    
+
     <button class="btn btn-secondary text-white rounded-circle" id="add-something" data-toggle="modal"
         data-target="#myModal">
         <i class="fas fa-plus"></i>
@@ -134,7 +134,7 @@
 
                 <form method="post" action="{{url('project/collaborator/create')}}">
                 {!! csrf_field() !!}
-                    <div class="modal-body">                       
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -177,6 +177,29 @@
 
 @section('script')
     <script>
+
+
+$('.text-danger').on("click",function(e){
+            e.preventDefault();
+            let collaboratorsName = e.target.dataset.id;
+           // let collaboratorsObjectArray = taskObject.split(":");
+
+           //fire confirmation dialogue
+        var confirmation = confirm(`Do you want to delete Collaborators with name ${collaboratorsName.toUpperCase()}`);
+              //run switch statement after dialogue
+            switch(true){
+                case confirmation == true: window.location = @if(isset($collabo))"{{ url('/')}}/project/collaborator/remove/{{ $collabo->id }}"@endif;
+                break;
+                case confirmation == false: alert("Collaborators delete aborted");
+                break;
+                default: alert("Please select Ok or Cancel to proceed with Collaborators delete");
+                break;
+            }
+
+
+    });
+
+
         // $(document).ready(function () {
         //     $('#sidebarCollapse').on('click', function () {
         //         $('#sidebar').toggleClass('active');
@@ -193,7 +216,7 @@
         //     $('.table-responsive').on('hide.bs.dropdown', function () {
         //         $('.table-responsive').css( "overflow", "auto" );
         //     })
-                    
+
         // });
 
 
