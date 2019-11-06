@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Invite;
 use App\Mail\InviteCreated;
+use App\Mail\NotifyCreator;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Auth\Events\Registered;
@@ -12,6 +13,7 @@ use App\Project;
 use App\Estimate;
 use App\Invoice;
 use App\Collaborator;
+// use App\Profile;
 use Response;
 use Hash;
 Use Validator;
@@ -91,14 +93,6 @@ public function process(Request $request)
     
     
     if($invite->save()){
-        // send the email
-         //start email
-        //  Mail::send('emails.invite', function ($message) use ($user, $invite)
-        //  {  
-        //  $message->from('noreply@lancers.app', 'Lancers');
-        //  $message->subject('Lancers, Collaboration Invite');
-        //  $message->to($request->get('email'));
-        //   });
     Mail::to($request->get('email'))->send(new InviteCreated($invite));
     }
 
@@ -156,13 +150,20 @@ public function accept( Request $request, $token)
                     'password' => $password
         ]);
 
+         // Lets log the user in and show them the dashboard
+
         Auth::login($user);
 
-        $query = Collaborator::updateOrCreate(
+        //create the collaborator and add the user as a collaborator
+
+        $collaborator = Collaborator::updateOrCreate(
             ['user_id'=>$user->id, 'role'=>$invite->role, 'project_id'=> $invite->project_id]
            
         );
-        //send notification
+        //send email notification to the Inviter
+
+        Mail::to($invite->user->email)->send(new NotifyCreator($collaborator));
+        // Mail::to('$invite->user->email')->send(new InviteCreated($invite));
 
     // change  the invite status so it can't be used again
     $invite->status = 'completed';
@@ -172,7 +173,7 @@ public function accept( Request $request, $token)
 
     return redirect('/dashboard');
 
-    // here you would probably log the user in and show them the dashboard, but we'll just prove it worked
+   
 
     // return 'Invite accepted!';
 }

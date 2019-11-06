@@ -61,7 +61,7 @@
                         
                             @if(isset($invites) && count($invites) < 1)
                             <tr class="py-2">
-                                <td scope="row" class="rounded-left border border-right-0" colspan="5">No inviterators found for your projects</td>
+                                <td scope="row" class="rounded-left border border-right-0" colspan="5">No invitee found for your projects</td>
                             </tr>
                             @elseif(isset($invites))
                             @foreach($invites as $invite)
@@ -124,7 +124,7 @@
                             <div class="col-6">
                                   <div class="form-group">
                                     <label for="message-text" class="col-form-label">Email:</label>
-                                    <input type="text" required name="email" maxlength="20" class="form-control" id="message-text">
+                                    <input type="text" required name="email"  class="form-control" id="message-text">
                                  </div>
                             </div>
                         </div>
@@ -135,7 +135,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary modal-save">Save changes</button>
+                        <button type="submit" class="btn btn-primary modal-save">Send Invite</button>
                         <button type="submit" class="btn btn-primary modal-close" data-dismiss="modal">Close</button>
                     </div>
                 </form>
