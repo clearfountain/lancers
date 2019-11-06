@@ -341,6 +341,9 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/contact', function() {
         return view('contact_support');
     });
+    Route::post('/process_contact_form', function() {
+        return view('process_contact_form');
+    });
 
 
     // Others
