@@ -17,7 +17,7 @@ if(isset($_POST['email'])){
                   'allow_self_signed' => true
               )
           );
-  $mail->SMTPDebug = 0
+  $mail->SMTPDebug = 0;
   //$mail->From = 'sandbox111d367d93c34256922f0663081a5984.mailgun.org'; 
   $mail->setFrom('info@lancers.app', 'Lancers.app');
   //$mail->FromName = 'Lancers.app'; // The NAME field which will be displayed on arrival by the email client
