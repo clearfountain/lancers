@@ -300,8 +300,8 @@ a.article:hover {
         <h3>Contact Support</h3>
         <div class="header-items">
           <div>
-            <a href="#"><img src="https://res.cloudinary.com/slarin/image/upload/v1570685957/contact-support/help_pvv3ie.svg" class="header-icon"></a>
-            <a href="#"><p>Support</p></a>
+            <img src="https://res.cloudinary.com/slarin/image/upload/v1570685957/contact-support/help_pvv3ie.svg" class="header-icon">
+            <p>Support</p>
           </div>
  
         </div>
