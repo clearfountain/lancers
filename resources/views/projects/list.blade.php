@@ -129,8 +129,8 @@
 
 
 @section('others')
-<a href="#"><button class="btn btn-secondary text-white rounded-circle" id="add-something">
-    <i class="fas fa-plus"></i></a>
+<!-- <a href="#"><button class="btn btn-secondary text-white rounded-circle" id="add-something">
+    <i class="fas fa-plus"></i></a> -->
 <button class="btn btn-secondary text-white rounded-circle" id="add-something">
     <a href="{{url('estimate/create/step1')}}">    <i class="fas fa-plus"></i> </a>
 </button>

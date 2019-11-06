@@ -19,6 +19,12 @@
                         {{ session('errors') }}
                     </div>
                 @endif
+
+                 @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <!-- @if (!empty($errors))
                 <span class='help-block'>
                     <strong>{{ "Some input field is not properly filled" }}</strong>
@@ -34,15 +40,108 @@
                     </ul>
                 </div>
                 <div class="table-responsive">
-                <form action="{{ url('project/invite') }}" 
+                {{--  <form action="{{ url('project/invite') }}" 
                     method="post">{{ csrf_field() }}
                     <input type="email" name="email" />
                     <button type="submit">Invite</button>
-                </form>
+                </form>  --}}
+
+                 
+                    <table class="table project-table table-borderless">
+                        <thead>
+                            <tr>
+                              
+                                <th scope="col">Email</th>
+                                <th scope="col">Project</th>
+                                <th scope="col">Role</th>
+                                <th scope="col"> status </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        
+                            @if(isset($invites) && count($invites) < 1)
+                            <tr class="py-2">
+                                <td scope="row" class="rounded-left border border-right-0" colspan="5">No invitee found for your projects</td>
+                            </tr>
+                            @elseif(isset($invites))
+                            @foreach($invites as $invite)
+                            <tr class="py-2">
+                             
+                                <td class="border-top border-bottom">{{$invite->email}}</td>
+                                <td class="border-top border-bottom">{{$invite->project->title}}</td>
+                               
+                                <td class="border-top border-bottom">{{ucfirst($invite->role) }}</td>
+                                 <td class="border-top border-bottom">
+                                    <span class="alert alert-primary py-0 px-2 small m-0">{{$invite->status}}</span>
+                                </td>
+                               
+                            </tr>
+                            @endforeach
+                            @endif
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </section>
+@endsection
+
+
+@section('others')
+    <button class="btn btn-secondary text-white rounded-circle" id="add-something">
+        <i class="fas fa-plus"></i>
+    </button>
+    
+    <button class="btn btn-secondary text-white rounded-circle" id="add-something" data-toggle="modal"
+        data-target="#myModal">
+        <i class="fas fa-plus"></i>
+    </button>
+    <div class="modal" tabindex="-1" role="dialog" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> Invite New Collaborator</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form method="post" action="{{url('project/invite/send')}}">
+                {!! csrf_field() !!}
+                    <div class="modal-body">                       
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Select Project:</label>
+                                    <select required class="form-control" name="project" id="selectProject">
+                                        <option>Select Project</option>
+                                        @foreach($projects as $project)
+                                        <option value="{{$project->id}}">{{$project->title}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                  <div class="form-group">
+                                    <label for="message-text" class="col-form-label">Email:</label>
+                                    <input type="text" required name="email"  class="form-control" id="message-text">
+                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Specify Role:</label>
+                            <input type="text" required name="role" maxlength="20" class="form-control" id="message-text">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary modal-save">Send Invite</button>
+                        <button type="submit" class="btn btn-primary modal-close" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 

@@ -17,21 +17,21 @@ if(isset($_POST['email'])){
                   'allow_self_signed' => true
               )
           );
-  $mail->SMTPDebug = 0
+  $mail->SMTPDebug = 0;
   //$mail->From = 'sandbox111d367d93c34256922f0663081a5984.mailgun.org'; 
   $mail->setFrom('info@lancers.app', 'Lancers.app');
   //$mail->FromName = 'Lancers.app'; // The NAME field which will be displayed on arrival by the email client
   $mail->addAddress($email);     // change to email from the text feild
-  $mail->isHTML(false);   // Set email to be sent as HTML, if you are planning on sending plain text email just set it to false
+  $mail->isHTML(true);   // Set email to be sent as HTML, if you are planning on sending plain text email just set it to false
   // The following is self explanatory
-  $mail->Subject = 'Thank you for Subscribing';
+  $mail->Subject = 'Thank you for subscribing';
   $mail->Body    = 'mail body';
  // $mail->AltBody = '';
   if(!$mail->send()) {  
-      echo "Oops!! We were unable to send you a mail, please try again later.";
+      echo "<span style='font-size:16px; color:#FFFFFF; text-algin: center; background-color: red;'> Oops!! We were unable to send you a mail, please try again later.</span>";
       //echo 'Mailer Error: ' . $mail->ErrorInfo . "n";
   } else {
-      echo "Message has been sent  n";
+      echo "<span style='font-size:15px; color:#FFFFFF;  text-algin: center; background-color: green;'>Email sent successfully</span>";
   }
 }
 ?>
