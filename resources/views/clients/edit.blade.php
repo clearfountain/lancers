@@ -6,11 +6,11 @@
   <link rel="stylesheet" type="text/css" href="{{asset('css/add_client.css')}}" />
     <style> a:hover{cursor: pointer;}</style>
 <div class="container-fluid">
- 
+
     {{-- {{$client}} --}}
     <main>
-        
-        <form method="post" action="/clients/edit">
+
+        <form method="post" action="/clients/edit" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <input type="hidden" name="client_id" value="{{$client->id}}">
@@ -28,11 +28,22 @@
             @elseif(session('error'))<br> <h6><span class="alert alert-danger">{{session('error')}}</span></h6> @endif
             <div class="clearfix"></div>
             <section class="content">
+                <i><strong>Click image to select client image for upload</strong></i>
+                </br>
+                 @if(null != $client->profile_picture)
+                <img id="invoice_image_selecter" src="{{asset($client->profile_picture)}}" style="width: 100px; height: 100px; border-radius: 10%; pointer: finger;" alt="Client Image">
+                @endif
+                @if(null == $client->profile_picture)
+                <img id="invoice_image_selecter" src="{{ asset('images/ClientImages/user-default.jpg') }}" style="width: 100px; height: 100px; border-radius: 10%; pointer: finger;" alt="Client Image">
+                @endif
+                </br>
                 <h4>Business Information</h4>
                 <div class="form-group">
                     <label for="company_name">Company name</label>
                     <input type="text" name="name" value="{{$client->name ?? ''}}" class="form-control" required id="Cname" placeholder="e.g Sunshine Studio">
                 </div>
+
+                <input id="invoice_picture" name="profileimage" type="file" style="visibility: hidden;"  onchange="invoiceImage(this);" />
 
                 <h5>Business Address</h5>
                 <div>
@@ -42,7 +53,7 @@
                             <input class="form-control" type="text" name="street" id="street" placeholder="Street" value="{{$client->street ?? ''}}">
                             <input  type="number" class="form-control" name="street_number" id="number" placeholder="Number" value="{{$client->street_number ?? ''}}">
                         </span>
-                        
+
                         <label for="city_Zcode">City & Zip Code</label>
                         <span>
                             <input type="text"  class="form-control" name="city" id="city" placeholder="City" value="{{$client->city ?? ''}}">
@@ -53,7 +64,7 @@
                         <span>
                             <select required name="country_id" class="country">
                                 <option value="" selected>Country</option>
-                                @foreach(countries() as $country)
+                                @foreach($countries as $country)
                                     <option {{$client->country_id == $country->id ? 'selected' : ''}} value="{{$country->id}}">{{$country->name}}</option>
                                 @endforeach
                             </select>
@@ -61,7 +72,7 @@
                             <select required name="state_id" class="country">
 
                                 <option value="" selected>Select State</option>
-                                @foreach(getStates($client->country_id) as $key => $state)
+                                @foreach($states as $key => $state)
                                     <option {{$client->state_id == $state['id'] ? 'selected' : ''}} value="{{$state['id']}}" >{{$state['name']}}</option>
                                 @endforeach
                             </select>
@@ -72,10 +83,10 @@
                     <h5>Contact Information</h5>
                     <span id="contacts">
                         @foreach($client->contacts ?? [] as $key => $contact)
-                            <div class="form-group">                                
+                            <div class="form-group">
                                 <label for="company_name_{{$key}}">Contact name</label>
                                 <input type="text" value="{{$contact['name']}}" class="form-control" name="contact[{{$key}}][name]" id="contact_name{{$key}}" placeholder="e.g Ben Davies">
-                                
+
                                 <label for="company_email_{{$key}}">Contact email</label>
                                 <input class="form-control" value="{{$contact['email']}}" type="email" name="contact[{{$key}}][email]" id="email_{{$key}}" placeholder="e.g email@domain.com">
                             </div>
@@ -94,6 +105,32 @@
 
 @section('script')
 <script type="text/javascript">
+
+
+ //jquery code for handling client image upload
+ $("#invoice_image_selecter").on("click", function() {
+        $("#invoice_picture").trigger("click");
+      });
+
+
+
+      function invoiceImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#invoice_image_selecter')
+                    .attr('src', e.target.result)
+                    .width(100)
+                    .height(100);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+
+    }
+
+
     let count = {{count($client->contacts ?? [])}};
 	window.addEventListener('load', function() {
         //{{--addStates({{$client->country_id}}) --}}
@@ -105,7 +142,7 @@
         newElement.innerHTML = `
             <label for="company_name_${count}">Contact name</label>
             <input type="text" ${count == 0 ? 'required' : ''} class="form-control" name="contact[${count}][name]" id="contact_name${count}" placeholder="e.g Ben Davies">
-            
+
             <label for="company_email">Contact email</label>
             <input class="form-control" type="email" ${count == 0 ? 'required' : ''} name="contact[${count}][email]" id="email_${count}" placeholder="e.g email@domain.com">
         `;
@@ -135,7 +172,7 @@
                 }
             });
         }else{
-            $('select[name="state"]').empty();
+            $('select[name="state_id"]').empty();
         }
     }
 </script>

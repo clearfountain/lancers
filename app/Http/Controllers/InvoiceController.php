@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use PDF;
 use App\User;
+Use Validator;
 use App\Client;
 use App\Project;
 use App\Invoice;
@@ -11,6 +12,7 @@ use App\Estimate;
 use Carbon\Carbon;
 use App\Mail\SendInvoice;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use App\Notifications\UserNotification;
@@ -27,6 +29,8 @@ class InvoiceController extends Controller {
 
         return view('invoice')->withInvoice($invoice);
     }
+
+
     public function edit($id)
     {
         $invoice = Invoice::where('id', $id)->first();
@@ -34,6 +38,10 @@ class InvoiceController extends Controller {
         $users = User::all(['id', 'name']);
         return view('invoices.reviewinvoice')->withInvoice($invoice)->withProjects($projects)->withUsers($users);
     }
+
+
+
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -54,6 +62,8 @@ class InvoiceController extends Controller {
         }
     }
 
+
+
     public function delete($id)
     {
         $object = Invoice::whereId($id)->first();
@@ -65,9 +75,14 @@ class InvoiceController extends Controller {
         }
     }
 
+
+
     public function __construct() {
         $this->middleware('auth');
     }
+
+
+
 
     public function review(Request $request){
         $estimate_id = session('new_estimate_id');
@@ -98,9 +113,13 @@ class InvoiceController extends Controller {
         return redirect('estimate/create');
     }
 
+
+
     public function send($id) {
         return view('invoice_sent');
     }
+
+
 
     public function index() {
         $user = Auth::user();
@@ -121,6 +140,7 @@ class InvoiceController extends Controller {
 
         return view('invoices.invoicelist')->with('invoices', $invoices);
     }
+
 
     /**
      * Creates new record in the invoice table
@@ -172,6 +192,7 @@ class InvoiceController extends Controller {
     //     }
     // }
 
+
     public function show($invoice) {
         $pre_invoice = Invoice::findOrFail($invoice);
         // dd($invoice);
@@ -181,6 +202,8 @@ class InvoiceController extends Controller {
     // return $invoice;
         return view('invoices.viewinvoice')->with('invoice', $invoice);
     }
+
+
 
     public function listGet(Request $request) {
         if ($request->filter == 'paid') {
@@ -194,6 +217,8 @@ class InvoiceController extends Controller {
         return view('invoices.list', $data);
     }
 
+
+
     public function getPdf($invoice) {
         $invoice = Invoice::findOrFail($invoice);
 
@@ -206,16 +231,88 @@ class InvoiceController extends Controller {
         return $pdf->download($filename);
     }
 
+
+
+
     public function sendinvoice(Request $request) {
         $invoice_id = $request->invoice;
+        $invoiceChecker = $request->invoiceChecker;
+        $image = $request->file('profileimage');
 
-        $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
+        if($invoiceChecker == null)
+        {
 
-        $project_name = $invoice->estimate->project->title;
+            session()->flash('message.alert', 'danger');
+            session()->flash('message.content', "Error handling invoice, Please Try again ");
+            return back();
+        }
 
-        $client = $invoice->estimate->project->client;
+        if($invoiceChecker == "saveInvoice")
+        {
+            if($image != null)
+            {
+                $storedImageStatus = null;
+                //upload image and return to invoices.
 
-        $client_email = $client->email;
+                $imageStatus = $this->updateImage($request,$client_id);
+
+                $storedImageStatus = $imageStatus;
+
+                  //check image return value and act accordingly
+                if($storedImageStatus == false)
+                {
+
+                //return back with error if any error
+                session()->flash('message.alert', 'danger');
+                session()->flash('message.content', "Error uploading image, Please Try again ");
+                return back();
+                }
+
+                //return to invoices with success or error
+                return redirect("/invoices");
+            }
+
+             if($image == null)
+            {
+                return redirect("/invoices");
+            }
+        }
+
+
+
+
+        if($invoiceChecker == "sendInvoice")
+        {
+
+            $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
+            //saveInvoice
+            $project_name = $invoice->estimate->project->title;
+
+            $client = $invoice->estimate->project->client;
+
+            $client_email = $client->email;
+            $client_id = $client->id;
+
+            $storedImageStatus = null;
+
+            if($image != null)
+            {
+                //upload image and return to invoices.
+                $imageStatus = $this->updateImage($request,$client_id);
+
+                $storedImageStatus = $imageStatus;
+            }
+
+             //check image return value and act accordingly
+            if($storedImageStatus == false)
+            {
+
+             //return back with error if any error
+             session()->flash('message.alert', 'danger');
+             session()->flash('message.content', "Error uploading image, Please Try again ");
+             return back();
+            }
+
 
         $encoded = base64_encode(base64_encode($client_email));
 
@@ -239,7 +336,110 @@ class InvoiceController extends Controller {
 
 
         return view('invoices.invoicesent');
+
+            }
     }
+
+
+
+        //UPLOAD IMAGE CODE
+        // @author: @Bits_and_Bytes
+        function ImageValidation(array $array)
+        {
+            return Validator::make($array, [
+                'profileimage'     =>  'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
+        }
+
+        /**
+         * @description receive user upload photo and update picture
+         * @param Request $request
+         * @author: @Bits_and_Bytes
+         */
+        // CHANGE ALL DB TABLE SAVES TO THE CORRECT ONE WITH INVOICE...
+        // @author: @Bits_and_Bytes
+        function updateImage($request,$clientId)
+        {
+            $imageValidate = $this->ImageValidation(['profileimage' => $request->file('profileimage')]);
+
+            if(!$imageValidate->fails())
+            {
+              //check if user has image
+              $clientProfileData = Client::where('id',$clientId)->first();
+
+              if($clientProfileData != null)
+              {
+                  //cast collection result to array
+                  $collectionResult = $clientProfileData->toArray();
+
+                  if(sizeof($collectionResult) != 0)
+                  {  //upload image and update image field only
+
+                      //get profile image
+                        $oldImage = $collectionResult['profile_picture'];
+                        //dd($oldImage);
+                        if($oldImage != null)
+                        {
+                            // check if user has image and unlink
+                            if(file_exists(public_path($oldImage)))
+                            {
+                                unlink(public_path($oldImage));
+                            }
+
+                        }
+
+
+                        $imagePathString = $this->uploadImageToFile($request->file('profileimage'));
+                        //store in DB
+
+                        $clientProfileData->profile_picture = $imagePathString;
+                        $clientProfileData->save();
+
+                        if($clientProfileData->profile_picture == $imagePathString)
+                        {
+
+                            return true;
+                        }
+                        else{
+                            return false;
+                        }
+
+                 }else{
+                    return false;
+                 }
+
+
+              }
+              else
+              {
+                return false;
+            }
+
+
+            }
+            else{
+               return false;
+            }
+        }
+
+
+
+
+        public function uploadImageToFile(UploadedFile $uploadedFile,  $Imagefilename = null, $folderName = null, $appDiskStorage = null)
+        {
+            $folderName = (!is_null($folderName)) ? $folderName : 'images/ClientImages';
+            $appDiskStorage = (!is_null($appDiskStorage)) ? $appDiskStorage : 'public';
+            $imageName = (!is_null($Imagefilename)) ? $Imagefilename : md5(auth()->user()->id.now());
+
+            $filePath = $uploadedFile->storeAs($folderName, $imageName.'.'.$uploadedFile->getClientOriginalExtension(), $appDiskStorage);
+
+            return $filePath;
+        }
+
+
+
+
+
 
     public function clientInvoice($client, $invoice) {
         $data['invoice'] = Invoice::with('estimate')->where('created_at', Carbon::createFromTimestamp($invoice))->first();
@@ -266,11 +466,11 @@ class InvoiceController extends Controller {
         } else {
             return $data['reason'];
         }
+
+
+
     }
 
-    // public function view($invoice_id) {
-    //     $invoice = Invoice::where(['id' => $invoice_id, 'project_id' => Auth::user()->id])->first();
-    //     return $invoice->count() > 0 ? $this->SUCCESS('Invoice retrieved', $invoice) : $this->SUCCESS('No invoice found');
-    // }
+
 
 }

@@ -12,7 +12,7 @@
             <div class="">
                 <form class="form-inline" style="display: inline-block; margin-top: 10px;">
                     <select  class="form-control" id="select-filter">
-                        
+
                         <option value="all" @if (Request()->filter) {{ 'selected' }} @endif >All</option>
                         <option value="pending" @if (Request()->filter && Request()->filter == 'pending') {{ 'selected' }} @endif>Pending</option>
                         <option value="completed" @if (Request()->filter && Request()->filter == 'completed') {{ 'selected' }} @endif>Completed</option>
@@ -40,7 +40,7 @@
                             <td scope="row" class="rounded-left border border-right-0">
                                 <span class="text-small text-muted mr-2">
                                     <i class="fas fa-circle"></i>
-                                </span> 
+                                </span>
                                 <span class="">{{date('d/m/Y', strtotime($client->created_at))}}</span>
                             </td>
                             <td class="border-top border-bottom titles text-center">
@@ -132,8 +132,29 @@
 
             let id = e.target.dataset.id;
 
-            $(`#delete-${id}`).submit();
+            //get client details from app
+            $.get(
+                `/clients/details/json/${id}`,
+                function(data,status)
+                {
+                //use spread operator to convert response array to object
+                let clientObject = JSON.parse(JSON.stringify(...data));
+
+                //fire confirmation dialogue
+                var confirmation = confirm(`Do you want to delete client with name ${clientObject.name.toUpperCase()} and email ${clientObject.email}`);
+              //run switch statement after dialogue
+            switch(true){
+                case confirmation == true: $(`#delete-${id}`).submit();
+                break;
+                case confirmation == false: alert("Client delete aborted");
+                break;
+                default: alert("Please select Ok or Cancel to proceed with Client delete");
+                break;
+            }
+                }
+            );
+
         });
-        
+
             </script>
 @endsection

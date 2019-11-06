@@ -76,7 +76,7 @@
                                     <span class="alert alert-primary py-0 px-2 small m-0">{{$task->progress}}%</span>
                                 </td> -->
                                 <td class="border-top border-bottom text-left">
-                                <span class="alert {{$task->status == 'pending' ? 'alert-default' 
+                                <span class="alert {{$task->status == 'pending' ? 'alert-default'
                                     : $task->status == 'in-progress' ? 'alert-warning' : 'alert-success' }}
                                     alert-primary py-0 px-2 small m-0 active">{{ucfirst($task->status) }}</span>
                                 </td>
@@ -102,9 +102,9 @@
                                                 class="fas fa-binoculars"></i> View
                                             </a>  --}}
                                              <a class="dropdown-item text-secondary" href="{{ url('/')}}/task/edit/{{ $task->id }}"><i
-                                                class="fas fa-edit"></i> Edit  
+                                                class="fas fa-edit"></i> Edit
                                             </a>
-                                            <a class="dropdown-item text-danger" href="{{ url('/')}}/task/remove/{{ $task->id }}"><i
+                                            <a class="dropdown-item text-danger"  data-id="{{ $task->task_title }}:{{$task->project_title}}"  href=""><i
                                                 class="fas fa-trash-alt"></i> Delete
                                             </a>
                                         </div>
@@ -126,7 +126,7 @@
     <button class="btn btn-secondary text-white rounded-circle" id="add-something">
         <i class="fas fa-plus"></i>
     </button>
-    
+
     <button class="btn btn-secondary text-white rounded-circle" id="add-something" data-toggle="modal"
         data-target="#myModal">
         <i class="fas fa-plus"></i>
@@ -143,7 +143,7 @@
 
                 <form method="post" action="{{url('project/task/create')}}">
                     @csrf
-                    <div class="modal-body">                       
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -183,14 +183,14 @@
                                 <div class="form-group">
                                         <label for="start" class="col-form-label">Start Date:</label>
                                         <input required type="date" name="start_date" class="form-control" id="start">
-                                    
+
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                         <label for="end" class="col-form-label">End Date:</label>
                                         <input required type="date" name="due_date" class="form-control" id="end">
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -223,9 +223,28 @@
         //     $('.table-responsive').on('hide.bs.dropdown', function () {
         //         $('.table-responsive').css( "overflow", "auto" );
         //     })
-                    
+
         // });
 
+        $('.text-danger').on("click",function(e){
+            e.preventDefault();
+            let taskObject = e.target.dataset.id;
+            let taskObjectArray = taskObject.split(":");
+
+           //fire confirmation dialogue
+        var confirmation = confirm(`Do you want to delete task with name ${taskObjectArray[1].toUpperCase()}`);
+              //run switch statement after dialogue
+            switch(true){
+                case confirmation == true: window.location = "{{ url('/')}}/task/remove/{{ $task->id }}";
+                break;
+                case confirmation == false: alert("Task delete aborted");
+                break;
+                default: alert("Please select Ok or Cancel to proceed with task delete");
+                break;
+            }
+
+
+    });
 
         let selectStatus = document.querySelector('#select-filter');
         selectStatus.addEventListener('change', function(){

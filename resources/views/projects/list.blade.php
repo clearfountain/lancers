@@ -24,7 +24,7 @@
             </div>
               @if(session()->has('message.alert'))
             <div class="text-center">
-                <button class=" alert alert-{{ session('message.alert') }}"> 
+                <button class=" alert alert-{{ session('message.alert') }}">
                     {!! session('message.content') !!}
                 </button>
             </div>
@@ -54,7 +54,7 @@
                             <td scope="row" class="rounded-left border border-right-0">
                                 <span class="text-small text-muted mr-2">
                                     <i class="fas fa-circle"></i>
-                                </span> 
+                                </span>
                                 <span class="">{{date('d/m/Y', strtotime($project->created_at))}}</span>
                             </td>
                             <td class="border-top border-bottom titles">{{$project->title}}</td>
@@ -92,9 +92,9 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <a class="dropdown-item text-success" href="{{url('view-project',['id'=>$esti->id])}}"><i class="fas fa-binoculars"></i> View</a>
                                         <a class="dropdown-item text-secondary" href="{{url('edit-project',['id'=>$esti->id])}}" ><i class="fas fa-edit"></i> Edit</a>
-                                      
+
                                         <form  class="deleted"   role="form" method="POST"
-                                               action="{{url('delete-project',['id'=>$esti->id])}}" >
+                                               action="{{url('delete-project',['id'=>$esti->id])}}" id="projectDelete">
                                              @csrf
                                             <button  class="dropdown-item text-danger noHover" type="submit"> <i class="fas fa-trash-alt"></i> Delete</button>
                                         </form>
@@ -142,7 +142,7 @@
     $('#myModal').appendTo("body").modal('show');
     $(".deleted").on("submit", function () {
 
-        return confirm("Are you sure?");
+        return confirm("Are you sure you want to delete project?");
     });
 </script>
 <script>

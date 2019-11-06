@@ -50,6 +50,9 @@
                             @else
                             @php $count = 1; @endphp
                             @foreach($invoices as $invoice)
+
+                            @if("object" == gettype($invoice->estimate->project->client))
+
                             <tr class="py-2">
                                 <td class="border-top border-bottom titles"># {{$count}}</td>
                                 <td class="border-top border-bottom titles">{{$invoice->estimate->project->client->name}}</td>
@@ -70,12 +73,14 @@
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                             <a class="dropdown-item text-success" href="{{url('/')}}/invoices/{{$invoice->id }}/getpdf"> <i class="fas fa-binoculars"></i> View</a>
                                             <a class="dropdown-item text-secondary" href="{{ url('/')}}/invoice/edit/{{ $invoice->id }}"> <i class="fas fa-edit"></i> Edit</a>
-                                            <a class="dropdown-item text-danger" href="{{ url('/')}}/invoice/remove/{{ $invoice->id }}"><i class="fas fa-trash-alt"></i> Delete</a>
+                                            <a class="dropdown-item text-danger" data-id="{{ $invoice->id }}:{{$invoice->estimate->project->title}}" href=""><i class="fas fa-trash-alt"></i> Delete</a>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
+
                             @php $count+=1; @endphp
+                            @endif
                             @endforeach
                             @endif
                     </tbody>
@@ -96,6 +101,28 @@
 
 @section('script')
 <script>
+    //alert for invoice delete
+    $('.text-danger').on("click",function(e){
+            e.preventDefault();
+            let invoiceObject = e.target.dataset.id;
+            let invoiceObjectArray = invoiceObject.split(":");
+
+           //fire confirmation dialogue
+        var confirmation = confirm(`Do you want to delete invoice with project name ${invoiceObjectArray[1].toUpperCase()}`);
+              //run switch statement after dialogue
+            switch(true){
+                case confirmation == true: window.location = "{{ url('/')}}/invoice/remove/{{ $invoice->id }}";
+                break;
+                case confirmation == false: alert("Invoice delete aborted");
+                break;
+                default: alert("Please select Ok or Cancel to proceed with Invoice delete");
+                break;
+            }
+
+
+    });
+
+
     let selectStatus = document.querySelector('#select-filter');
     selectStatus.addEventListener('change', function() {
         if (selectStatus.value == 'all') window.location.href = "/invoices";

@@ -21,8 +21,9 @@ public function process(Request $request)
     // validate the incoming request data
 
     do {
-        //generate a random string using Laravel's str_random helper
-        $token = str_random();
+
+        //form a random token string using md5 hash and timestamp
+        $token = MD5(time());
     } //check if the token already exists and if it does, try again
     while (Invite::where('token', $token)->first());
 
