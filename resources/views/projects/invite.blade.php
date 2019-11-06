@@ -124,7 +124,7 @@
                             <div class="col-6">
                                   <div class="form-group">
                                     <label for="message-text" class="col-form-label">Email:</label>
-                                    <input type="text" required name="email" maxlength="20" class="form-control" id="message-text">
+                                    <input type="text" required name="email"  class="form-control" id="message-text">
                                  </div>
                             </div>
                         </div>
@@ -135,7 +135,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary modal-save">Save changes</button>
+                        <button type="submit" class="btn btn-primary modal-save">Send Invite</button>
                         <button type="submit" class="btn btn-primary modal-close" data-dismiss="modal">Close</button>
                     </div>
                 </form>

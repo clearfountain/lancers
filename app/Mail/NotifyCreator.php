@@ -6,21 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Invite;
+use App\Collaborator;
 
-class InviteCreated extends Mailable
+class NotifyCreator extends Mailable
 {
     use Queueable, SerializesModels;
-    public $invite;
+
+    public $collaborator;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Invite $invite)
+    public function __construct(Collaborator $collaborator)
     {
-        $this->invite = $invite;
+        $this->collaborator =  $collaborator;
     }
 
     /**
@@ -30,6 +31,7 @@ class InviteCreated extends Mailable
      */
     public function build()
     {
-        return $this->from('mail@lancers.com')->subject('Mail from Real Programmer')->view('emails.invite');
+        // return $this->view('view.name');
+        return $this->from('mail@lancers.com')->view('emails.creator');
     }
 }
