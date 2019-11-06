@@ -146,11 +146,11 @@
         text-align: right;
     }
 
-    thead { background-color: #0ABAB5; color: #fff; font-size: 14px; text-align : right;
+    thead { background-color: #091428; color: #fff; font-size: 14px; text-align : right;
     }
       
       .bg-primary{
-          background-color : #0ABAB5 !important;
+          background-color : #091428 !important;
       }
 
     th:nth-child(1), td:nth-child(1) { text-align: start; padding: 10px;

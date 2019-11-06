@@ -489,8 +489,8 @@ class ProjectController extends Controller {
     public function dynamicPDF($trackCode) {
         if(is_numeric($trackCode) ) {
           if(Project::where('tracking_code',$trackCode)->first()){
+              
             $docData = [];
-            
             $projectData = Project::where('tracking_code',$trackCode)->with('user','client','profile')->get();
             
             if(isset($projectData[0]->client->country_id)){
@@ -525,18 +525,7 @@ class ProjectController extends Controller {
             }
               
             $currencySymbol = ($projectData[0]->estimate->invoice->currency['symbol']);
-            //$currencySymbol = $projectData[0]->estimate[0]->invoice['currency']['symbol'];
-            //$docData = compact("clientCountry","clientState","lancerCountry","lancerState");
-            //$projectData = Project::with('user')->get();
-            //$clientId = $projectData[0]->client_id;
-        //$clientName = $projectData[0]->client->contacts[0]->name;
-        //$clientName = dd($projectData[0]->client->contacts[0]['name']);
-            //$estimateId = $projectData[0]->estimate_id;
-            //return $projectData.'<br>'.$userId.'<br>'.$clientId.'<br>'.$estimateId.'<br>';
-            //return $projectData;
-            //return $clientName;
             $projectName = $projectData[0]->title;
-            
             $lancerName = $projectData[0]->user->name;
             $lancerMail = $projectData[0]->user->email;
                
@@ -623,22 +612,11 @@ class ProjectController extends Controller {
                 $amount = $projectData[0]->estimate['estimate'];
                 $docData += compact("amount");
             }
-            //$issueDate = dd($projectData[0]->estimate->start);
-            //$dueDate = $projectData[0]->estimate[0]->end;
+            
             $docData += compact("currencySymbol","projectName","lancerName","lancerMail","trackCode");
             
-            
-        // Fetch all customers from database
-        //$data = Customer::get();
-    
-        // Send data to the view using loadView function of PDF facade
-        //$pdf = PDF::loadView('pdf.customers', $data);
         $pdf = PDF::loadView('pdf.trackproject',$docData);
         
-        // If you want to store the generated pdf to the server then you can use the store function
-        //$pdf->save(storage_path().'_filename.pdf');
-    
-        // Finally, you can download the file using download function
         return $pdf->download('Invoice.pdf');
     }else {
             return view('errors.404');
