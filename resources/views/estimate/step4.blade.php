@@ -29,7 +29,7 @@
         </div>
 
         <div class="">
-            <input class="text-center cnc" value="NEXT" type="button">
+            <input class="text-center cnc" id="next_page" value="NEXT" type="button">
         </div>
 
     </div>
@@ -98,9 +98,9 @@
             <!-- <section>
                 <button class="btn">NEXT</button>
             </section> -->
-        </main>
+    </main>
 
-        <button class="btn" type="submit">NEXT</button>
+    <button class="btn" id="next_btn" type="submit">NEXT</button>
     </div>
 
     </div>
@@ -110,6 +110,21 @@
 @section('script')
 
 <script type="text/javascript">
+
+/**
+* Jquery code to highlight next buttons on form input
+ */
+$("#Cname").on("input", function() {
+       $("#next_btn").css( "background-color", "#0ABAB5");
+       $("#next_page").css( "background-color", "#0ABAB5");
+
+      });
+
+      $("#next_page").on("click", function() {
+        $("#next_btn").trigger("click");
+      });
+
+
     let count = 1;
     window.addEventListener('load', function() {
         addContact();
@@ -122,7 +137,7 @@
         newElement.innerHTML = `
             <label for="company_name_${count}">Contact name</label>
             <input type="text" name="contact[${count}]['name']" id="contact_name${count}" placeholder="e.g Ben Davies">
-            
+
             <label for="company_email">Contact email</label>
             <input type="email" name="contact[${count}]['email']" id="email_${count}" placeholder="e.g email@domain.com">
         `;

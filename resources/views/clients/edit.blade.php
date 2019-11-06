@@ -40,13 +40,13 @@
                         <label for="Str_Num">Street & Number</label>
                         <span>
                             <input class="form-control" type="text" name="street" id="street" placeholder="Street" value="{{$client->street ?? ''}}">
-                            <input  type="number" class="form-control" name="street_number" id="number" placeholder="Number" value="{{$client->street_number ?? ''}}">
+                            <input  type="number" min="0" class="form-control" name="street_number" id="number" placeholder="Number" value="{{$client->street_number ?? ''}}">
                         </span>
                         
                         <label for="city_Zcode">City & Zip Code</label>
                         <span>
                             <input type="text"  class="form-control" name="city" id="city" placeholder="City" value="{{$client->city ?? ''}}">
-                            <input type="number" class="form-control" name="zipcode" id="Zcode" placeholder="Zip code" value="{{$client->zipcode ?? ''}}">
+                            <input type="number" min="0" class="form-control" name="zipcode" id="Zcode" placeholder="Zip code" value="{{$client->zipcode ?? ''}}">
                         </span>
 
                         <label for="Country_state">Country & State</label>
