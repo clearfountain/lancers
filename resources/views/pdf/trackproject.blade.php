@@ -139,14 +139,14 @@
       font-family: 'Ubuntu', sans-serif;
     }
 
-    tfoot>tr { text-align: right;
+    tfoot>tr { text-align: left;
     }
       
     tbody {
-        text-align: right;
+        text-align: left;
     }
 
-    thead { background-color: #0ABAB5; color: #fff; font-size: 14px; text-align : right;
+    thead { background-color: #0ABAB5; color: #fff; font-size: 14px; text-align : left;
     }
       
       .bg-primary{
@@ -155,10 +155,6 @@
 
     th:nth-child(1), td:nth-child(1) { text-align: start; padding: 10px;
     }
-      
-      .left { 
-          text-align: left;
-      }
 
     #hourly-rateN { text-align: right;
     }
@@ -272,29 +268,29 @@
           <h5 class="invoice-banner-txt"><b>Invoice</b></h5>
           <div class="lanclient-invoice-logo">
             <div class="right-invy top-left">
-              <p><strong>Project:&nbsp;</strong>{{ ucwords($projectName) }}</p>
-              <p><strong>Lancer:&nbsp;</strong>{{ ucwords($lancerName) }}</p>
+              <p><strong>Project:&nbsp;</strong>{{ $projectName }}</p>
+              <p><strong>Lancer:&nbsp;</strong>{{ $lancerName }}</p>
               <p><strong>Email:&nbsp;</strong>{{ $lancerMail }}</p>
                 <p>
                   @if(isset($lancerAddress))
                     @php echo "<strong>Address:&nbsp;</strong>"; @endphp
-                    {{ ucwords($lancerAddress) }}
+                    {{ $lancerAddress }}
                   @else
                      @if(isset($lancerStreetNum))
                         @php echo "<strong>Address:&nbsp;</strong>"; @endphp
                         {{ $lancerStreetNum.", " }}
                      @endif
                      @if(isset($lancerStreet))
-                        {{ ucwords($lancerStreet)." Street, "}}
+                        {{ $lancerStreet." Street, "}}
                      @endif
                      @if(isset($lancerCity))
-                        {{ ucwords($lancerCity).", " }}
+                        {{ $lancerCity.", " }}
                      @endif
                      @if(isset($lancerState))
-                        {{ ucwords($lancerState).", " }}
+                        {{ $lancerState.", " }}
                      @endif
                      @if(isset($lancerCountry))
-                        {{ ucwords($lancerCountry).", " }}
+                        {{ $lancerCountry.", " }}
                      @endif
                   @endif
                 </p>
@@ -313,16 +309,16 @@
                                         {{ $clientStreetNum }}
                                     @endif
                                     @if(isset($clientStreet))
-                                        {{ ucwords($clientStreet)." Street, " }}
+                                        {{ $clientStreet." Street, " }}
                                     @endif
                                     @if(isset($clientCity))
-                                        {{ ucwords($clientCity).", " }}
+                                        {{ $clientCity.", " }}
                                     @endif
                                     @if(isset($clientState))
-                                        {{ ucwords($clientState).", " }}
+                                        {{ $clientState.", " }}
                                     @endif
                                     @if(isset($clientCountry))
-                                        {{ ucwords($clientCountry)." " }}
+                                        {{ $clientCountry." " }}
                                     @endif
                             </p>
                      </div>
@@ -352,7 +348,7 @@
              <div class="last-child-billing bill-right">
                      <div class="top-last-bill-details"> <p class="billing-clhead">Hourly Rate</p> <p class="bills-description" id = "hourly-rateN">N/A</p>
                      </div>
-                          <div class="bottom-last-bill-details"> <p class="billing-clhead">Amount Due</p> <p class="bills-description">{{ $currencySymbol }}{{ number_format((float)$amount, 2) }}</p>
+                          <div class="bottom-last-bill-details"> <p class="billing-clhead">Amount Due</p> <p class="bills-description">{{ $currencySymbol }}{{ $amount }}</p>
                            </div>
             </div>
           </div>
@@ -362,7 +358,7 @@
             <table>
               <thead class="bg-primary">
                 <tr>
-                  <th class="remove-borders left">Description</th>
+                  <th class="remove-borders">Description</th>
                   <th class="remove-borders">Quantity</th>
                   <th class="remove-borders">Rate</th>
                   <th class="remove-borders">Amount</th>
@@ -370,27 +366,27 @@
               </thead>
               <tbody>
                 <tr>
-                  <td class="left">Base Charge</td>
+                  <td>Base Charge</td>
                   <td>{{ $time }}</td>
-                  <td>{{ number_format((float)$pricePerHour, 2) }}</td>
+                  <td>{{ $pricePerHour }}</td>
                   <td>
                       @php
-                        echo number_format( (float)((float)$time * (float)$pricePerHour), 2);
+                        echo ((int)$time * (int)$pricePerHour);
                       @endphp
                   </td>
                 </tr>
                 <tr>
-                  <td class="left">Equipment Cost</td>
+                  <td>Equipment Cost</td>
                   <td>1</td>
-                  <td>{{ number_format((float)$equipmentCost, 2) }}</td>
-                  <td>{{ number_format((float)$equipmentCost, 2) }}</td>
+                  <td>{{ $equipmentCost }}</td>
+                  <td>{{ $equipmentCost }}</td>
                 </tr>
                 @if(null !== $subContractorCost)  
                 <tr>
-                        <td class="left">Sub-contractors</td>
+                        <td>Sub-contractors</td>
                         <td>1</td>
-                        <td>{{ number_format((float)$subContractorCost, 2) }}</td>    
-                        <td>{{ number_format((float)$subContractorCost, 2) }}</td>
+                        <td>{{ $subContractorCost }}</td>    
+                        <td>{{ $subContractorCost }}</td>
                     </tr>
                 @endif
               </tbody>
@@ -398,7 +394,7 @@
                 <tr>
                   <td colspan="2" class= "no-border-table"></td>
                   <td class= "no-border-table" >Total</td>
-                  <td class= "no-border-table" >{{ $currencySymbol }} {{ number_format((float)$amount, 2) }}</td>
+                  <td class= "no-border-table" >{{ $currencySymbol }} {{ $amount }}</td>
                 </tr>
                 <tr>
                   <td colspan="2" class= "no-border-table"></td>
@@ -407,7 +403,7 @@
                 <tr>
                   <td colspan="2" class= "no-border-table"></td>
                   <td class= "no-border-table">Amount Due</td>
-                  <td class= "no-border-table">{{ $currencySymbol }} {{ number_format((float)$amount, 2) }}</td>
+                  <td class= "no-border-table">{{ $currencySymbol }} {{ $amount }}</td>
                 </tr>
               </tfoot>
             </table>
