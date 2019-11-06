@@ -188,7 +188,7 @@ $('.text-danger').on("click",function(e){
         var confirmation = confirm(`Do you want to delete Collaborators with name ${collaboratorsName.toUpperCase()}`);
               //run switch statement after dialogue
             switch(true){
-                case confirmation == true: window.location = "{{ url('/')}}/project/collaborator/remove/{{ $collabo->id }}";
+                case confirmation == true: window.location = @if(isset($collabo))"{{ url('/')}}/project/collaborator/remove/{{ $collabo->id }}"@endif;
                 break;
                 case confirmation == false: alert("Collaborators delete aborted");
                 break;

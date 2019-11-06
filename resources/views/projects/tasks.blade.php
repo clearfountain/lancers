@@ -235,7 +235,7 @@
         var confirmation = confirm(`Do you want to delete task with name ${taskObjectArray[1].toUpperCase()}`);
               //run switch statement after dialogue
             switch(true){
-                case confirmation == true: window.location = "{{ url('/')}}/task/remove/{{ $task->id }}";
+                case confirmation == true: @if(isset($task))window.location = "{{ url('/')}}/task/remove/{{ $task->id }}" @endif;
                 break;
                 case confirmation == false: alert("Task delete aborted");
                 break;

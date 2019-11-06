@@ -111,7 +111,7 @@
         var confirmation = confirm(`Do you want to delete invoice with project name ${invoiceObjectArray[1].toUpperCase()}`);
               //run switch statement after dialogue
             switch(true){
-                case confirmation == true: window.location = "{{ url('/')}}/invoice/remove/{{ $invoice->id }}";
+                case confirmation == true: window.location = @if(isset($invoice))"{{ url('/')}}/invoice/remove/{{ $invoice->id }}"@endif;
                 break;
                 case confirmation == false: alert("Invoice delete aborted");
                 break;

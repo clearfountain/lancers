@@ -127,6 +127,8 @@
             else window.location.href="/clients?filter="+selectStatus.value;
         }, false)
 
+
+
         $(".delete-btn").on('click', e => {
             e.preventDefault();
 
