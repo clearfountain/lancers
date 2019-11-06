@@ -61,7 +61,7 @@
                         
                             @if(isset($invites) && count($invites) < 1)
                             <tr class="py-2">
-                                <td scope="row" class="rounded-left border border-right-0" colspan="5">No inviterators found for your projects</td>
+                                <td scope="row" class="rounded-left border border-right-0" colspan="5">No invitee found for your projects</td>
                             </tr>
                             @elseif(isset($invites))
                             @foreach($invites as $invite)
