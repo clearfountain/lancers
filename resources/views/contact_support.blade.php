@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Contact Support</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+@extends('layouts.auth')
+
+@section('title', 'Contact Support')
+
+@section('styles')
+<link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
     <style>
     body {
       padding: 0;
@@ -124,6 +123,97 @@
       cursor: pointer;
     }
     
+    /* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+  perspective: 1500px;
+}
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  background: var(--primary-color);
+  color: #fff;
+  transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+  transform-origin: bottom left;
+}
+#sidebar.active {
+  margin-left: -250px;
+  transform: rotateY(100deg);
+}
+#sidebar .sidebar-header {
+  padding: 20px;
+  background: var(--primary-color);
+}
+#sidebar ul.components {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--primary-color);
+}
+#sidebar ul p {
+  color: #fff;
+  padding: 10px;
+}
+#sidebar ul li a {
+  padding: 10px;
+  font-size: 1em;
+  font-weight: 600;
+  display: block;
+  transition: 0.4;
+}
+#sidebar ul li a:hover {
+  color: #ffffff;
+  background: rgba(19, 41, 82, 1);
+}
+#sidebar ul li a img {
+    margin-top: -4px !important;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+#sidebar.active ul li a span {
+    vertical-align: text-bottom !important;
+}
+#sidebar ul li.active > a,
+a[aria-expanded="true"] {
+  color: #fff;
+  background: rgba(19, 41, 82, 1);
+}
+a[data-toggle="collapse"] {
+  position: relative;
+}
+.dropdown-toggle::after {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+ul ul a {
+  font-size: 0.9em !important;
+  padding-left: 30px !important;
+  background: rgba(19, 41, 82, 1);;
+}
+ul.CTAs {
+  padding: 20px;
+}
+ul.CTAs a {
+  text-align: center;
+  font-size: 0.9em !important;
+  display: block;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+a.download {
+  background: #fff;
+  color: #7386D5;
+}
+a.article,
+a.article:hover {
+  background: rgba(19, 41, 82, 1) !important;
+  color: #fff !important;
+}
     /*main body content*/
     .content {
       grid-column: 2 / -1;
@@ -198,7 +288,9 @@
       }
     }
   </style>
-  </head>
+  @endsection
+
+@section('content')
 
   <body>
     <div class="main-cont">
@@ -217,7 +309,71 @@
 
       <div class="sidebar">
         <div class="sidebar-content">
-          <img class="logo-img" src="https://res.cloudinary.com/slarin/image/upload/v1570685957/contact-support/lancers_zump2v.svg">
+
+         <!-- <div class="wrapper"> -->
+    <!-- Side Nav -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+
+            <a href="{{ url('dashboard') }}"><img src="https://lancer-app.000webhostapp.com/images/svg/Lancers.svg" height="35" width="auto" class="img img-responsive"></a>
+
+        </div>
+        <ul class="list-unstyled components">
+            <li class=" @if(request()->path() == 'dashboard') active @endif">
+                <a href="{{url('dashboard')}}">
+                    <img src="https://lancer-app.000webhostapp.com/images/svg/home.svg" height="20" width="auto"> <span> Dashboard</span></a>
+            </li>
+            <li class=" @if(request()->path() == 'client' || request()->routeIs('viewClient') ) active @endif">
+                <a href="{{url('clients')}}">
+                    <img src="https://lancer-app.000webhostapp.com/images/svg/customer.svg" height="20" width="auto"> <span> Client</span>
+                </a>
+            </li>
+            <li class="@if(request()->path() == 'projects/status') active @endif">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><img src="https://lancer-app.000webhostapp.com/images/svg/lightbulb.svg" height="20" width="auto"> <span> Projects</span></a>
+                <ul class="collapse list-unstyled " id="homeSubmenu">
+                    <li>
+                        <a href="{{url('project/status')}}" class="pl-4"><i class="fas fa-dot-circle"></i> Status</a>
+                    </li>
+                    <!-- <li>
+                        <a href="{{url('project/overview')}}" class="pl-4"><i class="fas fa-dot-circle"></i> Overview</a>
+                    </li> -->
+                    <li>
+                        <a href="{{url('project/collaborators')}}" class="pl-4 "><i class="fas fa-dot-circle"></i> Collabrators</a>
+                    </li>
+                    <li>
+                        <a href="{{url('project/tasks')}}" class="pl-4"><i class="fas fa-dot-circle"></i> Task</a>
+                    </li>
+                    <!-- <li>
+                        <a href="{{url('project/documents')}}" class="pl-4"><i class="fas fa-dot-circle"></i> Documents</a>
+                    </li> -->
+
+                </ul>
+            </li>
+            <li class="@if(request()->path() == 'invoices') active @endif">
+                <a href="{{url('invoices')}}">
+                    <img src="https://lancer-app.000webhostapp.com/images/svg/approve-invoice.svg" height="20" width="auto"> <span> Invoice</span>
+                </a>
+            </li>
+            <!-- <li>
+                <a href="{{url('contracts')}}">
+                    <img src="https://lancer-app.000webhostapp.com/images/svg/policy.svg" height="20" width="auto"> <span> Contract</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{url('proposals')}}">
+                    <img src="https://lancer-app.000webhostapp.com/images/svg/approval.svg" height="20" width="auto"> <span> Proposals</span>
+                </a>
+            </li> -->
+            <li class="@if(request()->path() == url('/dashboard/profile/settings')) active @endif">
+                <a href="{{ url('/dashboard/profile/settings') }}">
+                    <img src="https://lancer-app.000webhostapp.com/images/svg/approval.svg" height="20" width="auto"> <span> Settings</span>
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
+          <!-- <img class="logo-img" src="https://res.cloudinary.com/slarin/image/upload/v1570685957/contact-support/lancers_zump2v.svg">
           <table class="nav-table">
             <tr>
               <td><img src="https://res.cloudinary.com/slarin/image/upload/v1570685957/contact-support/home_ytnlm7.svg" class="icon"></td><td class="nav-txt"><a href="#">Dashboard</a></td>
@@ -240,7 +396,7 @@
             <tr>
               <td><img src="https://res.cloudinary.com/slarin/image/upload/v1570685958/contact-support/approval_ylo1xp.svg" class="icon"></td><td class="nav-txt"><a href="#">Proposals</a></td>
             </tr>
-          </table>
+          </table> -->
         </div>
       </div>
 
@@ -282,5 +438,4 @@
       }
     </script>
   </body>
-
-</html>
+  @endsection
