@@ -28,7 +28,7 @@ if(isset($_POST['email'])){
   $mail->Body    = 'mail body';
  // $mail->AltBody = '';
   if(!$mail->send()) {  
-      echo "<span style='font-size:15px; color:#FFFFFF; text-algin: center; background-color: red;'> Oops!! We were unable to send you a mail, please try again later.</span>";
+      echo "<span style='font-size:16px; color:#FFFFFF; text-algin: center; background-color: red;'> Oops!! We were unable to send you a mail, please try again later.</span>";
       //echo 'Mailer Error: ' . $mail->ErrorInfo . "n";
   } else {
       echo "<span style='font-size:15px; color:#FFFFFF;  text-algin: center; background-color: green;'>Email sent successfully</span>";
