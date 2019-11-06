@@ -45,9 +45,12 @@
                 Invoice
             </div>
             <div class="box-5" style="max-width: 150px">
-                <form method="POST" action="/invoice/send">
+                <form method="POST" action="/invoice/send" id="finalInvoiceForm" enctype="multipart/form-data">
                     @csrf
+                    <input type="text" id="invoiceCheckerInput" style="display: none;" name="invoiceChecker" value="sendInvoice">
                     <input type="text" style="display: none;" name="invoice" value="{{$invoice->id}}">
+                    <input id="invoice_picture" name="profileimage" type="file" style="visibility: hidden;"  onchange="invoiceImage(this);" />
+
                     <button type="submit" class="sendInvoice">SEND INVOICE</button>
                 </form>
             </div>
@@ -66,15 +69,16 @@
                         </div>
                     </div>
                 </section> --}}
-                
+
                 @if(session()->has('message.alert'))
                 <div class="text-center">
-                    <button class=" alert alert-{{ session('message.alert') }}"> 
+                    <button class=" alert alert-{{ session('message.alert') }}">
                         {!! session('message.content') !!}
                     </button>
                 </div>
                 @endif
                 <section class="mainContentBelowLogo">
+                <img id="invoice_image_selecter" src="{{ asset('images/ClientImages/user-default.jpg') }}" style="width: 100px; height: 100px; border-radius: 10%; pointer: finger;" alt="Client Image">
                     <section>
                         <div class="addressAndPayment row">
                             <div class="card addressCard" style="font-weight: normal">
@@ -183,18 +187,54 @@
 @section('script')
     <script type="text/javascript">
         $(".save-close").click(() => {
-            window.location.href = "/invoices";
+            //change checker value to saveInvoice
+            $("#invoiceCheckerInput").val("saveInvoice");
+            $("#finalInvoiceForm").submit();
+
+        });
+
+        $(".sendInvoice").click((e) => {
+            e.preventDefault();
+            //change checker value to sendInvoice
+        $("#invoiceCheckerInput").val("sendInvoice");
+
+           $("#finalInvoiceForm").submit();
+
         });
 
         $(".go-back").click(() => {
             window.history.back();
         });
+
+        //jquery code for handling client image upload
+        $("#invoice_image_selecter").on("click", function() {
+        $("#invoice_picture").trigger("click");
+      });
+
+
+
+      function invoiceImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#invoice_image_selecter')
+                    .attr('src', e.target.result)
+                    .width(100)
+                    .height(100);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+
+    }
+
     </script>
 @endsection
 
 @section('styles')
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+    <sty
+        @import url('https://fonts.googleapis.com/cle>ss?family=Ubuntu&display=swap');
 
         * {
             font-family: 'Ubuntu', sans-serif;

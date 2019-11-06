@@ -187,6 +187,8 @@ Route::group(['middleware' => 'auth:web'], function() {
          return view('addclients');
     });
 
+    Route::get("/clients/details/json/{client_id}",'ClientController@getClientName');
+
     Route::get('/clients/view/{id}', 'ClientController@viewClient')->name('viewClient');
     Route::get('/clients/{client}/edit', 'ClientController@edit');
     Route::put('/clients/edit', 'ClientController@update');
@@ -315,8 +317,8 @@ Route::group(['middleware' => 'auth:web'], function() {
     // Route::get('/client-doc-view', function () {
     //     return view('client-doc-view');
     // });
-    
-    
+
+
     // Route::get('/invoice', function () {
     //     return view('invoice_view');
     // });
@@ -344,7 +346,9 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::post('/process_contact_form', function() {
         return view('process_contact_form');
     });
-
+    Route::get('/faq', function () {
+        return view('faq');
+    });
 
     // Others
 
