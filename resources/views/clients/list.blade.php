@@ -77,7 +77,7 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item text-success" href="#"><i class="fas fa-binoculars"></i> View</a>
+                                        <a class="dropdown-item text-success" href="/clients/view/{{$client->id}}"><i class="fas fa-binoculars"></i> View</a>
                                         <a class="dropdown-item text-secondary" href="/clients/{{$client->id}}/edit"><i class="fas fa-edit"></i> Edit</a>
                                             <a href="" data-id="{{$client->id}}" class="dropdown-item text-danger delete-btn"><i class="fas fa-trash-alt"></i> Delete</a>
                                     </div>
@@ -102,7 +102,7 @@
 
 
 @section('others')
-<button class="btn btn-secondary text-white rounded-circle" id="add-something">
+<button class="btn btn-secondary text-white rounded-circle" id="add-something" onclick="location.href='{{url('/clients/add')}}'">
     <i class="fas fa-plus"></i>
 </button>
 @endsection

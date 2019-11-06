@@ -68,8 +68,8 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item text-success" href="{{url('/')}}/invoices/{{$invoice->id}}" <i class="fas fa-binoculars"></i> View</a>
-                                            <a class="dropdown-item text-secondary" href="{{ url('/')}}/invoice/edit/{{ $invoice->id }}" <i class="fas fa-edit"></i> Edit</a>
+                                            <a class="dropdown-item text-success" href="{{url('/')}}/invoices/{{$invoice->id }}/getpdf"> <i class="fas fa-binoculars"></i> View</a>
+                                            <a class="dropdown-item text-secondary" href="{{ url('/')}}/invoice/edit/{{ $invoice->id }}"> <i class="fas fa-edit"></i> Edit</a>
                                             <a class="dropdown-item text-danger" href="{{ url('/')}}/invoice/remove/{{ $invoice->id }}"><i class="fas fa-trash-alt"></i> Delete</a>
                                         </div>
                                     </div>

@@ -2,7 +2,7 @@
 <!-- Select Project -->
 
 @section('styles')
-    <link rel="stylesheet" href="{{asset('css/step4.css')}}"/>
+<link rel="stylesheet" href="{{asset('css/step4.css')}}" />
 @endsection
 
 
@@ -29,23 +29,25 @@
         </div>
 
         <div class="">
-            <input class="text-center cnc" value="NEXT" type="button">
+            <input class="text-center cnc" id="next_page" value="NEXT" type="button">
         </div>
 
     </div>
 
     <div class="container-fluid main-section">
 
-    <main>
-        <h2>Client Information</h2>
-        <br>
-            {{--  <h2>Client Information</h2><br>  --}}
-            @if(session('success'))<br> <h6><span class="alert alert-success">{{session('success')}}</span></h6>
-            @elseif(session('error'))<br> <h6><span class="">{{session('error')}}</span></h6> @endif
+        <main>
+            <h2>Client Information</h2>
+            <br>
+            {{-- <h2>Client Information</h2><br>  --}}
+            @if(session('success'))<br>
+            <h6><span class="alert alert-success">{{session('success')}}</span></h6>
+            @elseif(session('error'))<br>
+            <h6><span class="">{{session('error')}}</span></h6> @endif
 
             @if(session()->has('message.alert'))
             <div class="text-center">
-                <button class=" alert alert-{{ session('message.alert') }}"> 
+                <button class=" alert alert-{{ session('message.alert') }}">
                     {!! session('message.content') !!}
                 </button>
             </div>
@@ -63,13 +65,13 @@
                         <label for="Str_Num">Street & Number</label>
                         <span>
                             <input required type="text" name="street" id="street" placeholder="Street">
-                            <input required type="number" name="street_number" id="number" placeholder="Number">
+                            <input required type="number" min="0" name="street_number" id="number" placeholder="Number">
                         </span>
 
                         <label for="city_Zcode">City & Zip Code</label>
                         <span>
                             <input required type="text" name="city" id="city" placeholder="City">
-                            <input required type="number" name="zipcode" id="Zcode" placeholder="Zip code">
+                            <input required type="number" min="0" name="zipcode" id="Zcode" placeholder="Zip code">
                         </span>
 
                         <label for="Country_state">Country & State</label>
@@ -97,10 +99,10 @@
                 <button class="btn">NEXT</button>
             </section> -->
     </main>
-    
-    <button class="btn" type="submit">NEXT</button>
+
+    <button class="btn" id="next_btn" type="submit">NEXT</button>
     </div>
-        
+
     </div>
 </form>
 @endsection
@@ -108,10 +110,26 @@
 @section('script')
 
 <script type="text/javascript">
+
+/**
+* Jquery code to highlight next buttons on form input
+ */
+$("#Cname").on("input", function() {
+       $("#next_btn").css( "background-color", "#0ABAB5");
+       $("#next_page").css( "background-color", "#0ABAB5");
+
+      });
+
+      $("#next_page").on("click", function() {
+        $("#next_btn").trigger("click");
+      });
+
+
     let count = 1;
-	window.addEventListener('load', function() {
-		addContact();
-	})
+    window.addEventListener('load', function() {
+        addContact();
+    })
+
     function addContact() {
         let element = document.querySelector('#contacts')
         let newElement = document.createElement('div');
@@ -119,7 +137,7 @@
         newElement.innerHTML = `
             <label for="company_name_${count}">Contact name</label>
             <input type="text" name="contact[${count}]['name']" id="contact_name${count}" placeholder="e.g Ben Davies">
-            
+
             <label for="company_email">Contact email</label>
             <input type="email" name="contact[${count}]['email']" id="email_${count}" placeholder="e.g email@domain.com">
         `;
@@ -127,18 +145,18 @@
         count += 1;
     }
 
-    $(document).ready(function () {
-        $('select[name="country_id"]').on('change', function () {
+    $(document).ready(function() {
+        $('select[name="country_id"]').on('change', function() {
             let countryID = $(this).val();
             if (countryID) {
                 $.ajax({
                     url: '/states/' + encodeURI(countryID),
                     type: "GET",
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         $('select[name="state_id"]').empty();
                         $('select[name="state_id"]').append('<option selected value="">Select State</option>');
-                        $.each(data.data, function (key, value) {
+                        $.each(data.data, function(key, value) {
                             $('select[name="state_id"]').append('<option value="' + value.id + '">' + value.name + '</option>');
                         });
                     }

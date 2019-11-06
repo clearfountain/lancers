@@ -86,14 +86,17 @@
     <div class="container-fluid main">
         <i class="fa fa-check-circle"></i>
         <a href="#" class="go-back"><img class="clear" src="https://res.cloudinary.com/soot3/image/upload/v1570665870/clear_24px_sz8k0p.png" alt="clear"></i></a>
-        <h3><strong>Invoice Sent</strong></h3>
-        <p>You would receive a notification once payment has been made</p>
+        <p><strong>Inquiry Submitted</strong></p>
+
+<p>Your request has been received and a member of the Lancers team will reach you shortly.</p>
+<p>Thank you!</p>
 
     </div>
 
     <div class="side">  
-        <a class="invBtn" href="/invoices">VIEW INVOICES</a>
+        <a class="invBtn" href="/dashboard">RETURN TO DASHBOARD</a>
     </div>
+    <!-- <input id = "continue" type = "continue"name = ""value = "Continue"> -->
 @endsection
 
 @section('script')

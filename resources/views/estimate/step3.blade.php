@@ -4,7 +4,7 @@
 @section('styles')
     <link rel="stylesheet" href="{{asset('css/step2.css')}}"/>
     <style>
-    
+
 
     .select-project {
       width: 90%;
@@ -15,12 +15,12 @@
     a:hover{cursor: pointer;}
 
     .cli-box{
-        height: 200px; 
+        height: 200px;
         width: 80%;
         margin: 0px auto;
-        vertical-align: middle; 
-        padding: 12%; 
-        border: 1px solid gray; 
+        vertical-align: middle;
+        padding: 12%;
+        border: 1px solid gray;
         text-align: center;
         margin-top: 20px;
     }
@@ -82,12 +82,12 @@
                             </div>
                         </div>
                     </div>
-
+                    <input type="hidden" id="next_checker" value="">
                     <div class="col-md-6" >
-                        <a class="" onClick="next(event)">
+                        <a class="" id="clientClick">
                             <div class="cli-box" style="color: #919191">
-                                <div class="sub-box new-client">    
-                                    
+                                <div class="sub-box new-client">
+
                                         <p class="">A new Client</p>
                                 </div>
                             </div>
@@ -103,7 +103,64 @@
 
 @section('script')
   <script>
-    
+  /**
+  * Jquery code to handle next buttons and form submission
+  * */
+      $("#client").on("onChange", function() {
+       $("#next_btn").css( "background-color", "#0ABAB5");
+       $("#next_page").css( "background-color", "#0ABAB5");
+       $("#next_checker").val("checked");
+      });
+
+      $("#clientClick").on("click", function() {
+       $("#next_btn").css( "background-color", "#0ABAB5");
+       $("#next_page").css( "background-color", "#0ABAB5");
+       $("#next_checker").val("checked");
+      });
+
+
+      $("#next_btn").on("click", function() {
+
+      let checkerValue = $("#next_checker").val();
+
+      if(checkerValue == "checked")
+      {
+        submitForm();
+      }
+      else
+      {
+        alert("Select a new or existing Client before proceeding to submit form");
+
+        $('#form').submit(function(e)
+        {
+             e.preventDefault();
+        });
+        }
+
+      });
+
+
+      $("#next_page").on("click", function() {
+
+       let checkerValue = $("#next_checker").val();
+
+       if(checkerValue == "checked")
+       {
+         submitForm();
+       }
+       else
+       {
+        alert("Select a new or existing Client before proceeding to submit form");
+
+        $('#form').submit(function(e)
+        {
+            e.preventDefault();
+
+        });
+       }
+
+       });
+
     let client = document.querySelector('#client');
     console.log(client)
     let next_page = document.querySelector('#next_page');
@@ -127,7 +184,7 @@
         next_page.classList.add('validated');
         next_btn.classList.add('validated');
     }
-    
+
     function falsy(el){
         if(typeof el.selected !== 'undefined'){
             if(el.selected != '' && el.selected !== 0 && el.selected == null) return false;
@@ -136,13 +193,17 @@
         }
         return true;
     }
-      
-    
+
+    function submitForm(){
+        let form = document.querySelector('#form');
+        form.submit();
+    }
+
     function next(e){
         let form = document.querySelector('#form');
         form.submit();
     }
-    
+
     function verifyPath(){
         let createProject = document.getElementById('createProject').value;
 

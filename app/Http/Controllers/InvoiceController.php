@@ -71,10 +71,12 @@ class InvoiceController extends Controller {
 
     public function review(Request $request){
         $estimate_id = session('new_estimate_id');
-        // dd($estimate_id);
-        
+        $projectObject = session("projectObject");
+
+
         if($estimate_id && is_int($estimate_id)){
             $estimate = Estimate::find($estimate_id);
+
             if($estimate){
                 $pre_invoice = Invoice::whereEstimate_id($request->estimate_id)->first();
                 if (is_object($pre_invoice)) {
@@ -83,8 +85,10 @@ class InvoiceController extends Controller {
                 }else{
                     $createinvoice = Invoice::create(['user_id' => Auth::user()->id, 'issue_date' => $estimate->start, 'due_date' => $estimate->end, 'estimate_id' => $estimate->id, 'amount' => $estimate->estimate, 'currency_id' => $estimate->currency_id]);
                     $invoice = Invoice::whereId($createinvoice->id)->with('estimate')->first();
+                    $projectObject->invoice_id = $createinvoice->id;
+                    $projectObject->save();
                 }
-        
+
                 return view('invoices.reviewinvoice')->with('invoice', $invoice);
             }else return redirect('estimate/create');
         }else{
@@ -98,7 +102,7 @@ class InvoiceController extends Controller {
         return view('invoice_sent');
     }
 
-    public function index() { 
+    public function index() {
         $user = Auth::user();
 
         // return $user->projects;
@@ -173,7 +177,7 @@ class InvoiceController extends Controller {
         // dd($invoice);
 
         $invoice = Project::where('invoice_id', $invoice)->select('id', 'title', 'estimate_id', 'client_id', 'invoice_id')->with(['estimate', 'invoice', 'client'])->first();
-	
+
     // return $invoice;
         return view('invoices.viewinvoice')->with('invoice', $invoice);
     }
@@ -230,10 +234,10 @@ class InvoiceController extends Controller {
             // dd($e->getMessage());
             session()->flash('message.alert', 'danger');
             session()->flash('message.content', "Error We Are Unable to Send This Invoice Now, Please Try Back Later ");
-            return back();
+            return redirect("/invoices");
         }
 
-        
+
         return view('invoices.invoicesent');
     }
 

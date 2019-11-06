@@ -1,5 +1,5 @@
 @extends('layouts.auth')
-
+@section('title', 'Edit Contact')
 
 
 @section('main-content')
@@ -40,13 +40,13 @@
                         <label for="Str_Num">Street & Number</label>
                         <span>
                             <input class="form-control" type="text" name="street" id="street" placeholder="Street" value="{{$client->street ?? ''}}">
-                            <input  type="number" class="form-control" name="street_number" id="number" placeholder="Number" value="{{$client->street_number ?? ''}}">
+                            <input  type="number" min="0" class="form-control" name="street_number" id="number" placeholder="Number" value="{{$client->street_number ?? ''}}">
                         </span>
                         
                         <label for="city_Zcode">City & Zip Code</label>
                         <span>
                             <input type="text"  class="form-control" name="city" id="city" placeholder="City" value="{{$client->city ?? ''}}">
-                            <input type="number" class="form-control" name="zipcode" id="Zcode" placeholder="Zip code" value="{{$client->zipcode ?? ''}}">
+                            <input type="number" min="0" class="form-control" name="zipcode" id="Zcode" placeholder="Zip code" value="{{$client->zipcode ?? ''}}">
                         </span>
 
                         <label for="Country_state">Country & State</label>
@@ -71,7 +71,7 @@
 
                     <h5>Contact Information</h5>
                     <span id="contacts">
-                        @foreach(json_decode($client->contacts, true) ?? [] as $key => $contact)
+                        @foreach($client->contacts ?? [] as $key => $contact)
                             <div class="form-group">                                
                                 <label for="company_name_{{$key}}">Contact name</label>
                                 <input type="text" value="{{$contact['name']}}" class="form-control" name="contact[{{$key}}][name]" id="contact_name{{$key}}" placeholder="e.g Ben Davies">
@@ -94,7 +94,7 @@
 
 @section('script')
 <script type="text/javascript">
-    let count = {{count(json_decode($client->contacts, true))}};
+    let count = {{count($client->contacts ?? [])}};
 	window.addEventListener('load', function() {
         //{{--addStates({{$client->country_id}}) --}}
     })

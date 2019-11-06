@@ -396,7 +396,7 @@ table.project-table thead tr th {
                 <a href="{{url('dashboard')}}">
                     <img src="https://lancer-app.000webhostapp.com/images/svg/home.svg" height="20" width="auto"> <span> Dashboard</span></a>
             </li>
-            <li class=" @if(request()->path() == 'client') active @endif">
+            <li class=" @if(request()->path() == 'client' || request()->routeIs('viewClient') ) active @endif">
                 <a href="{{url('clients')}}">
                     <img src="https://lancer-app.000webhostapp.com/images/svg/customer.svg" height="20" width="auto"> <span> Client</span>
                 </a>
@@ -483,7 +483,7 @@ table.project-table thead tr th {
                             <a class="nav-link p-3" href="{{ url('/contact') }}"><img src="https://lancer-app.000webhostapp.com/images/svg/help.svg" height="25" width="auto"> <span class="d-lg-none d-xl-none"> You need help?</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link border-left p-3" href="#"><img src="https://lancer-app.000webhostapp.com/images/svg/alarm-clock.svg" height="25" width="auto"> <span class="d-lg-none d-xl-none"> Reminder</span></a>
+                            <a class="nav-link border-left p-3" href="/notifications"><img src="https://lancer-app.000webhostapp.com/images/svg/alarm-clock.svg" height="25" width="auto"> <span class="d-lg-none d-xl-none"> Reminder</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link border-left p-3" href="/notifications"><img src="https://lancer-app.000webhostapp.com/images/svg/notification.svg" height="25" width="auto"> <span class="d-lg-none d-xl-none"> Notification</span></a>
