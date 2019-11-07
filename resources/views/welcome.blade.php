@@ -1,11 +1,7 @@
 @extends('layouts.app')
 @section('title') {{'Master'}} @endsection
 @section('styles')
-<!-- Add animations -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <!-- end add animations -->
+
 
 <style type="text/css">
 	/*Main page style by message*/
