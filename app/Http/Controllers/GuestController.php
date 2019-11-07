@@ -178,9 +178,16 @@ class GuestController extends Controller {
             return back();
         }
 
+        if(count($contacts) > 0){
+            $emailcontact = $contacts[0]['email'];
+        }
+        else{
+            $emailcontact = null;
+        }
+
         $data = [
             'name' => $request->name,
-            'email' => $request->email,
+            'email' => $emailcontact,
             'street' => $request->street,
             'street_number' => $request->street_number,
             'city' => $request->city,
@@ -245,7 +252,7 @@ class GuestController extends Controller {
         $clients = new Client;
         $clients->user_id = $user->id;
         $clients->name = session('client')['name'];
-        $clients->email = $emailcontact;
+        $clients->email = session('client')['email'];
         $clients->street = session('client')['street'];
         $clients->street_number = session('client')['street_number'];
         $clients->city = session('client')['city'];

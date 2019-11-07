@@ -361,6 +361,14 @@ class InvoiceController extends Controller {
         {
             if($image != null)
             {
+            $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
+            //saveInvoice
+            $project_name = $invoice->estimate->project->title;
+
+            $client = $invoice->estimate->project->client;
+
+            $client_id = $client->id;
+
                 $storedImageStatus = "null";
                 //upload image and return to invoices.
 
@@ -600,7 +608,7 @@ class InvoiceController extends Controller {
 
             // Storage::disk('public')->put("/storage/logos/".$name , $file);
             $file->move(public_path('storage/logos/'), $name);
-            
+
             $invoice->update(['logo' => $name]);
 
             request()->session()->flash('message.content', 'Logo successfully saved.');
