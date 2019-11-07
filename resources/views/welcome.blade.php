@@ -339,13 +339,10 @@
 	@endif
 </div>
 <main>
-	<section class="jumbotron p-0 text-left rounded-0 bg-white">
+	{{--  <section class="jumbotron p-0 text-left rounded-0 bg-white">
 		<div class="container">
 			<div class="row">
 				<div class="col-12 col-md-5 col-lg-6">
-					{{--  <h1 class="jumbotron-heading text-dark my-5">Let us do the work for you</h1>  --}}
-
-					{{--  <p class="text-dark bold text-bold my-5">Generate estimates, invoices, contacts and much more<br> for your project</p>  --}}
 					<p class="jumbotron-heading text-dark my-5 animated bounce">Generate estimates, invoices, contacts and much more<br> for your project.</p>
 					<p class="text-dark my-5">
 						<a href="{{ url('/guest/create/step1') }}" class="btn btn-secondary btn-lg py-2" data-aos="fade-right">Generate an Estimate</a>
@@ -353,17 +350,17 @@
 				</div>
 				<div class="col-12 col-md-7 col-lg-6 order-2 aos-init aos-animate">
 					<div class="text-center">
-						<img src="{{ asset('images/svg/coding.svg') }}" class="img img-responsive" height="auto" width="80%">
+						<img src="{{ asset('images/svg/coding.svg') }}" class="img img-responsive" height="auto" width="80%" data-aos="fade-left">
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
-	<section class="">
+	</section>  --}}
+	<section class="mt-5 mb-5 pt-5">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6">
-					<div class="text-left">
+					<div class="text-left animated bounce">
 						<h3 class="text-dark">Estimate your project’s cost for free</h3>
 						<p class="text-dark small">
 							Use our handy cost estimator to find out how much it will take you to deliver on your project.
@@ -371,14 +368,14 @@
 						<p class="text-dark small">
 							We take into consideration your work hours, subcontractors, amongst other things, to make sure you always have a healthy profit at the end of the day
 						</p>
-						<p class="text-dark my-4">
+						<p class="text-dark my-4" data-aos="fade-right">
 							<a href="{{ url('/guest/create/step1') }}" class="btn btn-secondary btn-lg py-2">Generate an Estimate</a>
 						</p>
 					</div>
 				</div>
 				<div class="col-md-6">
-					<div class="text-center">
-						<img src="{{ asset('images/svg/undraw_calculator.svg') }}" class="img img-responsive" height="auto" width="80%">
+					<div class="text-center aos-init aos-animate" >
+						<img src="{{ asset('images/svg/undraw_calculator.svg') }}" class="img img-responsive" height="auto" width="80%" data-aos="fade-left">
 					</div>
 				</div>
 			</div>
