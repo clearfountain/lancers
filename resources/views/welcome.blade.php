@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('title') {{'Master'}} @endsection
 @section('styles')
+
+
 <style type="text/css">
 	/*Main page style by message*/
 	@import url(http://fonts.googleapis.com/css?family=Open+Sans);
@@ -23,11 +25,11 @@
 		font-family: 'Open Sans', sans-serif !important;
 		font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300))) !important;
 	}
-    
-    .sub-msg{
-        text-align: center !important;
-        color: #fff !important;
-    }   
+
+	.sub-msg {
+		text-align: center !important;
+		color: #fff !important;
+	}
 
 	h1,
 	.h1 {
@@ -290,7 +292,7 @@
 						<a class="nav-link" href="{{ url('/pricing') }}">Pricing</a>
 					</li>
 					@guest
-                    <li class="nav-item">
+					<li class="nav-item">
 						<a class="nav-link" href="{{ url('guest/track') }}">Track a Project</a>
 					</li>
 					<li class="nav-item">
@@ -319,62 +321,61 @@
 
 @section('content')
 <div class="sub-msg">
-    @if(session()->has('subMessageGood'))
-        <p class="btn btn-success sub-msg">
-            {{ session('subMessageGood') }}
-            @php
-                session()->forget('subMessageGood');
-            @endphp
-        </p>
-    @endif
-    @if(session()->has('subMessageBad'))
-        <p class="btn btn-danger sub-msg">
-            {{ session('subMessageBad') }}
-            @php
-                session()->forget('subMessageBad');
-            @endphp
-        </p>
-    @endif
+	@if(session()->has('subMessageGood'))
+	<p class="btn btn-success sub-msg">
+		{{ session('subMessageGood') }}
+		@php
+		session()->forget('subMessageGood');
+		@endphp
+	</p>
+	@endif
+	@if(session()->has('subMessageBad'))
+	<p class="btn btn-danger sub-msg">
+		{{ session('subMessageBad') }}
+		@php
+		session()->forget('subMessageBad');
+		@endphp
+	</p>
+	@endif
 </div>
 <main>
-	<section class="jumbotron p-0 text-left rounded-0 bg-white">
+	{{--  <section class="jumbotron p-0 text-left rounded-0 bg-white">
 		<div class="container">
 			<div class="row">
 				<div class="col-12 col-md-5 col-lg-6">
-					<h1 class="jumbotron-heading text-dark my-5">Let us do the work for you</h1>
-					<p class="text-dark bold text-bold my-5">Generate estimates, invoices, contacts and much more<br> for your project</p>
+					<p class="jumbotron-heading text-dark my-5 animated bounce">Generate estimates, invoices, contacts and much more<br> for your project.</p>
 					<p class="text-dark my-5">
-						<a href="{{ url('/guest/create/step1') }}" class="btn btn-secondary btn-lg py-2">Generate an Estimate</a>
+						<a href="{{ url('/guest/create/step1') }}" class="btn btn-secondary btn-lg py-2" data-aos="fade-right">Generate an Estimate</a>
 					</p>
 				</div>
 				<div class="col-12 col-md-7 col-lg-6 order-2 aos-init aos-animate">
 					<div class="text-center">
-						<img src="{{ asset('images/svg/coding.svg') }}" class="img img-responsive" height="auto" width="80%">
+						<img src="{{ asset('images/svg/coding.svg') }}" class="img img-responsive" height="auto" width="80%" data-aos="fade-left">
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
-	<section class="">
+	</section>  --}}
+	<section class="mt-5 mb-5 pt-5">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6">
-					<div class="text-left">
+					<div class="text-left animated bounce">
 						<h3 class="text-dark">Estimate your project’s cost for free</h3>
 						<p class="text-dark small">
 							Use our handy cost estimator to find out how much it will take you to deliver on your project.
 						</p>
 						<p class="text-dark small">
-							We take into consideration your work hours, subcontractors, among other things, to make sure you always have a healthy profit at the end of the day
+							We take into consideration your work hours, subcontractors, amongst other things, to make sure you always have a healthy profit at the end of the day
 						</p>
-						<p class="text-dark my-4">
+						<p class="text-dark my-4" data-aos="fade-right">
 							<a href="{{ url('/guest/create/step1') }}" class="btn btn-secondary btn-lg py-2">Generate an Estimate</a>
 						</p>
 					</div>
 				</div>
 				<div class="col-md-6">
-					<div class="text-center">
-						<img src="{{ asset('images/svg/undraw_calculator.svg') }}" class="img img-responsive" height="auto" width="80%">
+					<div class="text-center aos-init aos-animate" >
+						<img src="{{ asset('images/svg/undraw_calculator.svg') }}" class="img img-responsive" height="auto" width="80%" data-aos="fade-left">
 					</div>
 				</div>
 			</div>
@@ -384,7 +385,7 @@
 		<div class="container mt-4 py-4">
 			<div class="row">
 				<div class="col-md-12">
-					<h3 class="text-white py-4 mb-4 text-center">Manage your Projects <br> for free</h3>
+					<h3 class="text-white py-4 mb-4 text-center" data-aos="zoom-in">Manage your Projects <br> for free</h3>
 				</div>
 			</div>
 			<div class="row">
@@ -396,7 +397,7 @@
 				</div>
 				<div class="col-md-4">
 					<div class="text-center text-white">
-						<img src="{{ asset('images/svg/project-collaborate.svg') }}" class="img img-responsive" height="auto" width="100%">
+						<img src="{{ asset('images/svg/project-collaborate.svg') }}" class="img img-responsive" height="230.30px" width="100%">
 						<p class="text-white text-bold mt-4">Collaborate</p>
 					</div>
 				</div>
@@ -422,11 +423,11 @@
 
 
 @section('footer')
-<footer class="bg-white pt-4">
+<footer class="bg-white pt-4"  data-aos="fade-down">
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-6 col-md-2">
-				<img src="{{ asset('images/svg/logo-dark.svg') }}" alt="" class="img img-responsive mb-2" height="30" width="auto">
+				<img src="https://res.cloudinary.com/nxcloud/image/upload/v1570984909/Lancer/Lancers_c40ozr.svg" alt="" class="img img-responsive mb-2" height="30" width="auto">
 				<ul class="list-unstyled">
 					<li><a class="text-dark" href="{{ url('/pricing') }}">Pricing</a></li>
 					<li><a class="text-dark" href="{{ url('/login') }}">Sign in</a></li>
@@ -447,7 +448,7 @@
 				<p class="text-dark small">
 					3 Birrel Avenue, Sabo.
 					Yaba, Lagos State,
-					Nigeria
+					Nigeria.
 				</p>
 				<h5>
 					<a href="http://facebook.com" class="text-dark mr-2"><i class="fab fa-facebook-square"></i></a>
@@ -460,12 +461,12 @@
 					Get emails about our newest features and events you can visit. We promise not to spam.
 				</p>
 				<form class="form-inline" method="post" action="/submailinglist">
-                    @csrf
+					@csrf
 					<div class="form-group mb-2 mr-2">
 						<label for="subEmail" class="sr-only">Email</label>
 						<input type="email" class="form-control" id="subEmail" name="subEmail" placeholder="Email Address" required>
 					</div>
-					<input type="submit" class="btn btn-secondary mb-2" id="btn-sub" name="btn-sub" value="Subscribe"/>
+					<input type="submit" class="btn btn-secondary mb-2" id="btn-sub" name="btn-sub" value="Subscribe" />
 				</form>
 			</div>
 		</div>
@@ -473,12 +474,26 @@
 	<div class="bg-white text-left py-2 mt-0">
 		<div class="container">
 			<p class="float-right">
-			{{-- <a href="#">Back to top</a> --}}
-			<a href="javascript:void(0)" onClick="window.scrollTo(0, 0)" class="btn btn-secondary mb-2" id="btn-sub">
-				<span>&#8593;</span></a>
+				{{-- <a href="#">Back to top</a> --}}
+				<a href="javascript:void(0)" onClick="window.scrollTo(0, 0)" class="btn btn-secondary mb-2" id="btn-sub">
+					<span>&#8593;</span></a>
 			</p>
 			<p>&copy; Lancer 2019.</p>
 		</div>
 	</div>
 </footer>
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {},
+      Tawk_LoadStart = new Date();
+    (function() {
+      var s1 = document.createElement("script"),
+        s0 = document.getElementsByTagName("script")[0];
+      s1.async = true;
+      s1.src = 'https://embed.tawk.to/5dc11896e4c2fa4b6bda03bf/default';
+      s1.charset = 'UTF-8';
+      s1.setAttribute('crossorigin', '*');
+      s0.parentNode.insertBefore(s1, s0);
+    })();
+  </script>
+  <!--End of Tawk.to Script-->
 @stop

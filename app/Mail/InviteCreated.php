@@ -30,6 +30,6 @@ class InviteCreated extends Mailable
      */
     public function build()
     {
-        return $this->from('mail@lancers.com')->subject('Mail from Real Programmer')->view('emails.invite');
+        return $this->from('noreply@lancers.app','Lancers')->subject('Lancers Collaboration Invitation')->view('emails.invite');
     }
 }

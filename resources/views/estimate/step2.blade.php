@@ -43,11 +43,13 @@
                 <h3>Billing</h3>
 
                 <div class="hour">
-                    <p>How long (in hours) will it take you to complete this project <i class="fa fa-question-circle" aria-hidden="true"></i></p>
+                    
+                    <p>How long (in hours) will it take you to complete this project <span tabindex="0" data-toggle="popover" data-content="Input average number of hours required to complete the project" data-placement="top" data-trigger="focus"><i class="fa fa-question-circle" aria-hidden="true">
+                    </i></span></p>
                     <input required type="number" min="0" maxlength="10000" name="time" placeholder="Hours" style="width: 83% !important;" />
                 </div>
                 <div class="hour" style="display: none;">
-                    <p>How much do you charge per hour <i class="fa fa-question-circle" aria-hidden="true"></i></p>
+                    <p>How much do you charge per hour <span title="Input amount you want to be paid per hour"><i class="fa fa-question-circle" aria-hidden="true"></i></span></p>
                     <input type="number" min="0" maxlength="10000000" value="5000" name="price_per_hour" placeholder="NGN 0.00" style="width: 83% !important;" />
                 </div>
 
@@ -64,7 +66,7 @@
                 <h3>Expenses</h3>
                 <div class="hour">
                     <p id="cost">
-                        How much would it cost you to power your devices or equipment for this project <i class="fa fa-question-circle" aria-hidden="true"></i>
+                        How much would it cost you to power your devices or equipment for this project <span tabindex="0"  data-toggle="popover" data-content="Enter total estimated cost of power needed to execute the project" data-placement="top" data-trigger="focus"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
                     </p>
                     <input type="number" min="0" required name="equipment_cost" id="equipment_cost" placeholder="NGN 0.00" style="width: 83% !important;" />
                 </div>
@@ -76,7 +78,7 @@
                 <br />
 
                 <div class="hour">
-                    <p id="pay">How much would they be paid <i class="fa fa-question-circle" aria-hidden="true"></i></p>
+                    <p id="pay">How much would they be paid <span tabindex="0" data-toggle="popover" data-content="Enter total estimated amount to be paid to all sub-contractors" data-placement="top" data-trigger="focus"><i class="fa fa-question-circle" aria-hidden="true"></i></span></p>
                     <input type="number" min="0" required name="sub_contractors_cost" id="sub_contractors_cost" placeholder="NGN 0.00" style="width: 83% !important;" />
                 </div>
             </div>
@@ -85,12 +87,12 @@
                 <h3>Expertise</h3>
 
                 <div class="hour">
-                    <p id="proj">How many similar projects have you done before <i class="fa fa-question-circle" aria-hidden="true"></i></p>
+                    <p id="proj">How many similar projects have you done before <span tabindex="0" data-toggle="popover" data-content="Enter the number of projects you have worked on that are similar to this, this information will be used for data analytics in the future" data-placement="top" data-trigger="focus"><i class="fa fa-question-circle" aria-hidden="true"></i></span></p>
                     <input type="number" min="0" max="10" maxlength="2" required name="similar_projects" id="similar_projects" placeholder="0" style="width: 30% !important;">
                 </div>
 
                 <div class="hour">
-                    <p id="rate">How would you rate your experience level in executing this project <i class="fa fa-question-circle" aria-hidden="true"></i><p>
+                    <p id="rate">How would you rate your experience level in executing this project <span tabindex="0" data-toggle="popover" data-content="On a scale of one(1) to five(5), how experienced do you feel you are with this kind of projects?" data-placement="top" data-trigger="focus"><i class="fa fa-question-circle" aria-hidden="true"></i></span><p>
                     <input required type="number" min="0" max="5" maxlength="1" name="rating" id="rating" placeholder="0" style="width: 30% !important;"> /5
                 </div>
 
@@ -121,6 +123,12 @@
 
     </div>
 </form>
+@endsection
+
+@section('footer')
+<script>
+    
+</script>
 @endsection
 
 @section('script')
@@ -188,7 +196,10 @@
         }
         return true;
     }
-
+    
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();
+});
 
 </script>
 @endsection
