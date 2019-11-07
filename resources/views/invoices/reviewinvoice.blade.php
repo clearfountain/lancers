@@ -87,6 +87,7 @@
                                {{$invoice->estimate->project->client->country->name}}
                             </div>
 
+
                             <div class="card payment ml-auto">
                                 <div style="font-size: 0.8em; color: #B1B1B1">Amount Due</div>
 

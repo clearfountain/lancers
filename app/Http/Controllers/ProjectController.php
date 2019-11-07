@@ -13,10 +13,7 @@ use App\Rules\IsUser;
 use PDF;
 use Illuminate\Http\Request;
 use App\Currency;
-// use App\Estimate;
-// use App\Client;
-// use App\Country;
-// use App\State;
+
 use Illuminate\Support\Facades\Redirect;
 
 class ProjectController extends Controller {

@@ -477,6 +477,7 @@ tbody, .bold {
                     @if(null != $invoice->client->profile_picture)
                     <img id="image_selecter" src="{{ asset($invoice->client->profile_picture) }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
 
+
                     @endif
                 </div>
             </div>

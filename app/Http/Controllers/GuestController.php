@@ -31,6 +31,7 @@ class GuestController extends Controller {
 
     // public $project;
 
+
     public function step1(Request $request) {
         $project = $request->session()->get('project');
         session(["path" => url('/')]);

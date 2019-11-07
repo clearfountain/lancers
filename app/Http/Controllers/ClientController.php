@@ -13,6 +13,7 @@ use App\Estimate;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
+
 class ClientController extends Controller {
 
     public function show() {

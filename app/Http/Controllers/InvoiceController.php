@@ -279,8 +279,6 @@ class InvoiceController extends Controller {
         }
 
 
-
-
         if($invoiceChecker == "sendInvoice")
         {
 

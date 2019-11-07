@@ -52,6 +52,7 @@
 							</td>
                             <td class="border-top border-bottom ">{{$client->name}}</td>
 
+
                             <td class="border-top border-bottom">
                                 @forelse($client->projects as $project)
                                 {{ $loop->first ? '' : ', ' }}
