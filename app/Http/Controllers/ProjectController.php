@@ -334,8 +334,6 @@ class ProjectController extends Controller {
     public function showproject($trackCode){
         
         /* Validate tracking code and retrieve project it tracks */
-        if(is_numeric($trackCode) ) { 
-
         if(is_numeric($trackCode) ) {
           if(Project::where('tracking_code',$trackCode)->first()){
             $docData = [];
