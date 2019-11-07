@@ -418,7 +418,7 @@
                     </ul>
 
                     <div class="price-button p-3">
-                        <a href="{{ route('register') }}" class="btn btn-primary btn-block">Sign up for free</a>
+                        <a href="{{ route('register') }}" class="btn btn-primary btn-block">Choose plan</a>
                     </div>
 
                 </div>
@@ -459,7 +459,7 @@
 
                     @if(Auth::user() != null)
                     <div class="price-button p-3">
-                        <a href="{{ url('/payment/pro') }}" class="btn btn-primary btn-block">Sign up for free</a>
+                        <a href="{{ url('/payment/subscription/pro') }}" class="btn btn-primary btn-block">Choose plan</a>
                     </div>
                     @endif
                     @if(Auth::user() == null)
@@ -514,7 +514,7 @@
 
                     @if(Auth::user() != null)
                     <div class="price-button p-3">
-                        <a href="{{ url('/payment/pro_plus') }}" class="btn btn-primary btn-block">Sign up for free</a>
+                        <a href="{{ url('/payment/subscription/pro_plus') }}" class="btn btn-primary btn-block">Choose plan</a>
                     </div>
                     @endif
                     @if(Auth::user() == null)

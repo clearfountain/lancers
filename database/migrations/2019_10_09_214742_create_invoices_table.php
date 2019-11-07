@@ -25,6 +25,7 @@ class CreateInvoicesTable extends Migration {
             $table->unsignedBigInteger('currency_id')->default(1);
                 $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade')->onUpdate('cascade');
             $table->string('filename')->nullable();
+            $table->string('logo')->default('default-logo.png');
             $table->enum('status', ['unpaid', 'paid']);
             $table->timestamps();
 
