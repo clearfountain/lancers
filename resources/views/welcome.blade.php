@@ -353,7 +353,7 @@
 				</div>
 				<div class="col-12 col-md-7 col-lg-6 order-2 aos-init aos-animate">
 					<div class="text-center">
-						<img src="{{ asset('images/svg/coding.svg') }}" class="img img-responsive" height="auto" width="80%">
+						<img src="{{ asset('images/svg/coding.svg') }}" class="img img-responsive" height="auto" width="80%" data-aos="fade-left">
 					</div>
 				</div>
 			</div>
