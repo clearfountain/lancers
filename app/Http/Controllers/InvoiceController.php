@@ -225,7 +225,7 @@ class InvoiceController extends Controller {
         $filename = "invoice#" . strtotime($invoice->created_at) . ".pdf";
 
         $invoice = Project::where('invoice_id', $invoice->id)->select('id', 'title', 'estimate_id', 'invoice_id','client_id')->with(['estimate', 'invoice', 'client'])->first();
-
+        //dd($invoice);
         $pdf = PDF::loadView('invoices.pdf', ['invoice' => $invoice]);
 
         return $pdf->download($filename);
