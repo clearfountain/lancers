@@ -23,11 +23,11 @@
 		font-family: 'Open Sans', sans-serif !important;
 		font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300))) !important;
 	}
-    
-    .sub-msg{
-        text-align: center !important;
-        color: #fff !important;
-    }   
+
+	.sub-msg {
+		text-align: center !important;
+		color: #fff !important;
+	}
 
 	h1,
 	.h1 {
@@ -290,7 +290,7 @@
 						<a class="nav-link" href="{{ url('/pricing') }}">Pricing</a>
 					</li>
 					@guest
-                    <li class="nav-item">
+					<li class="nav-item">
 						<a class="nav-link" href="{{ url('guest/track') }}">Track a Project</a>
 					</li>
 					<li class="nav-item">
@@ -319,22 +319,22 @@
 
 @section('content')
 <div class="sub-msg">
-    @if(session()->has('subMessageGood'))
-        <p class="btn btn-success sub-msg">
-            {{ session('subMessageGood') }}
-            @php
-                session()->forget('subMessageGood');
-            @endphp
-        </p>
-    @endif
-    @if(session()->has('subMessageBad'))
-        <p class="btn btn-danger sub-msg">
-            {{ session('subMessageBad') }}
-            @php
-                session()->forget('subMessageBad');
-            @endphp
-        </p>
-    @endif
+	@if(session()->has('subMessageGood'))
+	<p class="btn btn-success sub-msg">
+		{{ session('subMessageGood') }}
+		@php
+		session()->forget('subMessageGood');
+		@endphp
+	</p>
+	@endif
+	@if(session()->has('subMessageBad'))
+	<p class="btn btn-danger sub-msg">
+		{{ session('subMessageBad') }}
+		@php
+		session()->forget('subMessageBad');
+		@endphp
+	</p>
+	@endif
 </div>
 <main>
 	<section class="jumbotron p-0 text-left rounded-0 bg-white">
@@ -426,7 +426,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-6 col-md-2">
-				<img src="{{ asset('images/svg/logo-dark.svg') }}" alt="" class="img img-responsive mb-2" height="30" width="auto">
+				<img src="https://res.cloudinary.com/nxcloud/image/upload/v1570984909/Lancer/Lancers_c40ozr.svg" alt="" class="img img-responsive mb-2" height="30" width="auto">
 				<ul class="list-unstyled">
 					<li><a class="text-dark" href="{{ url('/pricing') }}">Pricing</a></li>
 					<li><a class="text-dark" href="{{ url('/login') }}">Sign in</a></li>
@@ -460,12 +460,12 @@
 					Get emails about our newest features and events you can visit. We promise not to spam.
 				</p>
 				<form class="form-inline" method="post" action="/submailinglist">
-                    @csrf
+					@csrf
 					<div class="form-group mb-2 mr-2">
 						<label for="subEmail" class="sr-only">Email</label>
 						<input type="email" class="form-control" id="subEmail" name="subEmail" placeholder="Email Address" required>
 					</div>
-					<input type="submit" class="btn btn-secondary mb-2" id="btn-sub" name="btn-sub" value="Subscribe"/>
+					<input type="submit" class="btn btn-secondary mb-2" id="btn-sub" name="btn-sub" value="Subscribe" />
 				</form>
 			</div>
 		</div>
@@ -473,9 +473,9 @@
 	<div class="bg-white text-left py-2 mt-0">
 		<div class="container">
 			<p class="float-right">
-			{{-- <a href="#">Back to top</a> --}}
-			<a href="javascript:void(0)" onClick="window.scrollTo(0, 0)" class="btn btn-secondary mb-2" id="btn-sub">
-				<span>&#8593;</span></a>
+				{{-- <a href="#">Back to top</a> --}}
+				<a href="javascript:void(0)" onClick="window.scrollTo(0, 0)" class="btn btn-secondary mb-2" id="btn-sub">
+					<span>&#8593;</span></a>
 			</p>
 			<p>&copy; Lancer 2019.</p>
 		</div>

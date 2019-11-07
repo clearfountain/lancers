@@ -8,6 +8,8 @@ use App\Client;
 use App\Project;
 use App\Invoice;
 use App\Estimate;
+use App\Country;
+use App\State;
 use Carbon\Carbon;
 use App\Mail\SendInvoice;
 use App\Mail\TrackingCode;
@@ -200,11 +202,138 @@ class InvoiceController extends Controller {
 
         $filename = "invoice#" . strtotime($invoice->created_at) . ".pdf";
 
-        $invoice = Project::where('invoice_id', $invoice->id)->select('id', 'title', 'estimate_id', 'invoice_id','client_id')->with(['estimate', 'invoice', 'client'])->first();
+        /* Retrieve, store and send data */
+        $projectData = Project::where('invoice_id', $invoice->id)->with('user','client','profile')->get();
+        
+        $docData = [];
+        
+        if(isset($projectData[0]->client->country_id)){
+                $country_id = $projectData[0]->client->country_id;
+                $cCountry = Country::where('id',$country_id)->get('name');
+                $clientCountry = $cCountry[0]->name;
+                $docData += compact("clientCountry");
+            }
 
-        $pdf = PDF::loadView('invoices.pdf', ['invoice' => $invoice]);
+            if(isset($projectData[0]->client->state_id)){
+                $state_id = $projectData[0]->client->state_id;
+                $cState = State::where(['id'=>$state_id,'country_id'=>$country_id])->get('name');
+                $clientState = $cState[0]->name;
+                $docData += compact("clientState");
 
-        return $pdf->download($filename);
+            }
+
+            if(isset($projectData[0]->profile->country_id)){
+                $country_id = $projectData[0]->profile->country_id;
+                $lCountry = Country::where('id',$country_id)->get('name');
+                $lancerCountry = $lCountry[0]->name;
+                $docData += compact("lancerCountry");
+
+            }
+
+            if(isset($projectData[0]->profile->state_id)){
+                $state_id = $projectData[0]->profile->state_id;
+                $lState = State::where(['id'=>$state_id,'country_id'=>$country_id])->get('name');
+                $lancerState = $lState[0]->name;
+                $docData += compact("lancerState");
+
+            }
+
+            $currencySymbol = ($projectData[0]->estimate->invoice->currency['symbol']);
+            $projectName = $projectData[0]->title;
+            $lancerName = $projectData[0]->user->name;
+            $lancerMail = $projectData[0]->user->email;
+
+            if(isset($projectData[0]->description)){
+                $projectDescription = $projectData[0]->description;
+                $docData += compact("projectDescription");
+            }
+
+            if(isset($projectData[0]->profile->company_address)){
+                $lancerAddress = $projectData[0]->profile->company_address;
+                $docData += compact("lancerAddress");
+            }
+
+            if(isset($projectData[0]->profile->street_number)){
+                $lancerStreetNum = $projectData[0]->profile->street_number;
+                $docData += compact("lancerStreetNum");
+            }
+
+            if(isset($projectData[0]->profile->street)){
+                $lancerStreet = $projectData[0]->profile->street;
+                $docData += compact("lancerStreet");
+            }
+
+            if(isset($projectData[0]->profile->city)){
+                $lancerCity = $projectData[0]->profile->city;
+                $docData += compact("lancerCity");
+            }
+
+            if(isset($projectData[0]->client->street_number)){
+                $clientStreetNum = $projectData[0]->client->street_number;
+                $docData += compact("clientStreetNum");
+            }
+
+            if(isset($projectData[0]->client->street)){
+                $clientStreet = $projectData[0]->client->street;
+                $docData += compact("clientStreet");
+            }
+            if(isset($projectData[0]->client->city)){
+                $clientCity = $projectData[0]->client->city;
+                $docData += compact("clientCity");
+            }
+
+            if(isset($projectData[0]->client->name)){
+                $clientName = $projectData[0]->client->name;
+                $docData += compact("clientName");
+            }
+
+            if(isset($projectData[0]->client->email)){
+                $clientMail = $projectData[0]->client->email;
+                $docData += compact("clientMail");
+            }
+
+            if(isset($projectData[0]->estimate->start)){
+                $issueDate = $projectData[0]->estimate->start;
+                $docData += compact("issueDate");
+            }
+
+            if(isset($projectData[0]->estimate->end)){
+                $dueDate = $projectData[0]->estimate->end;
+                $docData += compact("dueDate");
+            }
+
+            if(isset($projectData[0]->estimate->time)){
+                $time = $projectData[0]->estimate->time;
+                $docData += compact("time");
+            }
+
+            if(isset($projectData[0]->estimate->price_per_hour)){
+                $pricePerHour = $projectData[0]->estimate->price_per_hour;
+                $docData += compact("pricePerHour");
+            }
+
+            if(isset($projectData[0]->estimate->equipment_cost)){
+                $equipmentCost = $projectData[0]->estimate->equipment_cost;
+                $docData += compact("equipmentCost");
+            }
+
+            if(isset($projectData[0]->estimate->sub_contractors_cost)){
+                $subContractorCost = $projectData[0]->estimate->sub_contractors_cost;
+                $docData += compact("subContractorCost");
+            }
+
+            if(isset($projectData[0]->estimate['estimate'])){
+                $amount = $projectData[0]->estimate['estimate'];
+                $docData += compact("amount");
+            }
+            
+            $docData += compact("currencySymbol","projectName","lancerName","lancerMail");
+            
+        /* Send retieved data to view that will be used to generate PDF file, generate PDF file */
+        $pdf = PDF::loadView('pdf.trackproject',$docData);
+        
+        /* Download PDF file */
+        return $pdf->download('Invoice.pdf');
     }
 
     public function sendinvoice(Request $request) {
