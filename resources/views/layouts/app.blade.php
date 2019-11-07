@@ -110,6 +110,7 @@
    {{--  // inline scrpt  --}} -->
 
    @yield('script')
+   
 <script type="text/javascript">
         
         // window.onload=function(){
@@ -125,6 +126,9 @@
             $(this).toggleClass('active');
         });
     });
+
+    //initialize animation
+       AOS.init();
 </script>
 </body>
 </html>
