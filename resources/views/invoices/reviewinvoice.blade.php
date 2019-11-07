@@ -193,8 +193,8 @@
 @endsection
 
 @section('styles')
-    <sty
-        @import url('https://fonts.googleapis.com/cle>ss?family=Ubuntu&display=swap');
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
 
         * {
             font-family: 'Ubuntu', sans-serif;

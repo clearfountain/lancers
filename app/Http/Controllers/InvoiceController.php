@@ -12,6 +12,7 @@ use App\Country;
 use App\State;
 use Carbon\Carbon;
 use App\Mail\SendInvoice;
+use App\Mail\TrackingCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
@@ -359,6 +360,10 @@ class InvoiceController extends Controller {
                         'invoice_url' => $url,
                         'project' => $project_name
             ]));
+
+            //Lets Send the tracking code to the client
+            Mail::to($client_email)->send(new TrackingCode($invoice));
+
         } catch (\Throwable $e) {
             // dd($e->getMessage());
             session()->flash('message.alert', 'danger');

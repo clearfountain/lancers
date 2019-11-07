@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('title') {{'Master'}} @endsection
 @section('styles')
+
+
 <style type="text/css">
 	/*Main page style by message*/
 	@import url(http://fonts.googleapis.com/css?family=Open+Sans);
@@ -341,10 +343,12 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-12 col-md-5 col-lg-6">
-					<h1 class="jumbotron-heading text-dark my-5">Let us do the work for you</h1>
-					<p class="text-dark bold text-bold my-5">Generate estimates, invoices, contacts and much more<br> for your project</p>
+					{{--  <h1 class="jumbotron-heading text-dark my-5">Let us do the work for you</h1>  --}}
+
+					{{--  <p class="text-dark bold text-bold my-5">Generate estimates, invoices, contacts and much more<br> for your project</p>  --}}
+					<p class="jumbotron-heading text-dark my-5 animated bounce">Generate estimates, invoices, contacts and much more<br> for your project.</p>
 					<p class="text-dark my-5">
-						<a href="{{ url('/guest/create/step1') }}" class="btn btn-secondary btn-lg py-2">Generate an Estimate</a>
+						<a href="{{ url('/guest/create/step1') }}" class="btn btn-secondary btn-lg py-2" data-aos="fade-right">Generate an Estimate</a>
 					</p>
 				</div>
 				<div class="col-12 col-md-7 col-lg-6 order-2 aos-init aos-animate">
@@ -365,7 +369,7 @@
 							Use our handy cost estimator to find out how much it will take you to deliver on your project.
 						</p>
 						<p class="text-dark small">
-							We take into consideration your work hours, subcontractors, among other things, to make sure you always have a healthy profit at the end of the day
+							We take into consideration your work hours, subcontractors, amongst other things, to make sure you always have a healthy profit at the end of the day
 						</p>
 						<p class="text-dark my-4">
 							<a href="{{ url('/guest/create/step1') }}" class="btn btn-secondary btn-lg py-2">Generate an Estimate</a>
@@ -384,7 +388,7 @@
 		<div class="container mt-4 py-4">
 			<div class="row">
 				<div class="col-md-12">
-					<h3 class="text-white py-4 mb-4 text-center">Manage your Projects <br> for free</h3>
+					<h3 class="text-white py-4 mb-4 text-center" data-aos="zoom-in">Manage your Projects <br> for free</h3>
 				</div>
 			</div>
 			<div class="row">
@@ -396,7 +400,7 @@
 				</div>
 				<div class="col-md-4">
 					<div class="text-center text-white">
-						<img src="{{ asset('images/svg/project-collaborate.svg') }}" class="img img-responsive" height="auto" width="100%">
+						<img src="{{ asset('images/svg/project-collaborate.svg') }}" class="img img-responsive" height="230.30px" width="100%">
 						<p class="text-white text-bold mt-4">Collaborate</p>
 					</div>
 				</div>
@@ -422,7 +426,7 @@
 
 
 @section('footer')
-<footer class="bg-white pt-4">
+<footer class="bg-white pt-4"  data-aos="fade-down">
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-6 col-md-2">
@@ -447,7 +451,7 @@
 				<p class="text-dark small">
 					3 Birrel Avenue, Sabo.
 					Yaba, Lagos State,
-					Nigeria
+					Nigeria.
 				</p>
 				<h5>
 					<a href="http://facebook.com" class="text-dark mr-2"><i class="fab fa-facebook-square"></i></a>
