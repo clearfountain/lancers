@@ -12,6 +12,7 @@
             href="https://fonts.googleapis.com/css?family=Open+Sans|Pacifico&display=swap"
             rel="stylesheet"
             />
+            <link rel="shortcut icon" href="https://res.cloudinary.com/ddu0ww15f/image/upload/c_scale,h_16/v1571841777/icons8-home-office-24_veiqea.png" type="image/x-icon">
         <title>Setting | Profile</title>
 
         <style>
