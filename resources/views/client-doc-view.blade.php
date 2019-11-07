@@ -25,15 +25,15 @@
       border: none;
       border-bottom: 4px solid #0ABAB5;
     }
-
+      
       a {
           text-decoration : none !important;
       }
-
+      
       .main-color {
           color: #0ABAB5;
       }
-
+      
       .main-color:hover {
           text-decoration:none;
           color: #000;
@@ -138,26 +138,26 @@
     tbody {
         text-align: right;
     }
-
+      
     thead { background-color: #0ABAB5; color: #fff; font-size: 14px; text-align : right;
     }
-
+      
       .mg{
           padding-right: 17px !important;
       }
-
+      
       td{
           text-align: right !important;
       }
-
+          
       .bg-primary{
           background-color : #0ABAB5 !important;
       }
 
     th:nth-child(1), td:nth-child(1) { text-align: start; padding: 10px;
     }
-
-    .left {
+      
+    .left { 
           text-align: left !important;
       }
 
@@ -291,7 +291,7 @@
           </div>
         </div>
 
-
+        
         <div class="invoice-cont">
           <div class="lanclient-invoice-logo">
             <div class="right-invy">
@@ -305,7 +305,7 @@
                     {{ ucwords($docData['lancerAddress'])}}
                   @else
                      @if(array_key_exists('lancerStreetNum', $docData))
-                        @php echo "<strong>Address:&nbsp;</strong>"; @endphp
+                        @php echo "<strong>Address:&nbsp;</strong>"; @endphp                  
                         {{ $docData['lancerStreetNum'].", " }}
                      @endif
                      @if(array_key_exists('lancerStreet', $docData))
@@ -324,12 +324,8 @@
               </p>
             </div>
             <div class="left-invy-logo">
-                @if(!isset($docData['profile_picture']))
-              <img src="https://res.cloudinary.com/abisalde/image/upload/v1570566026/My_Logo_-_Black.png" alt="Client-Logo">
-                    @endif
-                    @if(isset($docData['profile_picture']))
-                    <img id="image_selecter" src="{{ $docData['profile_picture'] }}" style="width: 100px; height: 100px; border-radius: 10%; pointer: finger;" alt="Client-Logo">
-                    @endif</div>
+              <img src="https://res.cloudinary.com/abisalde/image/upload/v1570566026/My_Logo_-_Black.png" alt="Lancer-Logo">
+            </div>
           </div>
 
           <div class="lanclient-billing">
@@ -411,11 +407,11 @@
                   <td>{{ number_format((float)$docData['equipmentCost'], 2) }}</td>
                   <td>{{ number_format((float)$docData['equipmentCost'], 2) }}</td>
                 </tr>
-                @if(array_key_exists('subContractorCost',$docData))
+                @if(array_key_exists('subContractorCost',$docData))  
                 <tr>
                         <td class="left">Sub-contractors</td>
                         <td>1</td>
-                        <td>{{ number_format((float)$docData['subContractorCost'], 2) }}</td>
+                        <td>{{ number_format((float)$docData['subContractorCost'], 2) }}</td>    
                         <td>{{ number_format((float)$docData['subContractorCost'], 2) }}</td>
                     </tr>
                 @endif
@@ -456,7 +452,7 @@
         </div>
       </div>
 @endsection
-
+        
 @section('script')
     <script type="text/javascript">
         function printdata() {

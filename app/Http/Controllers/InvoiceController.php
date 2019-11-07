@@ -20,8 +20,6 @@ use App\Notifications\UserNotification;
 use Illuminate\Support\Facades\Storage;
 use App\Traits\VerifyandStoreTransactions;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\UploadedFile;
-Use Validator;
 
 class InvoiceController extends Controller {
 
@@ -206,9 +204,9 @@ class InvoiceController extends Controller {
 
         /* Retrieve, store and send data */
         $projectData = Project::where('invoice_id', $invoice->id)->with('user','client','profile')->get();
-
+        
         $docData = [];
-
+        
         if(isset($projectData[0]->client->country_id)){
                 $country_id = $projectData[0]->client->country_id;
                 $cCountry = Country::where('id',$country_id)->get('name');
@@ -275,11 +273,6 @@ class InvoiceController extends Controller {
                 $docData += compact("clientStreetNum");
             }
 
-            if(isset($projectData[0]->client->profile_picture)){
-                $profile_picture = $projectData[0]->client->profile_picture;
-                $docData += compact("profile_picture");
-            }
-
             if(isset($projectData[0]->client->street)){
                 $clientStreet = $projectData[0]->client->street;
                 $docData += compact("clientStreet");
@@ -333,96 +326,26 @@ class InvoiceController extends Controller {
                 $amount = $projectData[0]->estimate['estimate'];
                 $docData += compact("amount");
             }
-
+            
             $docData += compact("currencySymbol","projectName","lancerName","lancerMail");
-         //   dd($docData);
+            
         /* Send retieved data to view that will be used to generate PDF file, generate PDF file */
         $pdf = PDF::loadView('pdf.trackproject',$docData);
-
+        
         /* Download PDF file */
         return $pdf->download('Invoice.pdf');
     }
 
-
     public function sendinvoice(Request $request) {
         $invoice_id = $request->invoice;
-        $invoiceChecker = $request->invoiceChecker;
-        $image = $request->file('profileimage');
 
-        if($invoiceChecker == null)
-        {
+        $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
 
-            session()->flash('message.alert', 'danger');
-            session()->flash('message.content', "Error handling invoice, Please Try again ");
-            return back();
-        }
+        $project_name = $invoice->estimate->project->title;
 
-        if($invoiceChecker == "saveInvoice")
-        {
-            if($image != null)
-            {
-                $storedImageStatus = "null";
-                //upload image and return to invoices.
+        $client = $invoice->estimate->project->client;
 
-                $imageStatus = $this->updateImage($request,$client_id);
-
-                $storedImageStatus = $imageStatus;
-
-                  //check image return value and act accordingly
-                if($storedImageStatus == false)
-                {
-
-                //return back with error if any error
-                session()->flash('message.alert', 'danger');
-                session()->flash('message.content', "Error uploading image, Please Try again ");
-                return back();
-                }
-
-                //return to invoices with success or error
-                return redirect("/invoices");
-            }
-
-             if($image == null)
-            {
-                return redirect("/invoices");
-            }
-        }
-
-
-
-
-        if($invoiceChecker == "sendInvoice")
-        {
-
-            $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
-            //saveInvoice
-            $project_name = $invoice->estimate->project->title;
-
-            $client = $invoice->estimate->project->client;
-
-            $client_email = $client->email;
-            $client_id = $client->id;
-
-            $storedImageStatus = "null";
-
-            if($image != null)
-            {
-                //upload image and return to invoices.
-                $imageStatus = $this->updateImage($request,$client_id);
-
-                $storedImageStatus = $imageStatus;
-            }
-
-             //check image return value and act accordingly
-            if($storedImageStatus == false)
-            {
-
-             //return back with error if any error
-             session()->flash('message.alert', 'danger');
-             session()->flash('message.content', "Error uploading image, Please Try again ");
-             return back();
-            }
-
+        $client_email = $client->email;
 
         $encoded = base64_encode(base64_encode($client_email));
 
@@ -435,8 +358,13 @@ class InvoiceController extends Controller {
                         'name' => $client->name,
                         'amount' => $invoice->amount,
                         'invoice_url' => $url,
-                        'project' => $project_name
+                        'project' => $project_name,
+                        'trackingcode' => $invoice->estimate->project->tracking_code
             ]));
+
+            //Lets Send the tracking code to the client
+            // Mail::to($client_email)->send(new TrackingCode($invoice));
+
         } catch (\Throwable $e) {
             // dd($e->getMessage());
             session()->flash('message.alert', 'danger');
@@ -446,108 +374,7 @@ class InvoiceController extends Controller {
 
 
         return view('invoices.invoicesent');
-
-            }
     }
-
-
-
-        //UPLOAD IMAGE CODE
-        // @author: @Bits_and_Bytes
-        function ImageValidation(array $array)
-        {
-            return Validator::make($array, [
-                'profileimage'     =>  'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-            ]);
-        }
-
-        /**
-         * @description receive user upload photo and update picture
-         * @param Request $request
-         * @author: @Bits_and_Bytes
-         */
-        // CHANGE ALL DB TABLE SAVES TO THE CORRECT ONE WITH INVOICE...
-        // @author: @Bits_and_Bytes
-        function updateImage($request,$clientId)
-        {
-            $imageValidate = $this->ImageValidation(['profileimage' => $request->file('profileimage')]);
-
-            if(!$imageValidate->fails())
-            {
-              //check if user has image
-              $clientProfileData = Client::where('id',$clientId)->first();
-
-              if($clientProfileData != null)
-              {
-                  //cast collection result to array
-                  $collectionResult = $clientProfileData->toArray();
-
-                  if(sizeof($collectionResult) != 0)
-                  {  //upload image and update image field only
-
-                      //get profile image
-                        $oldImage = $collectionResult['profile_picture'];
-                        //dd($oldImage);
-                        if($oldImage != null)
-                        {
-                            // check if user has image and unlink
-                            if(file_exists(public_path($oldImage)))
-                            {
-                                unlink(public_path($oldImage));
-                            }
-
-                        }
-
-
-                        $imagePathString = $this->uploadImageToFile($request->file('profileimage'));
-                        //store in DB
-
-                        $clientProfileData->profile_picture = $imagePathString;
-                        $clientProfileData->save();
-
-                        if($clientProfileData->profile_picture == $imagePathString)
-                        {
-
-                            return true;
-                        }
-                        else{
-                            return false;
-                        }
-
-                 }else{
-                    return false;
-                 }
-
-
-              }
-              else
-              {
-                return false;
-            }
-
-
-            }
-            else{
-               return false;
-            }
-        }
-
-
-
-
-        public function uploadImageToFile(UploadedFile $uploadedFile,  $Imagefilename = null, $folderName = null, $appDiskStorage = null)
-        {
-            $folderName = (!is_null($folderName)) ? $folderName : 'images/ClientImages';
-            $appDiskStorage = (!is_null($appDiskStorage)) ? $appDiskStorage : 'public';
-            $imageName = (!is_null($Imagefilename)) ? $Imagefilename : md5(auth()->user()->id.now());
-
-            $filePath = $uploadedFile->storeAs($folderName, $imageName.'.'.$uploadedFile->getClientOriginalExtension(), $appDiskStorage);
-
-            return $filePath;
-        }
-
-
-
 
     public function clientInvoice($client, $invoice) {
         $data['invoice'] = Invoice::with('estimate')->where('created_at', Carbon::createFromTimestamp($invoice))->first();
