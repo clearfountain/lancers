@@ -3,6 +3,9 @@
 @section('title', 'Review Invoice')
 
 @section('content')
+
+{{-- {{dd($invoice)}} --}}
+
       <div class="pageBackground">
         <!-- This is the navbar for small screens -->
         <header class="container-a menuForSmallScreens">
@@ -82,6 +85,27 @@
                 <br>
                 <img id="invoice_image_selecter" src="{{ asset('images/ClientImages/user-default.jpg') }}" style="width: 100px; height: 100px; border-radius: 2%; pointer: finger;" alt="Client Image">
                     <section>
+                        <div class="invoice-logo">
+                            <div class="add-logo" id="add-logo" style="display: {{$invoice->logo == 'default_logo.png' ? 'block' : 'none'}}">
+                                <span class="logo-text">
+                                    Add Logo
+                                </span>
+                            </div>
+
+                            <form action="/invoice/logo" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="invoice" value="{{$invoice->id}}">
+                                <input type="file" name="logo_image_file" id="logo_image_file">
+                                <div class="show-logo" style="display: {{$invoice->logo == 'default_logo.png' ? 'none' : 'flex'}}">
+                                    <div class="logo-image">
+                                        <img id="logo-image" src="/storage/logos/{{$invoice->logo}}" alt="">
+                                    </div>
+
+                                    <button style="display: none;" class="btn btn-primary paymentButton" type="submit" id="save-logo">Save Logo</button>
+                                    <span class="change-logo">Change Logo</span>
+                                </div>
+                            </form>
+                        </div>
                         <div class="addressAndPayment row">
                             <div class="card addressCard" style="font-weight: normal">
                                 <div style="font-weight: bold">{{$invoice->estimate->project->client->name}}</div>
@@ -110,7 +134,7 @@
                                 </div>
 
                                 <button type="button" class="btn btn-primary paymentButton" style="background: #0ABAB5;" disabled>Pay with
-                                    Flutterwave</button>
+                                    Paystack</button>
                             </div>
                         </div>
 
@@ -344,7 +368,7 @@
         .mainContentBelowLogo {
             margin-left: 20px;
             margin-right: 20px;
-            margin-top: 200px;
+            margin-top: 30px;
         }
 
         .topMenu {
@@ -479,6 +503,60 @@
             .menuForSmallScreens {
                 display: flex;
             }
+        }
+
+        .add-logo{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: dashed 2px #ccc;
+            cursor: pointer;
+        }
+
+        .logo-text{
+            display: inline-block;
+            padding: 45px;
+        }
+
+        .invoice-logo{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #logo_image_file{
+            display: none;
+        }
+
+        .logo-image{
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .show-logo{
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo-image img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #save-logo{
+            margin: 7px 0;
+            padding: 3px 10px;
+            border-radius: 3px;
+        }
+
+        .change-logo{
+            font-size: 14px;
+            cursor: pointer;
         }
     </style>
 @endsection

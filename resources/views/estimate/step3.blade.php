@@ -143,8 +143,10 @@
       $("#next_page").on("click", function() {
 
        let checkerValue = $("#next_checker").val();
+       let selectValue = $("#client").val();
+       
 
-       if(checkerValue == "checked")
+       if(checkerValue == "checked" || allowNext)
        {
          submitForm();
        }
