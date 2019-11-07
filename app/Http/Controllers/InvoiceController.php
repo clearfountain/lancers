@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use App\Notifications\UserNotification;
+use Illuminate\Support\Facades\Storage;
 use App\Traits\VerifyandStoreTransactions;
 use Illuminate\Support\Facades\Auth;
 
@@ -81,10 +82,9 @@ class InvoiceController extends Controller {
             $estimate = Estimate::find($estimate_id);
 
             if($estimate){
-                $pre_invoice = Invoice::whereEstimate_id($request->estimate_id)->first();
-                if (is_object($pre_invoice)) {
-                    $pre_invoice->update(['amount' => $estimate->estimate]);
-                    $invoice = Invoice::whereId($pre_invoice->id)->with('estimate')->first();
+                if ($estimate->invoice !== null) {
+                    // $pre_invoice->update(['amount' => $estimate->estimate]);
+                    $invoice = $estimate->invoice;
                 }else{
                     $createinvoice = Invoice::create(['user_id' => Auth::user()->id, 'issue_date' => $estimate->start, 'due_date' => $estimate->end, 'estimate_id' => $estimate->id, 'amount' => $estimate->estimate, 'currency_id' => $estimate->currency_id]);
                     $invoice = Invoice::whereId($createinvoice->id)->with('estimate')->first();
@@ -407,5 +407,38 @@ class InvoiceController extends Controller {
     //     $invoice = Invoice::where(['id' => $invoice_id, 'project_id' => Auth::user()->id])->first();
     //     return $invoice->count() > 0 ? $this->SUCCESS('Invoice retrieved', $invoice) : $this->SUCCESS('No invoice found');
     // }
+
+    public function addLogo(Request $request)
+    {
+        // $this->validate($request, [
+        //     'logo_image_file' => 'required|image',
+        //     'invoice' => 'required|numeric'
+        // ]);
+
+        $user_id = Auth::id();
+        // dd($request);
+
+        // dd($request->invoice);
+
+        $invoice = Invoice::where('id', $request->invoice)->where('user_id', $user_id)->first();
+
+        if($file =$request->file('logo_image_file')){
+            $name = 'invoice_logo_'.time().".".$file->getClientOriginalExtension();
+
+            // Storage::disk('public')->put("/storage/logos/".$name , $file);
+            $file->move(public_path('storage/logos/'), $name);
+            
+            $invoice->update(['logo' => $name]);
+
+            request()->session()->flash('message.content', 'Logo successfully saved.');
+            request()->session()->flash('message.alert', 'success');
+            return redirect()->back();
+        }else{
+            request()->session()->flash('message.content', 'Please select a valid image.');
+            request()->session()->flash('message.alert', 'danger');
+
+            return redirect()->back();
+        }
+    }
 
 }
