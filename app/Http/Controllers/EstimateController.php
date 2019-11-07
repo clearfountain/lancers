@@ -17,6 +17,7 @@ use App\Http\Resources\Estimate as EstimateResource;
 use App\Http\Resources\EstimateCollection;
 use Illuminate\Support\Facades\Auth;
 
+
 class EstimateController extends Controller {
 
     public function step1(Request $request) {

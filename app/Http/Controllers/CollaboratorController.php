@@ -8,6 +8,7 @@ use Auth;
 use App\User;
 use App\Project;
 
+
 class CollaboratorController extends Controller
 {
     
