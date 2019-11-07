@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use PDF;
 use App\User;
-Use Validator;
 use App\Client;
 use App\Project;
 use App\Invoice;
 use App\Estimate;
+use App\Country;
+use App\State;
 use Carbon\Carbon;
 use App\Mail\SendInvoice;
+use App\Mail\TrackingCode;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use App\Notifications\UserNotification;
@@ -29,8 +30,6 @@ class InvoiceController extends Controller {
 
         return view('invoice')->withInvoice($invoice);
     }
-
-
     public function edit($id)
     {
         $invoice = Invoice::where('id', $id)->first();
@@ -38,10 +37,6 @@ class InvoiceController extends Controller {
         $users = User::all(['id', 'name']);
         return view('invoices.reviewinvoice')->withInvoice($invoice)->withProjects($projects)->withUsers($users);
     }
-
-
-
-
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -62,8 +57,6 @@ class InvoiceController extends Controller {
         }
     }
 
-
-
     public function delete($id)
     {
         $object = Invoice::whereId($id)->first();
@@ -75,14 +68,9 @@ class InvoiceController extends Controller {
         }
     }
 
-
-
     public function __construct() {
         $this->middleware('auth');
     }
-
-
-
 
     public function review(Request $request){
         $estimate_id = session('new_estimate_id');
@@ -113,13 +101,9 @@ class InvoiceController extends Controller {
         return redirect('estimate/create');
     }
 
-
-
     public function send($id) {
         return view('invoice_sent');
     }
-
-
 
     public function index() {
         $user = Auth::user();
@@ -140,7 +124,6 @@ class InvoiceController extends Controller {
 
         return view('invoices.invoicelist')->with('invoices', $invoices);
     }
-
 
     /**
      * Creates new record in the invoice table
@@ -192,7 +175,6 @@ class InvoiceController extends Controller {
     //     }
     // }
 
-
     public function show($invoice) {
         $pre_invoice = Invoice::findOrFail($invoice);
         // dd($invoice);
@@ -202,8 +184,6 @@ class InvoiceController extends Controller {
     // return $invoice;
         return view('invoices.viewinvoice')->with('invoice', $invoice);
     }
-
-
 
     public function listGet(Request $request) {
         if ($request->filter == 'paid') {
@@ -217,102 +197,155 @@ class InvoiceController extends Controller {
         return view('invoices.list', $data);
     }
 
-
-
     public function getPdf($invoice) {
         $invoice = Invoice::findOrFail($invoice);
 
         $filename = "invoice#" . strtotime($invoice->created_at) . ".pdf";
 
-        $invoice = Project::where('invoice_id', $invoice->id)->select('id', 'title', 'estimate_id', 'invoice_id','client_id')->with(['estimate', 'invoice', 'client'])->first();
+        /* Retrieve, store and send data */
+        $projectData = Project::where('invoice_id', $invoice->id)->with('user','client','profile')->get();
+        
+        $docData = [];
+        
+        if(isset($projectData[0]->client->country_id)){
+                $country_id = $projectData[0]->client->country_id;
+                $cCountry = Country::where('id',$country_id)->get('name');
+                $clientCountry = $cCountry[0]->name;
+                $docData += compact("clientCountry");
+            }
 
-        $pdf = PDF::loadView('invoices.pdf', ['invoice' => $invoice]);
+            if(isset($projectData[0]->client->state_id)){
+                $state_id = $projectData[0]->client->state_id;
+                $cState = State::where(['id'=>$state_id,'country_id'=>$country_id])->get('name');
+                $clientState = $cState[0]->name;
+                $docData += compact("clientState");
 
-        return $pdf->download($filename);
+            }
+
+            if(isset($projectData[0]->profile->country_id)){
+                $country_id = $projectData[0]->profile->country_id;
+                $lCountry = Country::where('id',$country_id)->get('name');
+                $lancerCountry = $lCountry[0]->name;
+                $docData += compact("lancerCountry");
+
+            }
+
+            if(isset($projectData[0]->profile->state_id)){
+                $state_id = $projectData[0]->profile->state_id;
+                $lState = State::where(['id'=>$state_id,'country_id'=>$country_id])->get('name');
+                $lancerState = $lState[0]->name;
+                $docData += compact("lancerState");
+
+            }
+
+            $currencySymbol = ($projectData[0]->estimate->invoice->currency['symbol']);
+            $projectName = $projectData[0]->title;
+            $lancerName = $projectData[0]->user->name;
+            $lancerMail = $projectData[0]->user->email;
+
+            if(isset($projectData[0]->description)){
+                $projectDescription = $projectData[0]->description;
+                $docData += compact("projectDescription");
+            }
+
+            if(isset($projectData[0]->profile->company_address)){
+                $lancerAddress = $projectData[0]->profile->company_address;
+                $docData += compact("lancerAddress");
+            }
+
+            if(isset($projectData[0]->profile->street_number)){
+                $lancerStreetNum = $projectData[0]->profile->street_number;
+                $docData += compact("lancerStreetNum");
+            }
+
+            if(isset($projectData[0]->profile->street)){
+                $lancerStreet = $projectData[0]->profile->street;
+                $docData += compact("lancerStreet");
+            }
+
+            if(isset($projectData[0]->profile->city)){
+                $lancerCity = $projectData[0]->profile->city;
+                $docData += compact("lancerCity");
+            }
+
+            if(isset($projectData[0]->client->street_number)){
+                $clientStreetNum = $projectData[0]->client->street_number;
+                $docData += compact("clientStreetNum");
+            }
+
+            if(isset($projectData[0]->client->street)){
+                $clientStreet = $projectData[0]->client->street;
+                $docData += compact("clientStreet");
+            }
+            if(isset($projectData[0]->client->city)){
+                $clientCity = $projectData[0]->client->city;
+                $docData += compact("clientCity");
+            }
+
+            if(isset($projectData[0]->client->name)){
+                $clientName = $projectData[0]->client->name;
+                $docData += compact("clientName");
+            }
+
+            if(isset($projectData[0]->client->email)){
+                $clientMail = $projectData[0]->client->email;
+                $docData += compact("clientMail");
+            }
+
+            if(isset($projectData[0]->estimate->start)){
+                $issueDate = $projectData[0]->estimate->start;
+                $docData += compact("issueDate");
+            }
+
+            if(isset($projectData[0]->estimate->end)){
+                $dueDate = $projectData[0]->estimate->end;
+                $docData += compact("dueDate");
+            }
+
+            if(isset($projectData[0]->estimate->time)){
+                $time = $projectData[0]->estimate->time;
+                $docData += compact("time");
+            }
+
+            if(isset($projectData[0]->estimate->price_per_hour)){
+                $pricePerHour = $projectData[0]->estimate->price_per_hour;
+                $docData += compact("pricePerHour");
+            }
+
+            if(isset($projectData[0]->estimate->equipment_cost)){
+                $equipmentCost = $projectData[0]->estimate->equipment_cost;
+                $docData += compact("equipmentCost");
+            }
+
+            if(isset($projectData[0]->estimate->sub_contractors_cost)){
+                $subContractorCost = $projectData[0]->estimate->sub_contractors_cost;
+                $docData += compact("subContractorCost");
+            }
+
+            if(isset($projectData[0]->estimate['estimate'])){
+                $amount = $projectData[0]->estimate['estimate'];
+                $docData += compact("amount");
+            }
+            
+            $docData += compact("currencySymbol","projectName","lancerName","lancerMail");
+            
+        /* Send retieved data to view that will be used to generate PDF file, generate PDF file */
+        $pdf = PDF::loadView('pdf.trackproject',$docData);
+        
+        /* Download PDF file */
+        return $pdf->download('Invoice.pdf');
     }
-
-
-
 
     public function sendinvoice(Request $request) {
         $invoice_id = $request->invoice;
-        $invoiceChecker = $request->invoiceChecker;
-        $image = $request->file('profileimage');
 
-        if($invoiceChecker == null)
-        {
+        $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
 
-            session()->flash('message.alert', 'danger');
-            session()->flash('message.content', "Error handling invoice, Please Try again ");
-            return back();
-        }
+        $project_name = $invoice->estimate->project->title;
 
-        if($invoiceChecker == "saveInvoice")
-        {
-            if($image != null)
-            {
-                $storedImageStatus = null;
-                //upload image and return to invoices.
+        $client = $invoice->estimate->project->client;
 
-                $imageStatus = $this->updateImage($request,$client_id);
-
-                $storedImageStatus = $imageStatus;
-
-                  //check image return value and act accordingly
-                if($storedImageStatus == false)
-                {
-
-                //return back with error if any error
-                session()->flash('message.alert', 'danger');
-                session()->flash('message.content', "Error uploading image, Please Try again ");
-                return back();
-                }
-
-                //return to invoices with success or error
-                return redirect("/invoices");
-            }
-
-             if($image == null)
-            {
-                return redirect("/invoices");
-            }
-        }
-
-
-
-
-        if($invoiceChecker == "sendInvoice")
-        {
-
-            $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
-            //saveInvoice
-            $project_name = $invoice->estimate->project->title;
-
-            $client = $invoice->estimate->project->client;
-
-            $client_email = $client->email;
-            $client_id = $client->id;
-
-            $storedImageStatus = null;
-
-            if($image != null)
-            {
-                //upload image and return to invoices.
-                $imageStatus = $this->updateImage($request,$client_id);
-
-                $storedImageStatus = $imageStatus;
-            }
-
-             //check image return value and act accordingly
-            if($storedImageStatus == false)
-            {
-
-             //return back with error if any error
-             session()->flash('message.alert', 'danger');
-             session()->flash('message.content', "Error uploading image, Please Try again ");
-             return back();
-            }
-
+        $client_email = $client->email;
 
         $encoded = base64_encode(base64_encode($client_email));
 
@@ -327,6 +360,10 @@ class InvoiceController extends Controller {
                         'invoice_url' => $url,
                         'project' => $project_name
             ]));
+
+            //Lets Send the tracking code to the client
+            Mail::to($client_email)->send(new TrackingCode($invoice));
+
         } catch (\Throwable $e) {
             // dd($e->getMessage());
             session()->flash('message.alert', 'danger');
@@ -336,110 +373,7 @@ class InvoiceController extends Controller {
 
 
         return view('invoices.invoicesent');
-
-            }
     }
-
-
-
-        //UPLOAD IMAGE CODE
-        // @author: @Bits_and_Bytes
-        function ImageValidation(array $array)
-        {
-            return Validator::make($array, [
-                'profileimage'     =>  'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-            ]);
-        }
-
-        /**
-         * @description receive user upload photo and update picture
-         * @param Request $request
-         * @author: @Bits_and_Bytes
-         */
-        // CHANGE ALL DB TABLE SAVES TO THE CORRECT ONE WITH INVOICE...
-        // @author: @Bits_and_Bytes
-        function updateImage($request,$clientId)
-        {
-            $imageValidate = $this->ImageValidation(['profileimage' => $request->file('profileimage')]);
-
-            if(!$imageValidate->fails())
-            {
-              //check if user has image
-              $clientProfileData = Client::where('id',$clientId)->first();
-
-              if($clientProfileData != null)
-              {
-                  //cast collection result to array
-                  $collectionResult = $clientProfileData->toArray();
-
-                  if(sizeof($collectionResult) != 0)
-                  {  //upload image and update image field only
-
-                      //get profile image
-                        $oldImage = $collectionResult['profile_picture'];
-                        //dd($oldImage);
-                        if($oldImage != null)
-                        {
-                            // check if user has image and unlink
-                            if(file_exists(public_path($oldImage)))
-                            {
-                                unlink(public_path($oldImage));
-                            }
-
-                        }
-
-
-                        $imagePathString = $this->uploadImageToFile($request->file('profileimage'));
-                        //store in DB
-
-                        $clientProfileData->profile_picture = $imagePathString;
-                        $clientProfileData->save();
-
-                        if($clientProfileData->profile_picture == $imagePathString)
-                        {
-
-                            return true;
-                        }
-                        else{
-                            return false;
-                        }
-
-                 }else{
-                    return false;
-                 }
-
-
-              }
-              else
-              {
-                return false;
-            }
-
-
-            }
-            else{
-               return false;
-            }
-        }
-
-
-
-
-        public function uploadImageToFile(UploadedFile $uploadedFile,  $Imagefilename = null, $folderName = null, $appDiskStorage = null)
-        {
-            $folderName = (!is_null($folderName)) ? $folderName : 'images/ClientImages';
-            $appDiskStorage = (!is_null($appDiskStorage)) ? $appDiskStorage : 'public';
-            $imageName = (!is_null($Imagefilename)) ? $Imagefilename : md5(auth()->user()->id.now());
-
-            $filePath = $uploadedFile->storeAs($folderName, $imageName.'.'.$uploadedFile->getClientOriginalExtension(), $appDiskStorage);
-
-            return $filePath;
-        }
-
-
-
-
-
 
     public function clientInvoice($client, $invoice) {
         $data['invoice'] = Invoice::with('estimate')->where('created_at', Carbon::createFromTimestamp($invoice))->first();
@@ -466,11 +400,11 @@ class InvoiceController extends Controller {
         } else {
             return $data['reason'];
         }
-
-
-
     }
 
-
+    // public function view($invoice_id) {
+    //     $invoice = Invoice::where(['id' => $invoice_id, 'project_id' => Auth::user()->id])->first();
+    //     return $invoice->count() > 0 ? $this->SUCCESS('Invoice retrieved', $invoice) : $this->SUCCESS('No invoice found');
+    // }
 
 }
