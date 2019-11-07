@@ -13,10 +13,6 @@ use App\Rules\IsUser;
 use PDF;
 use Illuminate\Http\Request;
 use App\Currency;
-// use App\Estimate;
-// use App\Client;
-// use App\Country;
-// use App\State;
 use Illuminate\Support\Facades\Redirect;
 
 class ProjectController extends Controller {
@@ -319,103 +315,94 @@ class ProjectController extends Controller {
             return $this->error("Not authorized", [], 401);
         }
     }
-
     /* Track Project */
-
-    public function acceptproject(){
+    
+    public function acceptproject(){ 
         return view('trackproject');
     }
-
+    
     public function selectproject(Request $request){
+        /* Accept user inputted tracking code and redirect to page that displays project details */
         $projectid = $request->input('projectid');
         return redirect('guest/track/'.$projectid);
     }
-
+    
     public function showproject($trackCode){
-
+        
+        /* Validate tracking code and retrieve project it tracks */
         if(is_numeric($trackCode) ) {
           if(Project::where('tracking_code',$trackCode)->first()){
             $docData = [];
-            //$projectData = Project::where('tracking_code',$pid)->get();
+              
+            /* Retrieve data that will be displayed and place them all in an array $docData */
             $projectData = Project::where('tracking_code',$trackCode)->with('user','client','profile')->get();
-
+            
             if(isset($projectData[0]->client->country_id)){
                 $country_id = $projectData[0]->client->country_id;
                 $cCountry = Country::where('id',$country_id)->get('name');
                 $clientCountry = $cCountry[0]->name;
                 $docData += compact("clientCountry");
             }
-
+            
             if(isset($projectData[0]->client->state_id)){
                 $state_id = $projectData[0]->client->state_id;
                 $cState = State::where(['id'=>$state_id,'country_id'=>$country_id])->get('name');
                 $clientState = $cState[0]->name;
                 $docData += compact("clientState");
-
+                
             }
-
+            
             if(isset($projectData[0]->profile->country_id)){
                 $country_id = $projectData[0]->profile->country_id;
                 $lCountry = Country::where('id',$country_id)->get('name');
                 $lancerCountry = $lCountry[0]->name;
                 $docData += compact("lancerCountry");
-
+                
             }
-
+            
             if(isset($projectData[0]->profile->state_id)){
                 $state_id = $projectData[0]->profile->state_id;
                 $lState = State::where(['id'=>$state_id,'country_id'=>$country_id])->get('name');
                 $lancerState = $lState[0]->name;
                 $docData += compact("lancerState");
-
+                
             }
-
+            
             $currencySymbol = ($projectData[0]->estimate->invoice->currency['symbol']);
-            //$currencySymbol = $projectData[0]->estimate[0]->invoice['currency']['symbol'];
-            //$docData = compact("clientCountry","clientState","lancerCountry","lancerState");
-            //$projectData = Project::with('user')->get();
-            //$clientId = $projectData[0]->client_id;
-        //$clientName = $projectData[0]->client->contacts[0]->name;
-        //$clientName = dd($projectData[0]->client->contacts[0]['name']);
-            //$estimateId = $projectData[0]->estimate_id;
-            //return $projectData.'<br>'.$userId.'<br>'.$clientId.'<br>'.$estimateId.'<br>';
-            //return $projectData;
-            //return $clientName;
-            $projectName = $projectData[0]->title;
-
+            $projectName = $projectData[0]->title;            
             $lancerName = $projectData[0]->user->name;
             $lancerMail = $projectData[0]->user->email;
-
+               
             if(isset($projectData[0]->description)){
                 $projectDescription = $projectData[0]->description;
                 $docData += compact("projectDescription");
             }
-
+              
             if(isset($projectData[0]->profile->company_address)){
                 $lancerAddress = $projectData[0]->profile->company_address;
                 $docData += compact("lancerAddress");
             }
-
+              
             if(isset($projectData[0]->profile->street_number)){
                 $lancerStreetNum = $projectData[0]->profile->street_number;
                 $docData += compact("lancerStreetNum");
             }
-
+              
             if(isset($projectData[0]->profile->street)){
                 $lancerStreet = $projectData[0]->profile->street;
                 $docData += compact("lancerStreet");
             }
-
+              
             if(isset($projectData[0]->profile->city)){
                 $lancerCity = $projectData[0]->profile->city;
                 $docData += compact("lancerCity");
             }
-
+              
             if(isset($projectData[0]->client->street_number)){
                 $clientStreetNum = $projectData[0]->client->street_number;
                 $docData += compact("clientStreetNum");
             }
-
+              
             if(isset($projectData[0]->client->street)){
                 $clientStreet = $projectData[0]->client->street;
                 $docData += compact("clientStreet");
@@ -424,152 +411,142 @@ class ProjectController extends Controller {
                 $clientCity = $projectData[0]->client->city;
                 $docData += compact("clientCity");
             }
-
+            
             if(isset($projectData[0]->client->name)){
                 $clientName = $projectData[0]->client->name;
                 $docData += compact("clientName");
             }
-
+              
             if(isset($projectData[0]->client->email)){
                 $clientMail = $projectData[0]->client->email;
                 $docData += compact("clientMail");
             }
-
+              
             if(isset($projectData[0]->estimate->start)){
                 $issueDate = $projectData[0]->estimate->start;
                 $docData += compact("issueDate");
             }
-
+              
             if(isset($projectData[0]->estimate->end)){
                 $dueDate = $projectData[0]->estimate->end;
                 $docData += compact("dueDate");
             }
-
+              
             if(isset($projectData[0]->estimate->time)){
                 $time = $projectData[0]->estimate->time;
                 $docData += compact("time");
             }
-
+              
             if(isset($projectData[0]->estimate->price_per_hour)){
                 $pricePerHour = $projectData[0]->estimate->price_per_hour;
                 $docData += compact("pricePerHour");
             }
-
+              
             if(isset($projectData[0]->estimate->equipment_cost)){
                 $equipmentCost = $projectData[0]->estimate->equipment_cost;
                 $docData += compact("equipmentCost");
             }
-
+              
             if(isset($projectData[0]->estimate->sub_contractors_cost)){
                 $subContractorCost = $projectData[0]->estimate->sub_contractors_cost;
                 $docData += compact("subContractorCost");
             }
-
+              
             if(isset($projectData[0]->estimate['estimate'])){
                 $amount = $projectData[0]->estimate['estimate'];
                 $docData += compact("amount");
             }
-            //$issueDate = dd($projectData[0]->estimate->start);
-            //$dueDate = $projectData[0]->estimate[0]->end;
+            
             $docData += compact("currencySymbol","projectName","lancerName","lancerMail","trackCode");
-            //$data += [$category => $question];
-            //$docData += $dData;
-            //array_push($docData,$dData);
-            //return $docData;
+            
+            /* Send data to be displayed to the view and return same view */
             return view('client-doc-view')->with('docData',$docData);
           } else {
+            /* If project is not found, return error page */
             return view('errors.404');
         }
         } else {
+            /* If tracking code fails validation, return error page */
             return view('errors.404');
         }
-        //return view('client-doc-view');
     }
-
+    
     public function dynamicPDF($trackCode) {
+        /* Validate tracking code and retrieve project it tracks */
         if(is_numeric($trackCode) ) {
           if(Project::where('tracking_code',$trackCode)->first()){
             $docData = [];
-
+            
+            /* Retrieve data that will be displayed and place them all in an array $docData */
             $projectData = Project::where('tracking_code',$trackCode)->with('user','client','profile')->get();
-
+            
             if(isset($projectData[0]->client->country_id)){
                 $country_id = $projectData[0]->client->country_id;
                 $cCountry = Country::where('id',$country_id)->get('name');
                 $clientCountry = $cCountry[0]->name;
                 $docData += compact("clientCountry");
             }
-
+            
             if(isset($projectData[0]->client->state_id)){
                 $state_id = $projectData[0]->client->state_id;
                 $cState = State::where(['id'=>$state_id,'country_id'=>$country_id])->get('name');
                 $clientState = $cState[0]->name;
                 $docData += compact("clientState");
-
+                
             }
-
+            
             if(isset($projectData[0]->profile->country_id)){
                 $country_id = $projectData[0]->profile->country_id;
                 $lCountry = Country::where('id',$country_id)->get('name');
                 $lancerCountry = $lCountry[0]->name;
                 $docData += compact("lancerCountry");
-
+                
             }
-
+            
             if(isset($projectData[0]->profile->state_id)){
                 $state_id = $projectData[0]->profile->state_id;
                 $lState = State::where(['id'=>$state_id,'country_id'=>$country_id])->get('name');
                 $lancerState = $lState[0]->name;
                 $docData += compact("lancerState");
-
+                
             }
-
+              
             $currencySymbol = ($projectData[0]->estimate->invoice->currency['symbol']);
-            //$currencySymbol = $projectData[0]->estimate[0]->invoice['currency']['symbol'];
-            //$docData = compact("clientCountry","clientState","lancerCountry","lancerState");
-            //$projectData = Project::with('user')->get();
-            //$clientId = $projectData[0]->client_id;
-        //$clientName = $projectData[0]->client->contacts[0]->name;
-        //$clientName = dd($projectData[0]->client->contacts[0]['name']);
-            //$estimateId = $projectData[0]->estimate_id;
-            //return $projectData.'<br>'.$userId.'<br>'.$clientId.'<br>'.$estimateId.'<br>';
-            //return $projectData;
-            //return $clientName;
             $projectName = $projectData[0]->title;
-
+            
             $lancerName = $projectData[0]->user->name;
             $lancerMail = $projectData[0]->user->email;
-
+               
             if(isset($projectData[0]->description)){
                 $projectDescription = $projectData[0]->description;
                 $docData += compact("projectDescription");
             }
-
+              
             if(isset($projectData[0]->profile->company_address)){
                 $lancerAddress = $projectData[0]->profile->company_address;
                 $docData += compact("lancerAddress");
             }
-
+              
             if(isset($projectData[0]->profile->street_number)){
                 $lancerStreetNum = $projectData[0]->profile->street_number;
                 $docData += compact("lancerStreetNum");
             }
-
+              
             if(isset($projectData[0]->profile->street)){
                 $lancerStreet = $projectData[0]->profile->street;
                 $docData += compact("lancerStreet");
             }
-
+              
             if(isset($projectData[0]->profile->city)){
                 $lancerCity = $projectData[0]->profile->city;
                 $docData += compact("lancerCity");
             }
-
+              
             if(isset($projectData[0]->client->street_number)){
                 $clientStreetNum = $projectData[0]->client->street_number;
                 $docData += compact("clientStreetNum");
             }
-
+              
             if(isset($projectData[0]->client->street)){
                 $clientStreet = $projectData[0]->client->street;
                 $docData += compact("clientStreet");
@@ -578,75 +555,66 @@ class ProjectController extends Controller {
                 $clientCity = $projectData[0]->client->city;
                 $docData += compact("clientCity");
             }
-
+            
             if(isset($projectData[0]->client->name)){
                 $clientName = $projectData[0]->client->name;
                 $docData += compact("clientName");
             }
-
+              
             if(isset($projectData[0]->client->email)){
                 $clientMail = $projectData[0]->client->email;
                 $docData += compact("clientMail");
             }
-
+              
             if(isset($projectData[0]->estimate->start)){
                 $issueDate = $projectData[0]->estimate->start;
                 $docData += compact("issueDate");
             }
-
+              
             if(isset($projectData[0]->estimate->end)){
                 $dueDate = $projectData[0]->estimate->end;
                 $docData += compact("dueDate");
             }
-
+              
             if(isset($projectData[0]->estimate->time)){
                 $time = $projectData[0]->estimate->time;
                 $docData += compact("time");
             }
-
+              
             if(isset($projectData[0]->estimate->price_per_hour)){
                 $pricePerHour = $projectData[0]->estimate->price_per_hour;
                 $docData += compact("pricePerHour");
             }
-
+              
             if(isset($projectData[0]->estimate->equipment_cost)){
                 $equipmentCost = $projectData[0]->estimate->equipment_cost;
                 $docData += compact("equipmentCost");
             }
-
+              
             if(isset($projectData[0]->estimate->sub_contractors_cost)){
                 $subContractorCost = $projectData[0]->estimate->sub_contractors_cost;
                 $docData += compact("subContractorCost");
             }
-
+              
             if(isset($projectData[0]->estimate['estimate'])){
                 $amount = $projectData[0]->estimate['estimate'];
                 $docData += compact("amount");
             }
-            //$issueDate = dd($projectData[0]->estimate->start);
-            //$dueDate = $projectData[0]->estimate[0]->end;
+            
             $docData += compact("currencySymbol","projectName","lancerName","lancerMail","trackCode");
-
-
-        // Fetch all customers from database
-        //$data = Customer::get();
-
-        // Send data to the view using loadView function of PDF facade
-        //$pdf = PDF::loadView('pdf.customers', $data);
+        /* Send retieved data to view that will be used to generate PDF file, generate PDF file */
         $pdf = PDF::loadView('pdf.trackproject',$docData);
-
-        // If you want to store the generated pdf to the server then you can use the store function
-        //$pdf->save(storage_path().'_filename.pdf');
-
-        // Finally, you can download the file using download function
+ 
         return $pdf->download('Invoice.pdf');
     }else {
+             /* If project is not found, return error page */
             return view('errors.404');
         }
-
+            
   } else {
+      /* If tracking code fails validation, return error page */
       return view('errors.404');
     }
- }
+ } 
 
 }
