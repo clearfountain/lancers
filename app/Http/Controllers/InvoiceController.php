@@ -358,11 +358,12 @@ class InvoiceController extends Controller {
                         'name' => $client->name,
                         'amount' => $invoice->amount,
                         'invoice_url' => $url,
-                        'project' => $project_name
+                        'project' => $project_name,
+                        'trackingcode' => $invoice->estimate->project->tracking_code
             ]));
 
             //Lets Send the tracking code to the client
-            Mail::to($client_email)->send(new TrackingCode($invoice));
+            // Mail::to($client_email)->send(new TrackingCode($invoice));
 
         } catch (\Throwable $e) {
             // dd($e->getMessage());
