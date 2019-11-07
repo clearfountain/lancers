@@ -391,18 +391,18 @@
 
 
                         <li class="nav-item active border-right">
-                            <a class="nav-link mt-2 mr-3" href="#">
+                            <a class="nav-link mt-2 mr-3" href="{{ url('/contact') }}">
                                 <img src="{{ asset('images/help.svg') }}">
                             </a>
                         </li>
                         <li class="nav-item border-right">
-                            <a class="nav-link mt-2 mx-3" href="#">
+                            <a class="nav-link mt-2 mx-3" href="/notifications">
                                 <img src="{{ asset('images/alarm-clock.svg') }}">
                             </a>
                         </li>
 
                         <li class="nav-item border-right">
-                            <a class="nav-link mt-2 mx-3" href="#">
+                            <a class="nav-link mt-2 mx-3" href="/notifications">
                                 <img src="{{ asset('images/Vector.svg') }}">
                             </a>
                         </li>
