@@ -31,7 +31,6 @@ class GuestController extends Controller {
 
     // public $project;
 
-
     public function step1(Request $request) {
         $project = $request->session()->get('project');
         session(["path" => url('/')]);
@@ -163,15 +162,10 @@ class GuestController extends Controller {
         $contacts = [];
         if ($request->contact) {
             foreach ($request->contact as $contact) {
-
-                $contacts[] = ["name" => $contact["'name'"], "email" => $contact["'email'"]];
-
+                array_push($contacts, ["name" => $contact["'name'"], "email" => $contact["'email'"]]);
             }
-            //the bug was from this line, casting $contacts = $contact; would use the value of $contact from the foreach loop
-            //$contacts = $contact;
+            $contacts = $contact;
         }
-
-
         if (empty($contact["'email'"])) {
             session()->flash('message.alert', 'danger');
             session()->flash('message.content', "Client Contact Email Can Not Be Empty.. Please Check Contact Information");

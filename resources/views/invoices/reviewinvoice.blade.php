@@ -48,12 +48,9 @@
                 Invoice
             </div>
             <div class="box-5" style="max-width: 150px">
-                <form method="POST" action="/invoice/send" id="finalInvoiceForm" enctype="multipart/form-data">
+                <form method="POST" action="/invoice/send">
                     @csrf
-                    <input type="text" id="invoiceCheckerInput" style="display: none;" name="invoiceChecker" value="sendInvoice">
                     <input type="text" style="display: none;" name="invoice" value="{{$invoice->id}}">
-                    <input id="invoice_picture" name="profileimage" type="file" style="visibility: hidden;"  onchange="invoiceImage(this);" />
-
                     <button type="submit" class="sendInvoice">SEND INVOICE</button>
                 </form>
             </div>
@@ -72,20 +69,17 @@
                         </div>
                     </div>
                 </section> --}}
-
+                
                 @if(session()->has('message.alert'))
                 <div class="text-center">
-                    <button class=" alert alert-{{ session('message.alert') }}">
+                    <button class=" alert alert-{{ session('message.alert') }}"> 
                         {!! session('message.content') !!}
                     </button>
                 </div>
                 @endif
                 <section class="mainContentBelowLogo">
-                <i>Click Image to upload client logo</i>
-                <br>
-                <img id="invoice_image_selecter" src="{{ asset('images/ClientImages/user-default.jpg') }}" style="width: 100px; height: 100px; border-radius: 2%; pointer: finger;" alt="Client Image">
                     <section>
-                        <div class="invoice-logo">
+                        <div class="invoice-logo">                         
                             <div class="add-logo" id="add-logo" style="display: {{$invoice->logo == 'default_logo.png' ? 'block' : 'none'}}">
                                 <span class="logo-text">
                                     Add Logo
@@ -97,7 +91,7 @@
                                 <input type="hidden" name="invoice" value="{{$invoice->id}}">
                                 <input type="file" name="logo_image_file" id="logo_image_file">
                                 <div class="show-logo" style="display: {{$invoice->logo == 'default_logo.png' ? 'none' : 'flex'}}">
-                                    <div class="logo-image">
+                                    <div class="logo-image">                     
                                         <img id="logo-image" src="/storage/logos/{{$invoice->logo}}" alt="">
                                     </div>
 
@@ -213,49 +207,38 @@
 @section('script')
     <script type="text/javascript">
         $(".save-close").click(() => {
-            //change checker value to saveInvoice
-            $("#invoiceCheckerInput").val("saveInvoice");
-
-            $("#finalInvoiceForm").submit();
-
-        });
-
-        $(".sendInvoice").click((e) => {
-            e.preventDefault();
-            //change checker value to sendInvoice
-        $("#invoiceCheckerInput").val("sendInvoice");
-
-           $("#finalInvoiceForm").submit();
-
+            window.location.href = "/invoices";
         });
 
         $(".go-back").click(() => {
             window.history.back();
         });
 
-        //jquery code for handling client image upload
-        $("#invoice_image_selecter").on("click", function() {
-        $("#invoice_picture").trigger("click");
-      });
+        $("#add-logo").click(e => {
+            $("#logo_image_file").click();
+        });
 
+         $(".change-logo").click(e => {
+            $("#logo_image_file").click();
+        });
 
+        $("#logo_image_file").change(function(e){
+            let input = e.target;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
-      function invoiceImage(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#logo-image')
+                        .attr('src', e.target.result);
 
-            reader.onload = function (e) {
-                $('#invoice_image_selecter')
-                    .attr('src', e.target.result)
-                    .width(100)
-                    .height(100);
-            };
+                    $("#add-logo").hide();
+                    $(".show-logo").css('display', 'flex');
+                    $("#save-logo").show();
+                };
 
-            reader.readAsDataURL(input.files[0]);
-        }
-
-    }
-
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
     </script>
 @endsection
 
@@ -536,7 +519,7 @@
             border-radius: 10px;
             overflow: hidden;
         }
-
+        
         .show-logo{
             display: none;
             flex-direction: column;
