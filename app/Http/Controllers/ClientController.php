@@ -6,10 +6,10 @@ use Auth;
 use App\User;
 use App\State;
 use App\Client;
-Use Validator;
 use App\Project;
 use App\Country;
 use App\Estimate;
+Use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
@@ -145,8 +145,8 @@ class ClientController extends Controller {
         //dd($client);
 
         return view('clients.edit')->with(['client'=> $client,'countries'=>$countries,'states'=>$states]);
-    }
 
+    }
 
 
     public function update(Request $request) {
@@ -329,10 +329,6 @@ class ClientController extends Controller {
 
             return $filePath;
         }
-
-
-
-
 
 
 

@@ -25,15 +25,15 @@
       border: none;
       border-bottom: 4px solid #0ABAB5;
     }
-      
+
       a {
           text-decoration : none !important;
       }
-      
+
       .main-color {
           color: #0ABAB5;
       }
-      
+
       .main-color:hover {
           text-decoration:none;
           color: #000;
@@ -131,18 +131,35 @@
       font-family: 'Ubuntu', sans-serif;
     }
 
+
     tfoot>tr { text-align: right;
     }
 
-    thead { background-color: #0ABAB5; color: #fff; font-size: 14px; text-align : center;
+    tbody {
+        text-align: right;
     }
-      
+
+    thead { background-color: #0ABAB5; color: #fff; font-size: 14px; text-align : right;
+    }
+
+      .mg{
+          padding-right: 17px !important;
+      }
+
+      td{
+          text-align: right !important;
+      }
+
       .bg-primary{
           background-color : #0ABAB5 !important;
       }
 
     th:nth-child(1), td:nth-child(1) { text-align: start; padding: 10px;
     }
+
+    .left {
+          text-align: left !important;
+      }
 
     #hourly-rateN { text-align: right;
     }
@@ -274,41 +291,45 @@
           </div>
         </div>
 
-        
+
         <div class="invoice-cont">
           <div class="lanclient-invoice-logo">
             <div class="right-invy">
               <h3 class="invoice-banner-txt">Invoice</h3>
-              <p><strong>Project:&nbsp;</strong>{{ $docData['projectName'] }}</p>
-              <p><strong>Lancer:&nbsp;</strong>{{ $docData['lancerName'] }}</p>
+              <p><strong>Project:&nbsp;</strong>{{ ucwords($docData['projectName']) }}</p>
+              <p><strong>Lancer:&nbsp;</strong>{{ ucwords($docData['lancerName']) }}</p>
               <p><strong>Email:&nbsp;</strong>{{ $docData['lancerMail'] }}</p>
               <p>
                   @if(array_key_exists('lancerAddress', $docData))
                     @php echo "<strong>Address:&nbsp;</strong>"; @endphp
-                    {{ $docData['lancerAddress']}}
+                    {{ ucwords($docData['lancerAddress'])}}
                   @else
                      @if(array_key_exists('lancerStreetNum', $docData))
-                        @php echo "<strong>Address:&nbsp;</strong>"; @endphp                  
+                        @php echo "<strong>Address:&nbsp;</strong>"; @endphp
                         {{ $docData['lancerStreetNum'].", " }}
                      @endif
                      @if(array_key_exists('lancerStreet', $docData))
-                        {{ $docData['lancerStreet']." Street, "}}
+                        {{ ucwords($docData['lancerStreet'])." Street, "}}
                      @endif
                      @if(array_key_exists('lancerCity',$docData))
-                        {{ $docData['lancerCity'].", " }}
+                        {{ ucwords($docData['lancerCity']).", " }}
                      @endif
                      @if(array_key_exists('lancerState', $docData))
-                        {{ $docData['lancerState'].", " }}
+                        {{ ucwords($docData['lancerState']).", " }}
                      @endif
                      @if(array_key_exists('lancerCountry', $docData))
-                        {{ $docData['lancerCountry'].", " }}
+                        {{ ucwords($docData['lancerCountry']).", " }}
                      @endif
                   @endif
               </p>
             </div>
             <div class="left-invy-logo">
-              <img src="https://res.cloudinary.com/abisalde/image/upload/v1570566026/My_Logo_-_Black.png" alt="Lancer-Logo">
-            </div>
+                @if(!isset($docData['profile_picture']))
+              <img src="https://res.cloudinary.com/abisalde/image/upload/v1570566026/My_Logo_-_Black.png" alt="Client-Logo">
+                    @endif
+                    @if(isset($docData['profile_picture']))
+                    <img id="image_selecter" src="{{ $docData['profile_picture'] }}" style="width: 100px; height: 100px; border-radius: 10%; pointer: finger;" alt="Client-Logo">
+                    @endif</div>
           </div>
 
           <div class="lanclient-billing">
@@ -319,16 +340,16 @@
                                         {{ $docData['clientStreetNum'] }}
                                     @endif
                                     @if(array_key_exists('clientStreet',$docData))
-                                        {{ $docData['clientStreet']." Street, " }}
+                                        {{ ucwords($docData['clientStreet'])." Street, " }}
                                     @endif
                                     @if(array_key_exists('clientCity', $docData))
-                                        {{ $docData['clientCity'].", " }}
+                                        {{ ucwords($docData['clientCity']).", " }}
                                     @endif
                                     @if(array_key_exists('clientState', $docData))
-                                        {{ $docData['clientState'].", " }}
+                                        {{ ucwords($docData['clientState']).", " }}
                                     @endif
                                     @if(array_key_exists('clientCountry', $docData))
-                                        {{ $docData['clientCountry']." " }}
+                                        {{ ucwords($docData['clientCountry'])." " }}
                                     @endif
                             </p>
                      </div>
@@ -358,7 +379,7 @@
              <div class="last-child-billing">
                      <div class="top-last-bill-details"> <p class="billing-clhead">Hourly Rate</p> <p class="bills-description" id = "hourly-rateN">N/A</p>
                      </div>
-                          <div class="bottom-last-bill-details"> <p class="billing-clhead">Amount Due</p> <p class="bills-description">{{ $docData['currencySymbol'] }}{{ $docData['amount'] }}</p>
+                          <div class="bottom-last-bill-details"> <p class="billing-clhead">Amount Due</p> <p class="bills-description">{{ $docData['currencySymbol'] }}{{ number_format((float)$docData['amount'], 2) }}</p>
                            </div>
             </div>
           </div>
@@ -367,35 +388,35 @@
             <table>
               <thead class="bg-primary">
                 <tr>
-                  <th class="remove-borders">Description</th>
-                  <th class="remove-borders">Quantity</th>
-                  <th class="remove-borders">Rate</th>
-                  <th class="remove-borders">Amount</th>
+                  <th class="remove-borders left mg">Description</th>
+                  <th class="remove-borders right mg">Quantity</th>
+                  <th class="remove-borders right mg">Rate</th>
+                  <th class="remove-borders mg">Amount</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Base Charge</td>
+                  <td class="left">Base Charge</td>
                   <td>{{ $docData['time'] }}</td>
-                  <td>{{ $docData['pricePerHour'] }}</td>
+                  <td>{{ number_format((float)$docData['pricePerHour'], 2) }}</td>
                   <td>
                       @php
-                        echo $docData['time'] * $docData['pricePerHour'];
+                        echo number_format((float)((float)$docData['time'] * (float)$docData['pricePerHour']), 2);
                       @endphp
                   </td>
                 </tr>
                 <tr>
-                  <td>Equipment Cost</td>
+                  <td class="left">Equipment Cost</td>
                   <td>1</td>
-                  <td>{{ $docData['equipmentCost'] }}</td>
-                  <td>{{ $docData['equipmentCost'] }}</td>
+                  <td>{{ number_format((float)$docData['equipmentCost'], 2) }}</td>
+                  <td>{{ number_format((float)$docData['equipmentCost'], 2) }}</td>
                 </tr>
-                @if(array_key_exists('subContractorCost',$docData))  
+                @if(array_key_exists('subContractorCost',$docData))
                 <tr>
-                        <td>Sub-contractors</td>
+                        <td class="left">Sub-contractors</td>
                         <td>1</td>
-                        <td>{{ $docData['subContractorCost'] }}</td>    
-                        <td>{{ $docData['subContractorCost'] }}</td>
+                        <td>{{ number_format((float)$docData['subContractorCost'], 2) }}</td>
+                        <td>{{ number_format((float)$docData['subContractorCost'], 2) }}</td>
                     </tr>
                 @endif
               </tbody>
@@ -403,7 +424,7 @@
                 <tr>
                   <td colspan="2" class= "no-border-table"></td>
                   <td class= "no-border-table" >Total</td>
-                  <td class= "no-border-table" >{{ $docData['currencySymbol'] }}{{ $docData['amount'] }}</td>
+                  <td class= "no-border-table" >{{ $docData['currencySymbol'] }}{{ number_format((float)$docData['amount'], 2) }}</td>
                 </tr>
                 <tr>
                   <td colspan="2" class= "no-border-table"></td>
@@ -412,7 +433,7 @@
                 <tr>
                   <td colspan="2" class= "no-border-table"></td>
                   <td class= "no-border-table">Amount Due</td>
-                  <td class= "no-border-table">{{ $docData['currencySymbol'] }}{{ $docData['amount'] }}</td>
+                  <td class= "no-border-table">{{ $docData['currencySymbol'] }}{{ number_format((float)$docData['amount'], 2) }}</td>
                 </tr>
               </tfoot>
             </table>
@@ -435,7 +456,7 @@
         </div>
       </div>
 @endsection
-        
+
 @section('script')
     <script type="text/javascript">
         function printdata() {

@@ -11,7 +11,7 @@ use App\Project;
 
 class CollaboratorController extends Controller
 {
-
+    
     public function getAllCollaborators(){
         $projects = Project::where('user_id', Auth::user()->id)->get(['id', 'title']);
         $users = User::all(['id', 'name']);
@@ -23,7 +23,7 @@ class CollaboratorController extends Controller
                 ->orderBy('c.created_at', 'DESC')
                 ->get();
                 // dd($collaborators);
-        return view('projects.collaborators')->with(["collaborators" => $collaborators,"projects" => $projects, "users" => $users]);
+        return view('projects.collaborators')->withCollabo($collaborators)->withProjects($projects)->withUsers($users);
     }
 
     public function store(Request $request){
@@ -34,7 +34,7 @@ class CollaboratorController extends Controller
         ]);
 
         $query = Collaborator::updateOrCreate(
-            ['user_id'=>$request->user_id, 'role'=>$request->role, 'project_id'=>$request->project_id],
+            ['user_id'=>$request->user_id, 'role'=>$request->role, 'project_id'=>$request->project_id], 
             $request->all()
         );
 
@@ -51,7 +51,7 @@ class CollaboratorController extends Controller
 
         $collaborator = Collaborator::where('id',$id)->first();
 
-
+        
         return view('projects.collaborator')->withCollabo($collaborator);
 
     }
@@ -100,10 +100,10 @@ class CollaboratorController extends Controller
        }
        else{
         return redirect()->back()->with('error','An error occur');
-       }
+       }    
 
     }
 
-
+    
 
 }

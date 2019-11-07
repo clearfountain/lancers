@@ -82,6 +82,7 @@
 
                     <h5>Contact Information</h5>
                     <span id="contacts">
+
                         @foreach($client->contacts ?? [] as $key => $contact)
                             <div class="form-group">
                                 <label for="company_name_{{$key}}">Contact name</label>
@@ -102,7 +103,6 @@
     </main>
 </div>
 @endsection
-
 
 @section('script')
 <script type="text/javascript">

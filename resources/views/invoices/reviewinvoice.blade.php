@@ -78,7 +78,9 @@
                 </div>
                 @endif
                 <section class="mainContentBelowLogo">
-                <img id="invoice_image_selecter" src="{{ asset('images/ClientImages/user-default.jpg') }}" style="width: 100px; height: 100px; border-radius: 10%; pointer: finger;" alt="Client Image">
+                <i>Click Image to upload client logo</i>
+                <br>
+                <img id="invoice_image_selecter" src="{{ asset('images/ClientImages/user-default.jpg') }}" style="width: 100px; height: 100px; border-radius: 2%; pointer: finger;" alt="Client Image">
                     <section>
                         <div class="addressAndPayment row">
                             <div class="card addressCard" style="font-weight: normal">
@@ -86,7 +88,6 @@
                                 {{$invoice->estimate->project->client->city}}, {{$invoice->estimate->project->client->state->name}}<br>
                                {{$invoice->estimate->project->client->country->name}}
                             </div>
-
 
                             <div class="card payment ml-auto">
                                 <div style="font-size: 0.8em; color: #B1B1B1">Amount Due</div>
@@ -190,6 +191,7 @@
         $(".save-close").click(() => {
             //change checker value to saveInvoice
             $("#invoiceCheckerInput").val("saveInvoice");
+
             $("#finalInvoiceForm").submit();
 
         });
