@@ -383,13 +383,13 @@ form {
          <span id="seconds"> 00</span>
           SECONDS
          </div>
-            <div class="form">
+            {{--  <div class="form">
              <form action="">
                  <input type="text" placeholder="&nbsp&nbsp; Enter email address and get notified"  id="box" >
                  <input type="submit" value="Submit" id="sbt"  style=" border: black; width: 80px; margin: 10px auto; height: 33px;  border-radius: 0 25px 25px 0; background-color: #091429; color: white;">
              </form>
                  <p id="ww" style="font-weight: bold;"><i>we will not spam...</i></p>
-            </div>
+            </div>  --}}
                   </div>
 
 
