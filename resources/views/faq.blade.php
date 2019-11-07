@@ -172,7 +172,7 @@
         <div class="case mb-2">
             <button class="accordion">Can I save invoice?</button>
             <div class="panel-body">
-                <p>Yes, you can save, download or print your invoice. Lancers has also made it easier to send ytour invoice directly to your mail.</p>
+                <p>Yes, you can save, download or print your invoice. Lancers has also made it easier to send your invoice directly to your mail.</p>
             </div>
 
 
