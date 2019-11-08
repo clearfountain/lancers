@@ -363,7 +363,12 @@ class ClientController extends Controller {
                             // dd($project['title'], $search);
                         // dd($project);
                         // dd($clients);
-                        $clients['data'] = $client;
+                        // $clients['data'] = $client;
+                        if($count==1){
+                            $clientSearch[0]= $client;
+                        }else{
+                            array_push($clientSearch, $client);
+                        }
                         }
                     };
                 }
