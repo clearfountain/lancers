@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Lancers') }} - @yield('title')</title>
+    <link rel="shortcut icon" href="https://res.cloudinary.com/ddu0ww15f/image/upload/c_scale,h_16/v1571841777/icons8-home-office-24_veiqea.png" type="image/x-icon">
 
     {{--  <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>  --}}
@@ -110,6 +111,7 @@
    {{--  // inline scrpt  --}} -->
 
    @yield('script')
+   
 <script type="text/javascript">
         
         // window.onload=function(){
@@ -125,6 +127,9 @@
             $(this).toggleClass('active');
         });
     });
+
+    //initialize animation
+       AOS.init();
 </script>
 </body>
 </html>

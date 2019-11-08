@@ -19,7 +19,7 @@ class CreateEstimatesTable extends Migration {
             $table->integer('time');
             $table->unsignedBigInteger('currency_id')->default(1);
                 $table->foreign('currency_id')->references('id')->on('currencies');
-            $table->integer('price_per_hour')->nullable();
+            $table->integer('price_per_hour')->default(2000);
             $table->integer('equipment_cost')->nullable();
             $table->text('sub_contractors')->nullable();
             $table->integer('sub_contractors_cost')->nullable();

@@ -7,7 +7,7 @@ use App\Estimate;
 use App\Currency;
 class Invoice extends Model
 {
-    protected $fillable = ["user_id","issue_date", "due_date", "amount", "estimate_id", "amount_paid", "status", "currency_id", "filename"];
+    protected $guarded = ['id'];
 
     public function project(){
         return $this->belongsTo('App\Project');

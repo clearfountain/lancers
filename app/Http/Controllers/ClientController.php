@@ -9,7 +9,10 @@ use App\Client;
 use App\Project;
 use App\Country;
 use App\Estimate;
+Use Validator;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+
 
 class ClientController extends Controller {
 
@@ -17,6 +20,13 @@ class ClientController extends Controller {
         $countries = Country::all('id', 'name');
         $states = State::all('id', 'name');
         return view('clients.add')->withCountries($countries)->withStates($states);
+    }
+
+    public function getClientName($client_id)
+    {
+        $clientName = Client::where('id',$client_id)->get();
+        if($clientName != null){return response()->json($clientName->toArray());}else{return response()->json("");}
+
     }
 
     public function store(Request $request) {
@@ -93,12 +103,12 @@ class ClientController extends Controller {
         return view('clients.list', $data);
     }
 
-    
+
     public function view($client_id) {
         $client = Client::where(['id' => $client_id, 'user_id' => Auth::user()->id])->first();
         return $client !== null ? $this->SUCCESS('Client retrieved', $client) : $this->SUCCESS('No client found');
     }
-    
+
     public function viewClient($client_id) {
         $clientData = [];
         if(Client::where(['id' => $client_id, 'user_id' => Auth::user()->id])->first()){
@@ -109,13 +119,13 @@ class ClientController extends Controller {
                 $clientCountry = $country[0]['name'];
                 $clientData += compact("clientCountry");
             }
-            
+
             if(isset($clientData['state_id'])){
                 $state_id = $clientData['state_id'];
                 $state = State::where(['id'=>$state_id,'country_id'=>$country_id])->get('name');
                 $clientState = $state[0]['name'];
                 $clientData += compact("clientState");
-                
+
             }
             return view('clients.client-info')->with('clientData',$clientData);
             //return $clientData;
@@ -129,12 +139,18 @@ class ClientController extends Controller {
     public function edit($client)
     {
         $client = Client::findOrFail($client);
+        $countries = Country::all('id', 'name');
 
+        $states = State::where("country_id",$client->country_id)->get();
+        //dd($client);
 
-        return view('clients.edit')->with('client', $client);
+        return view('clients.edit')->with(['client'=> $client,'countries'=>$countries,'states'=>$states]);
+
     }
 
+
     public function update(Request $request) {
+        $image = $request->file('profileimage');
 
         $this->validate($request, [
             'client_id' => 'numeric|required',
@@ -150,9 +166,34 @@ class ClientController extends Controller {
             'contact.0.name' => 'required|string',
         ]);
 
+
         $client = Client::findOrFail($request->client_id);
 
         $inputs = $request->input();
+
+        $storedImageStatus = null;
+        //upload image and return to invoices.
+
+        if($image != null)
+        {
+
+
+            $imageStatus = $this->updateImage($request,$client->id);
+
+            $storedImageStatus = $imageStatus;
+
+              //check image return value and act accordingly
+            if($storedImageStatus == false)
+            {
+
+            //return back with error if any error
+            session()->flash('message.alert', 'danger');
+            session()->flash('message.content', "Error uploading image, Please Try again ");
+            return back();
+            }
+        }
+
+
 
         $contacts = [];
         if ($request->contact) {
@@ -183,12 +224,112 @@ class ClientController extends Controller {
 
         try {
 
-            $client->update($to_save);
+            $clientUpdate = $client->update($to_save);
+
             return back()->with('success', 'Client details updated');
         } catch (\Throwable $e) {
             return back()->with('error', $e->getMessage());
         }
 
     }
+
+
+
+
+       //UPLOAD IMAGE CODE
+        // @author: @Bits_and_Bytes
+        function ImageValidation(array $array)
+        {
+            return Validator::make($array, [
+                'profileimage'     =>  'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
+        }
+
+        /**
+         * @description receive user upload photo and update picture
+         * @param Request $request
+         * @author: @Bits_and_Bytes
+         */
+        // CHANGE ALL DB TABLE SAVES TO THE CORRECT ONE WITH INVOICE...
+        // @author: @Bits_and_Bytes
+        function updateImage($request,$clientId)
+        {
+            $imageValidate = $this->ImageValidation(['profileimage' => $request->file('profileimage')]);
+
+            if(!$imageValidate->fails())
+            {
+              //check if user has image
+              $clientProfileData = Client::where('id',$clientId)->first();
+
+              if($clientProfileData != null)
+              {
+                  //cast collection result to array
+                  $collectionResult = $clientProfileData->toArray();
+
+                  if(sizeof($collectionResult) != 0)
+                  {  //upload image and update image field only
+
+                      //get profile image
+                        $oldImage = $collectionResult['profile_picture'];
+                        //dd($oldImage);
+                        if($oldImage != null)
+                        {
+                            // check if user has image and unlink
+                            if(file_exists(public_path($oldImage)))
+                            {
+                                unlink(public_path($oldImage));
+                            }
+
+                        }
+
+
+                        $imagePathString = $this->uploadImageToFile($request->file('profileimage'));
+                        //store in DB
+
+                        $clientProfileData->profile_picture = $imagePathString;
+                        $clientProfileData->save();
+
+                        if($clientProfileData->profile_picture == $imagePathString)
+                        {
+
+                            return true;
+                        }
+                        else{
+                            return false;
+                        }
+
+                 }else{
+                    return false;
+                 }
+
+
+              }
+              else
+              {
+                return false;
+            }
+
+
+            }
+            else{
+               return false;
+            }
+        }
+
+
+
+
+        public function uploadImageToFile(UploadedFile $uploadedFile,  $Imagefilename = null, $folderName = null, $appDiskStorage = null)
+        {
+            $folderName = (!is_null($folderName)) ? $folderName : 'images/ClientImages';
+            $appDiskStorage = (!is_null($appDiskStorage)) ? $appDiskStorage : 'public';
+            $imageName = (!is_null($Imagefilename)) ? $Imagefilename : md5(auth()->user()->id.now());
+
+            $filePath = $uploadedFile->storeAs($folderName, $imageName.'.'.$uploadedFile->getClientOriginalExtension(), $appDiskStorage);
+
+            return $filePath;
+        }
+
+
 
 }

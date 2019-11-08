@@ -17,6 +17,7 @@ use App\Http\Resources\Estimate as EstimateResource;
 use App\Http\Resources\EstimateCollection;
 use Illuminate\Support\Facades\Auth;
 
+
 class EstimateController extends Controller {
 
     public function step1(Request $request) {
@@ -96,7 +97,7 @@ class EstimateController extends Controller {
             $data['currency'] = Currency::find(session('estimate')['currency_id'])->code;
             $data['currency_symbol'] = Currency::find(session('estimate')['currency_id'])->symbol;
             $data['lancer_name'] = Auth::user()->name;
-            $data['workmanship'] = session('estimate')['price_per_hour'] * session('estimate')['time'];
+            $data['workmanship'] = (session('estimate')['price_per_hour'] ?? 2000) * session('estimate')['time'];
             $data['equipment_cost'] = session('estimate')['equipment_cost'];
             $data['sub_contractors_cost'] = session('estimate')['sub_contractors_cost'];
             $data['total'] = $data['workmanship'] + $data['equipment_cost'] + $data['sub_contractors_cost'];

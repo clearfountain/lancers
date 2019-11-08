@@ -6,10 +6,9 @@
   <link rel="stylesheet" type="text/css" href="{{asset('css/add_client.css')}}" />
     <style> a:hover{cursor: pointer;}</style>
 <div class="container-fluid">
- 
 
     <main>
-        
+
         <form method="post" action="/client/add">
             @csrf
             <h2>New Client</h2><br>
@@ -31,7 +30,7 @@
                             <input required class="form-control" type="text" name="street" id="street" placeholder="Street">
                             <input required type="number" class="form-control" name="street_number" id="number" placeholder="Number">
                         </span>
-                        
+
                         <label for="city_Zcode">City & Zip Code</label>
                         <span>
                             <input required type="text"  class="form-control" name="city" id="city" placeholder="City">
@@ -84,7 +83,7 @@
         newElement.innerHTML = `
             <label for="company_name_${count}">Contact name</label>
             <input type="text" ${count == 0 ? 'required' : ''} class="form-control" name="contact[${count}][name]" id="contact_name${count}" placeholder="e.g Ben Davies">
-            
+
             <label for="company_email">Contact email</label>
             <input class="form-control" ${count == 0 ? 'required' : ''} type="email" name="contact[${count}][email]" id="email_${count}" placeholder="e.g email@domain.com">
         `;

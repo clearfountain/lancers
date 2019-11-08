@@ -187,6 +187,9 @@ Route::group(['middleware' => 'auth:web'], function() {
          return view('addclients');
     });
 
+    Route::get("/clients/details/json/{client_id}",'ClientController@getClientName');
+
+
     Route::get('/clients/view/{id}', 'ClientController@viewClient')->name('viewClient');
     Route::get('/clients/{client}/edit', 'ClientController@edit');
     Route::put('/clients/edit', 'ClientController@update');
@@ -293,7 +296,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     // Route::get('/transactions', 'TransactionsController@index');
     Route::resource('transactions', 'TransactionsController');
     Route::get('/transactions', 'TransactionsController@index');
-    Route::get('payment/subscription/{type}', 'PaymentContoller@create');
+    Route::get('payment/subscription/{type}', 'PaymentContoller@create')->middleware('auth');
     Route::get('payment/invoice/{ref}', 'PaymentContoller@invoice'); //ref is the timestamp value of the created_at field
     //Invoice routes
     //Route::resource('invoices', 'InvoiceController');
@@ -301,6 +304,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     // Route::get('/invoices', 'InvoiceController@list');
     Route::get('/invoices', 'InvoiceController@listGet');
     Route::get('/invoice/review', 'InvoiceController@review');
+    Route::post('invoice/logo', 'InvoiceController@addLogo');
     //Route::get('/invoices/{invoice}/getpdf', 'InvoiceController@getPdf');
     //Route::get('/invoice/pay/{txref}', 'InvoiceController@pay');
     Route::get('/invoice', function () {
@@ -315,8 +319,8 @@ Route::group(['middleware' => 'auth:web'], function() {
     // Route::get('/client-doc-view', function () {
     //     return view('client-doc-view');
     // });
-    
-    
+
+
     // Route::get('/invoice', function () {
     //     return view('invoice_view');
     // });
