@@ -5,9 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Estimate;
 use App\Currency;
+use App\Project;
 class Invoice extends Model
 {
-    protected $fillable = ["user_id","issue_date", "due_date", "amount", "estimate_id", "amount_paid", "status", "currency_id", "filename"];
+    protected $guarded = ['id'];
 
     public function project(){
         return $this->belongsTo('App\Project');
@@ -20,5 +21,5 @@ class Invoice extends Model
      public function currency(){
     	return $this->belongsTo(Currency::class, 'currency_id');
     }
-    
+  
 }
