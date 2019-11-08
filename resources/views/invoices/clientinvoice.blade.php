@@ -254,16 +254,28 @@
         <a href="#"><h4 class="header-nav-item header-nav-item-left">Project Info</h4></a>
         <a href="#"><h4 class="header-nav-item">Documents</h4></a>
       </div>
-
+ @if(session()->has('message.alert'))
+                <div class="text-center">
+                    <button class=" alert alert-{{ session('message.alert') }}">
+                        {!! session('message.content') !!}
+                    </button>
+                </div>
+                @endif
       <div class="content">
 
         <div class="lanclient-buttons">
           <div class="left">
             <button type="button">Print</button> <button type="button">Download as PDF</button>
           </div>
+            @if($invoice =='paid')
+              <div class="right">
+            <span class="btn btn-secondary" type="button">Invoice Paid</span>
+          </div>
+            @else
             <div class="right">
             <a href="/payment/invoice/{{strtotime($invoice->created_at)}}" class="btn btn-secondary" type="button">Make Payment</a>
           </div>
+            @endif
         </div>
 
         <div class="invoice-cont">
