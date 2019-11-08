@@ -330,6 +330,63 @@ class ClientController extends Controller {
             return $filePath;
         }
 
+        //Search functionality for clients
+         // $posts = Client::where('','', $search)-->paginate();
+            // State::where("country_id",$client->country_id)->get();
+        public function search (Request $request) {
+            $user = Auth::user()->id;
+            $search = $request->get('search');
+        //    $clients = DB::table('clients')->where('name','created_at', '%'.$search.'%')->paginate(5);
+           
+            $clients['data'] = Client::whereUser_id($user)->with(["projects"])->get();
+            $clientSearch= array();
+            $count=0;
+                foreach ($clients['data'] as $client) {
+                    if ($client['name'] == $search) {
+                        // dd($client['name'],$search);
+                        // dd($client);
+                        $count+=1;
+                        // dd($count);
+                        // $clientSearch = $client;
+                        if($count==1){
+                            // $clients['data'][0] = $client;
+                            $clientSearch[0]= $client;
+                        }else{
+                            array_push($clientSearch, $client);
+                            // dd($clientSearch);
+                        }
+                        
+                      
+                } if ($client['project']) {
+                    foreach ($client['project'] as $project){
+                        if ($project['title'] == $search){
+                            // dd($project['title'], $search);
+                        // dd($project);
+                        // dd($clients);
+                        // $clients['data'] = $client;
+                        if($count==1){
+                            $clientSearch[0]= $client;
+                        }else{
+                            array_push($clientSearch, $client);
+                        }
+                        }
+                    };
+                }
+                //  else {
+                //     $emailcontact = null;
+                // }
+            };
+           
+
+        // dd($clients[0]['name']);
+        // dd($clients);
+        // dd($clients[0]['project'][0]['title']);
+        // dd($search);
+        // dd($count);
+        //    return view('clients.list', ['clients'=>$clients]);
+           return view('clients.list', ['clients'=>$clientSearch]);
+            }
+
 
 
 }

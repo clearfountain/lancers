@@ -576,4 +576,40 @@ class InvoiceController extends Controller {
         }
     }
 
+
+    //Search functionality
+            public function search (Request $request) {
+                $user = Auth::user()->id;
+                $search = $request->get('search');
+               
+                $invoices['data'] = Invoice::whereUser_id($user)->with(["projects"])->get();
+                $invoiceSearch= array();
+                $count=0;
+                    foreach ($invoices['data'] as $invoice) {
+                        if ($invoice['name'] == $search) {
+                            // dd($client['name'],$search);
+                            $count+=1;
+                        if($count==1){
+                            $invoiceSearch[0]= $invoice;
+                        }else{
+                            array_push($invoiceSearch, $invoice);
+                        }
+                          
+                    } if ($invoice['project']) {
+                        foreach ($invoice['project'] as $project){
+                            if ($project['title'] == $search){
+                            // dd($clients); $invoices['data'] = $invoice;
+                            $count+=1;
+                            if($count==1){
+                                $invoiceSearch[0]= $invoice;
+                            }else{
+                                array_push($invoiceSearch, $invoice);
+                            }
+                            }
+                        };
+                    }
+                };
+               return view('invoices.list', ['invoices'=>$invoiceSearch]);
+                }
+
 }
