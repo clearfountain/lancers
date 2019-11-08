@@ -330,6 +330,47 @@ class ClientController extends Controller {
             return $filePath;
         }
 
+        //Search functionality for clients
+         // $posts = Client::where('','', $search)-->paginate();
+            // State::where("country_id",$client->country_id)->get();
+        public function search (Request $request) {
+            $user = Auth::user()->id;
+            $search = $request->get('search');
+        //    $clients = DB::table('clients')->where('name','created_at', '%'.$search.'%')->paginate(5);
+           
+            $clients['data'] = Client::whereUser_id($user)->with(["projects"])->get();
+            // $clientSearch= array();
+                foreach ($clients['data'] as $client) {
+                    if ($client['name'] == $search) {
+                        // dd($client['name'],$search);
+                        // dd($client);
+                        // dd($clientSearch);
+                        // $clientSearch = $client;
+                        $clients['data'] = $client;
+                      
+                } if ($client['project']) {
+                    foreach ($client['project'] as $project){
+                        if ($project['title'] == $search){
+                            // dd($project['title'], $search);
+                        // dd($project);
+                        // dd($clients);
+                        $clients['data'] = $client;
+                        }
+                    };
+                }
+                //  else {
+                //     $emailcontact = null;
+                // }
+            };
+           
+
+        // dd($clients[0]['name']);
+        // dd($clients);
+        // dd($clients[0]['project'][0]['title']);
+        // dd($search);
+           return view('clients.list', ['clients'=>$clients]);
+            }
+
 
 
 }

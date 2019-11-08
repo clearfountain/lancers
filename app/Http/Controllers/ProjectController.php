@@ -627,4 +627,27 @@ class ProjectController extends Controller {
     }
  }
 
+  //Search functionality
+  public function search (Request $request) {
+    $user = Auth::user()->id;
+    $search = $request->get('search');
+   
+    $projects['data'] = Project::whereUser_id($user)->with(["projects"])->get();
+        foreach ($projects['data'] as $project) {
+            if ($project['name'] == $search) {
+                // dd($client['name'],$search);
+                $projects['data'] = $project;
+              
+        } if ($project['project']) {
+            foreach ($project['project'] as $project){
+                if ($project['title'] == $search){
+                // dd($clients);
+                $projects['data'] = $projects;
+                }
+            };
+        }
+    };
+   return view('projects.list', ['projects'=>$projects]);
+    }
+
 }

@@ -622,4 +622,28 @@ class InvoiceController extends Controller {
         }
     }
 
+
+    //Search functionality
+            public function search (Request $request) {
+                $user = Auth::user()->id;
+                $search = $request->get('search');
+               
+                $invoices['data'] = Invoice::whereUser_id($user)->with(["projects"])->get();
+                    foreach ($invoices['data'] as $invoice) {
+                        if ($invoice['name'] == $search) {
+                            // dd($client['name'],$search);
+                            $invoices['data'] = $invoice;
+                          
+                    } if ($invoice['project']) {
+                        foreach ($invoice['project'] as $project){
+                            if ($project['title'] == $search){
+                            // dd($clients);
+                            $invoices['data'] = $invoice;
+                            }
+                        };
+                    }
+                };
+               return view('invoices.list', ['invoices'=>$invoices]);
+                }
+
 }
