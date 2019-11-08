@@ -339,14 +339,23 @@ class ClientController extends Controller {
         //    $clients = DB::table('clients')->where('name','created_at', '%'.$search.'%')->paginate(5);
            
             $clients['data'] = Client::whereUser_id($user)->with(["projects"])->get();
-            // $clientSearch= array();
+            $clientSearch= array();
+            $count=0;
                 foreach ($clients['data'] as $client) {
                     if ($client['name'] == $search) {
                         // dd($client['name'],$search);
                         // dd($client);
-                        // dd($clientSearch);
+                        $count+=1;
+                        // dd($count);
                         // $clientSearch = $client;
-                        $clients['data'] = $client;
+                        if($count==1){
+                            // $clients['data'][0] = $client;
+                            $clientSearch[0]= $client;
+                        }else{
+                            array_push($clientSearch, $client);
+                            // dd($clientSearch);
+                        }
+                        
                       
                 } if ($client['project']) {
                     foreach ($client['project'] as $project){
@@ -368,7 +377,9 @@ class ClientController extends Controller {
         // dd($clients);
         // dd($clients[0]['project'][0]['title']);
         // dd($search);
-           return view('clients.list', ['clients'=>$clients]);
+        // dd($count);
+        //    return view('clients.list', ['clients'=>$clients]);
+           return view('clients.list', ['clients'=>$clientSearch]);
             }
 
 
