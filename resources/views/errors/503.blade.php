@@ -3,11 +3,12 @@
 <head>
 <meta charset="uft-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lancer</title>
+<title>Lancers</title>
 <link rel="stylesheet"  href="css/style.css">
 </head>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
     *{
         margin:0;
         padding:0;
