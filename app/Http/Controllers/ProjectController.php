@@ -369,6 +369,7 @@ class ProjectController extends Controller {
             }
 
             $currencySymbol = ($projectData[0]->estimate->invoice->currency['symbol']);
+            $invoiceColor = $projectData[0]->estimate->invoice->invoice_color;
             $projectName = $projectData[0]->title;
             $lancerName = $projectData[0]->user->name;
             $lancerMail = $projectData[0]->user->email;
@@ -461,9 +462,9 @@ class ProjectController extends Controller {
                 $amount = $projectData[0]->estimate['estimate'];
                 $docData += compact("amount");
             }
-
-            $docData += compact("currencySymbol","projectName","lancerName","lancerMail","trackCode");
-
+              
+            $docData += compact("currencySymbol","invoiceColor","projectName","lancerName","lancerMail","trackCode");
+              
             /* Send data to be displayed to the view and return same view */
             return view('client-doc-view')->with('docData',$docData);
           } else {
@@ -517,8 +518,8 @@ class ProjectController extends Controller {
             }
 
             $currencySymbol = ($projectData[0]->estimate->invoice->currency['symbol']);
+            $invoiceColor = $projectData[0]->estimate->invoice->invoice_color;
             $projectName = $projectData[0]->title;
-
             $lancerName = $projectData[0]->user->name;
             $lancerMail = $projectData[0]->user->email;
 
@@ -611,7 +612,7 @@ class ProjectController extends Controller {
                 $docData += compact("amount");
             }
 
-            $docData += compact("currencySymbol","projectName","lancerName","lancerMail","trackCode");
+            $docData += compact("currencySymbol","invoiceColor","projectName","lancerName","lancerMail","trackCode");
         /* Send retieved data to view that will be used to generate PDF file, generate PDF file */
         $pdf = PDF::loadView('pdf.trackproject',$docData);
 

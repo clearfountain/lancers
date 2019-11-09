@@ -235,6 +235,7 @@ class InvoiceController extends Controller {
         }
 
         $currencySymbol = ($projectData[0]->estimate->invoice->currency['symbol']);
+        $invoiceColor = $projectData[0]->estimate->invoice->invoice_color;
         $projectName = $projectData[0]->title;
         $lancerName = $projectData[0]->user->name;
         $lancerMail = $projectData[0]->user->email;
@@ -328,7 +329,7 @@ class InvoiceController extends Controller {
             $docData += compact("amount");
         }
 
-        $docData += compact("currencySymbol", "projectName", "lancerName", "lancerMail");
+        $docData += compact("currencySymbol", "invoiceColor", "projectName", "lancerName", "lancerMail");
         //   dd($docData);
         /* Send retieved data to view that will be used to generate PDF file, generate PDF file */
         $pdf = PDF::loadView('pdf.trackproject', $docData);
@@ -341,6 +342,10 @@ class InvoiceController extends Controller {
         $invoice_id = $request->invoice;
         $invoiceChecker = $request->invoiceChecker;
         $image = $request->file('profileimage');
+        
+        $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
+        $invoice->invoice_color = $request->invoiceClr;
+        $invoice->save();
 
         if ($invoiceChecker == null) {
 
@@ -350,6 +355,8 @@ class InvoiceController extends Controller {
         }
 
         if ($invoiceChecker == "saveInvoice") {
+            $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
+            
             if ($image != null) {
                 $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
                 //saveInvoice
@@ -365,6 +372,9 @@ class InvoiceController extends Controller {
                 $imageStatus = $this->updateImage($request, $client_id);
 
                 $storedImageStatus = $imageStatus;
+                
+                Post::where('id',3)->update(['title'=>'Updated title']);
+                
 
                 //check image return value and act accordingly
                 if ($storedImageStatus == false) {

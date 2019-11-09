@@ -28,6 +28,7 @@ class CreateInvoicesTable extends Migration {
             $table->string('logo')->default('default-logo.png');
             $table->enum('status', ['unpaid', 'paid']);
             $table->timestamps();
+            $table->string('invoice_color')->default('#0ABAB5');
 
         });
     }
