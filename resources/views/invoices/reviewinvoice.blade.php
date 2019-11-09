@@ -118,7 +118,7 @@
                         </div>  
                         <div class="samples">
                             <p class="title-text dynamicColor">Sample Title</p>
-                            <button class="button_1 dynamicBgColor" style="margin-right:5%;">Sample Button</button>
+                            <button disabled class="button_1 dynamicBgColor" style="margin-right:5%;">Sample Button</button>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -845,7 +845,7 @@
 
             .modal-content {
                 padding: 36px 60px 70px 60px;
-                width: 50%;
+                width: 100%;
             }
 
             .button_1 {
@@ -902,7 +902,7 @@
 
             .modal-content {
                 padding: 36px 60px 70px 60px;
-                width: 50%;
+                width: 80%;
             }
 
             .button_1 {
@@ -961,7 +961,7 @@
 
             .modal-content {
                 padding: 30px 54px 54px 54px;
-                width: 50%;
+                width: 80%;
             }
 
             .button_1 {
