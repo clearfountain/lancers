@@ -93,6 +93,7 @@ public function process(Request $request)
     
     
     if($invite->save()){
+        // now we will send the email to the invitee
     Mail::to( $invite->email)->send(new InviteCreated($invite));
     }
 
@@ -159,8 +160,8 @@ public function accept( Request $request, $token)
              'role'=>$invite->role, 
              'project_id'=> $invite->project_id
              ]);
-        //send email notification to the Inviter
 
+        //send email notification to the Inviter
         Mail::to($invite->user->email)->send(new NotifyCreator($collaborator));
         // Mail::to('$invite->user->email')->send(new InviteCreated($invite));
 
