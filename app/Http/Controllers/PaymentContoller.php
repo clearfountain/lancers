@@ -10,17 +10,14 @@ use App\Subscription;
 use App\SubscriptionPlan;
 use Illuminate\Http\Request;
 
-class PaymentContoller extends Controller
-{
-
+class PaymentContoller extends Controller {
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($type)
-    {
+    public function create($type) {
         $user = Auth::user();
 
         $subcriptions = SubscriptionPlan::all();
@@ -34,7 +31,7 @@ class PaymentContoller extends Controller
         foreach ($subcriptions as $subcription) {
 
             $payment_types[$subcription->name] = [
-                'name' => str_replace("_", " ",$subcription->name)." plan",
+                'name' => str_replace("_", " ", $subcription->name) . " plan",
                 'amount' => $subcription->price,
                 'type' => 'sub',
                 'id' => $subcription->id,
@@ -45,7 +42,7 @@ class PaymentContoller extends Controller
             ];
         }
 
-        if(in_array($type, array_keys($payment_types))){
+        if (in_array($type, array_keys($payment_types))) {
             // if the requested payment is a subcription
             $data = $payment_types[$type];
 
@@ -53,27 +50,25 @@ class PaymentContoller extends Controller
             $sub = $user->subscription;
 
             // check if there's still some days left for the plan to exprire, so as to remove the cost from the charge
-            if($sub){
-                if($sub->plan_id > $data['id']){
+            if ($sub) {
+                if ($sub->plan_id > $data['id']) {
                     // return session value here
                     return "Sorry, you cannot downgrade your subscription";
                 }
 
-                if($data['id'] > $sub->plan_id){
+                if ($data['id'] > $sub->plan_id) {
                     $remaining = Carbon::parse($sub->enddate)->diffInDays(Carbon::parse($sub->startdate));
                     $plan = SubscriptionPlan::find($sub->plan_id);
                     //constraint to check for null value returned from db query
-                    if($plan !== null)
-                    {
-                    $price_per_day = $plan->price/30;
+                    if ($plan !== null) {
+                        $price_per_day = $plan->price / 30;
 
-                    $balance = $price_per_day * $remaining;
+                        $balance = $price_per_day * $remaining;
 
-                    $data['balance'] = $balance;
+                        $data['balance'] = $balance;
                     }
-                      //if null value is returned cast balance to nill
+                    //if null value is returned cast balance to nill
                     $data['balance'] = 0;
-
                 }
             }
 
@@ -81,28 +76,32 @@ class PaymentContoller extends Controller
             //     return redirect($data['redirect']);
             // }
             return view('paystackpay')->with('data', $data);
-        }else{
+        } else {
             return "Invalid payment option";
         }
     }
 
-
-    public function invoice($ref)
-    {
-        if($ref == null){
-            return "Invalid payment option";
-        }else{
+    public function invoice($ref) {
+        if ($ref == null) {
+            session()->flash('message.alert', 'danger');
+            session()->flash('message.content', "Invalid payment option");
+            return back();
+        } else {
             $invoice = Invoice::where('created_at', Carbon::createFromTimestamp($ref))->first();
-            if(empty($invoice)){
-                return "Invalid payment option";
-            }else{
-                if($invoice->status == "paid"){
-                    return "This invoice has been paid";
+            if (empty($invoice)) {
+                session()->flash('message.alert', 'danger');
+                session()->flash('message.content', "Invalid payment option ");
+                return back();
+            } else {
+                if ($invoice->status == "paid") {
+                    session()->flash('message.alert', 'danger');
+                    session()->flash('message.content', "This invoice has been paid ");
+                    return back();
                 }
                 $key = Transaction::$PYS_PUB_KEY;
                 $txRef = Transaction::generateRef();
                 $data = [
-                    "name" => "Invoice #".$ref,
+                    "name" => "Invoice #" . $ref,
                     "amount" => $invoice->amount,
                     "type" => 'invoice',
                     "redirect" => '/invoice/pay/',
@@ -115,4 +114,5 @@ class PaymentContoller extends Controller
             return view('paystackpay')->with('data', $data);
         }
     }
+
 }

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Estimate;
 use App\Currency;
+use App\Project;
 class Invoice extends Model
 {
     protected $guarded = ['id'];
@@ -20,5 +21,5 @@ class Invoice extends Model
      public function currency(){
     	return $this->belongsTo(Currency::class, 'currency_id');
     }
-    
+  
 }

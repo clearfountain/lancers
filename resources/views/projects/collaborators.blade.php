@@ -65,10 +65,10 @@
                             @foreach($collabo as $collabo)
                             <tr class="py-2">
                                 <td  class="rounded-left border border-right-0">
-                                    @if(Auth::user()->profile_picture !== 'user-default.png')
-                                    <img id="image_selecter" src="{{ asset(Auth::user()->profile_picture) }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
+                                    @if( $collabo->toArray()['profile_picture'] !== 'user-default.png')
+                                    <img id="image_selecter" src="{{ asset($collabo->toArray()['profile_picture']) }}" style="width: 30px; height: 30px; border-radius: 50%; pointer: finger;" alt="Profile Image">
                                     @endif
-                                    @if(Auth::user()->profile_picture == 'user-default.png')
+                                    @if( $collabo->toArray()['profile_picture'] == 'user-default.png')
                                     <img id="image_selecter" src="{{ asset('images/user-default.jpg') }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
                                     @endif
                                 </td>
