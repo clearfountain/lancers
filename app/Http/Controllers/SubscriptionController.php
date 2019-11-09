@@ -1,11 +1,5 @@
 <?php
-/**
- * @author Mofehintolu MUMUNI
- *
- * @description Subscription controller that handles user subscriptions
- * @slack @Bits_and_Bytes
- * @copyright 2019
- */
+
 namespace App\Http\Controllers;
 
 use App\SubscriptionPlan;
