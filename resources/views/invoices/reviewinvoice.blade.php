@@ -157,8 +157,10 @@
                                     </div>
                                 </div>
 
-                                <button type="button" class="btn btn-primary paymentButton contentBgColor" style="background: #0ABAB5;" disabled>Pay with
-                                    Paystack</button>
+                                {{--<button type="button" class="btn btn-primary paymentButton contentBgColor" style="background: #0ABAB5;" disabled>Pay with
+                                    Paystack</button>--}}
+                                <button type="button" class="btn btn-primary paymentButton" style="background: #0ABAB5;" disabled>Pay with
+                                    Flutterwave</button>
                             </div>
                         </div>
 
