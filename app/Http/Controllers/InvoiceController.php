@@ -342,10 +342,10 @@ class InvoiceController extends Controller {
         $invoice_id = $request->invoice;
         $invoiceChecker = $request->invoiceChecker;
         $image = $request->file('profileimage');
-        
-        $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
-        $invoice->invoice_color = $request->invoiceClr;
-        $invoice->save();
+
+        $invoiceVal = Invoice::findOrFail($invoice_id);
+        $invoiceVal->invoice_color = $request->invoiceClr;
+        $invoiceVal->save();
 
         if ($invoiceChecker == null) {
 
@@ -356,7 +356,7 @@ class InvoiceController extends Controller {
 
         if ($invoiceChecker == "saveInvoice") {
             $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
-            
+
             if ($image != null) {
                 $invoice = Invoice::with('estimate')->findOrFail($invoice_id);
                 //saveInvoice
@@ -372,7 +372,7 @@ class InvoiceController extends Controller {
                 $imageStatus = $this->updateImage($request, $client_id);
 
                 $storedImageStatus = $imageStatus;
-                
+
                 //check image return value and act accordingly
                 if ($storedImageStatus == false) {
 
@@ -588,7 +588,7 @@ class InvoiceController extends Controller {
             public function search (Request $request) {
                 $user = Auth::user()->id;
                 $search = $request->get('search');
-               
+
                 $invoices['data'] = Invoice::whereUser_id($user)->with(["projects"])->get();
                 $invoiceSearch= array();
                 $count=0;
@@ -601,7 +601,7 @@ class InvoiceController extends Controller {
                         }else{
                             array_push($invoiceSearch, $invoice);
                         }
-                          
+
                     } if ($invoice['project']) {
                         foreach ($invoice['project'] as $project){
                             if ($project['title'] == $search){
