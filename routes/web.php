@@ -32,7 +32,6 @@ Route::get('/', function () {
 
 
 Route::get('/pricing', "SubscriptionController@showSubscriptions")->name('subscriptions'); //THIS IS THE CORRECT ROUTE
-
 //Email subscription
 Route::post('/submailinglist', 'MailSubscriptionController@mailStore');
 
@@ -61,7 +60,7 @@ Route::post('/guest/track/project', 'ProjectController@selectproject');
 Route::get('/guest/track/{trackCode}', 'ProjectController@showproject');
 
 //Doc view pdf
-Route::get('/guest/track/{trackCode}/dynamic_pdf','ProjectController@dynamicPDF');
+Route::get('/guest/track/{trackCode}/dynamic_pdf', 'ProjectController@dynamicPDF');
 //Route::get('/guest/track/{id}/dynamic_pdf','DynamicPDFController@index')->middleware('guest');
 
 
@@ -111,6 +110,10 @@ Route::get('/email/client', function(Request $request) {
  * Protected Routes
  */
 Route::group(['middleware' => 'auth:web'], function() {
+    //flutterwave
+    Route::post('/pay', 'RaveController@initialize')->name('pay');
+    Route::post('/rave/callback', 'RaveController@callback')->name('callback');
+
     // Auth
     Route::get('/logout', 'AuthController@logout')->name('logout');
 
@@ -153,13 +156,16 @@ Route::group(['middleware' => 'auth:web'], function() {
     // Project Routes
     Route::get('/projects', 'ProjectController@listGet');
     Route::get('/project/status', 'ProjectController@listGet');
-    Route::get('/project/track', function(){ return view('trackproject'); });
+    Route::get('/project/track', function() {
+        return view('trackproject');
+    });
     Route::get('/edit-project/{id}', 'ProjectController@edit');
     Route::post('/edit-project-save/{id}', 'ProjectController@update');
     Route::get('/view-project/{id}', 'ProjectController@view');
     Route::post('/completed-project/{id}', 'ProjectController@complete');
     Route::post('/pending-project/{id}', 'ProjectController@pending');
      Route::post('/delete-project/{id}', 'ProjectController@delete');
+     Route::get('/projects/satus/search', 'ProjectController@search');
     // Task Routes
     Route::get('/project/tasks', 'TaskController@getAllTasks');
     Route::post('/project/task/create', 'TaskController@store');
@@ -174,6 +180,7 @@ Route::group(['middleware' => 'auth:web'], function() {
 
 
     // Client Routes
+    Route::get('/clients/search', 'ClientController@search');
     Route::get('/clients', 'ClientController@listGet');
     Route::get('/clients/add', 'ClientController@show');
     Route::post('/client/add', 'ClientController@store');
@@ -184,10 +191,10 @@ Route::group(['middleware' => 'auth:web'], function() {
 
     Route::get('/clients/{client}/invoices/{invoice}', 'InvoiceController@clientInvoice');
     Route::get('/client/add', function() {
-         return view('addclients');
+        return view('addclients');
     });
 
-    Route::get("/clients/details/json/{client_id}",'ClientController@getClientName');
+    Route::get("/clients/details/json/{client_id}", 'ClientController@getClientName');
 
 
     Route::get('/clients/view/{id}', 'ClientController@viewClient')->name('viewClient');
@@ -265,10 +272,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     // Route::get('/estimates/{estimate}', 'EstimateController@show')->middleware('auth');
     // Route::put('/estimates/{estimate}', 'EstimateController@update')->middleware('auth');
     // Route::delete('/estimates/{estimate}', 'EstimateController@destroy')->middleware('auth');
-
     // Route::get('/estimate/create', 'EstimateController@step1');
-
-
     // Task Routes
     Route::get('/tasks', 'TaskController@getAllTasks');
     Route::get('/task/edit/{id}', 'TaskController@edit');
@@ -305,6 +309,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/invoices', 'InvoiceController@listGet');
     Route::get('/invoice/review', 'InvoiceController@review');
     Route::post('invoice/logo', 'InvoiceController@addLogo');
+    Route::get('/invoices/search', 'InvoiceController@search');
     //Route::get('/invoices/{invoice}/getpdf', 'InvoiceController@getPdf');
     //Route::get('/invoice/pay/{txref}', 'InvoiceController@pay');
     Route::get('/invoice', function () {
@@ -319,8 +324,6 @@ Route::group(['middleware' => 'auth:web'], function() {
     // Route::get('/client-doc-view', function () {
     //     return view('client-doc-view');
     // });
-
-
     // Route::get('/invoice', function () {
     //     return view('invoice_view');
     // });
@@ -333,9 +336,6 @@ Route::group(['middleware' => 'auth:web'], function() {
     // Route::get('/client-doc-view', function () {
     //     return view('client-doc-view');
     // });
-
-
-
     //Proposals
     Route::get('/proposals', function() {
         return view('proposals');
@@ -370,17 +370,17 @@ Route::group(['middleware' => 'auth:web'], function() {
     });
 });
 
-    //Invite new user to collaborate . Form submission
-    Route::get('project/invite', 'InviteController@invite')->name('invite');
-    //Process the form submission and send the invitation
-    Route::post('project/invite/send', 'InviteController@process')->name('process');
-    //Create account
-    Route::get('register/{token}', 'InviteController@register');
-    // Accept the invitation. {token} is a required parameter that will be exposed to us in the controller method
-    Route::post('accept/{token}', 'InviteController@accept')->name('accept');
+//Invite new user to collaborate . Form submission
+Route::get('project/invite', 'InviteController@invite')->name('invite');
+//Process the form submission and send the invitation
+Route::post('project/invite/send', 'InviteController@process')->name('process');
+//Create account
+Route::get('register/{token}', 'InviteController@register');
+// Accept the invitation. {token} is a required parameter that will be exposed to us in the controller method
+Route::post('accept/{token}', 'InviteController@accept')->name('accept');
 
 
-    Route::get('/run/{command}', function ($command) {
-        $test = \Artisan::call($command);
-        dd($test);
-    });
+Route::get('/run/{command}', function ($command) {
+    $test = \Artisan::call($command);
+    dd($test);
+});

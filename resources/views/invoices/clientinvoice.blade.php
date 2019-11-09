@@ -1,6 +1,5 @@
 @extends('layouts.auth')
 
-@push('styles')
   <style>
 
 
@@ -241,32 +240,39 @@
       }
     }
   </style>
-@endpush
 
 @section('main-content')
     <div class="main-cont">
-      <div class="header">
-        <div class="mobile-nav-btn" onclick="bars()" id="nav-btn">
-          <span class="nav-span"></span>
-          <span class="nav-span"></span>
-          <span class="nav-span"></span>
-        </div>
-        <a href="#"><h4 class="header-nav-item header-nav-item-left">Project Info</h4></a>
-        <a href="#"><h4 class="header-nav-item">Documents</h4></a>
-      </div>
-
-      <div class="content">
+     
+ @if(session()->has('message.alert'))
+                <div class="text-center">
+                    <button class=" alert alert-{{ session('message.alert') }}">
+                        {!! session('message.content') !!}
+                    </button>
+                </div>
+                @endif
+      <div class="col col-md-8 offset-md-2" >
 
         <div class="lanclient-buttons">
           <div class="left">
-            <button type="button">Print</button> <button type="button">Download as PDF</button>
+              <button type="button"  onclick="printDiv('printableArea')">Print</button> <button type="button"><a href='{{url('/')}}/invoices/{{$invoice->id }}/getpdf'>Download as PDF</a></button>
           </div>
+            <div class="clearfix"></div>
+             <br/>   <br/>   <br/>   <br/>
+            @if($invoice->status =='paid')
+              <div class="right">
+            <span class="btn btn-secondary" type="button">Invoice Paid</span>
+          </div>
+            @else
+            
+           
             <div class="right">
             <a href="/payment/invoice/{{strtotime($invoice->created_at)}}" class="btn btn-secondary" type="button">Make Payment</a>
           </div>
+            @endif
         </div>
 
-        <div class="invoice-cont">
+        <div class="invoice-cont card " id="printableArea" >
           <div class="lanclient-invoice-logo">
             <div class="right-invy">
               <h3 class="invoice-banner-txt">Invoice</h3>
@@ -288,7 +294,7 @@
               </div>
                         <div>
                               <div class="top-mid-bill-details"> <p class="billing-clhead">Issue Date</p>
-                               <p class="bills-description">{{strtotime($invoice->issue_date ?? $invoice->created_at)}}</p>
+                               <p class="bills-description">{{ date('F d, Y', strtotime($invoice->issue_date)) }}</p>
                               </div>
                                      <div class="bottom-mid-bill-details">
                                <p class="billing-clhead">Due Date</p>
@@ -304,14 +310,14 @@
             </div>
           </div>
 
-          <section class="billing-data-table">
-            <table>
+            <section class="billing-data-table" style="overflow:auto">
+                  <table class="  text-center table-container">
               <thead class="bg-primary">
                 <tr>
-                  <th class="remove-borders">Description</th>
-                  <th class="remove-borders">Quantity</th>
-                  <th class="remove-borders">Rate</th>
-                  <th class="remove-borders">Amount</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Rate</th>
+                  <th scope="col">Amount</th>
                 </tr>
               </thead>
               <tbody>
@@ -357,4 +363,16 @@
 
         </div>
       </div>
+         <script>
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>       
 @endsection
