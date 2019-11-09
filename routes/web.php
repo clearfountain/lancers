@@ -164,7 +164,8 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/view-project/{id}', 'ProjectController@view');
     Route::post('/completed-project/{id}', 'ProjectController@complete');
     Route::post('/pending-project/{id}', 'ProjectController@pending');
-    Route::post('/delete-project/{id}', 'ProjectController@delete');
+     Route::post('/delete-project/{id}', 'ProjectController@delete');
+     Route::get('/projects/satus/search', 'ProjectController@search');
     // Task Routes
     Route::get('/project/tasks', 'TaskController@getAllTasks');
     Route::post('/project/task/create', 'TaskController@store');
@@ -179,6 +180,7 @@ Route::group(['middleware' => 'auth:web'], function() {
 
 
     // Client Routes
+    Route::get('/clients/search', 'ClientController@search');
     Route::get('/clients', 'ClientController@listGet');
     Route::get('/clients/add', 'ClientController@show');
     Route::post('/client/add', 'ClientController@store');
@@ -307,6 +309,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/invoices', 'InvoiceController@listGet');
     Route::get('/invoice/review', 'InvoiceController@review');
     Route::post('invoice/logo', 'InvoiceController@addLogo');
+    Route::get('/invoices/search', 'InvoiceController@search');
     //Route::get('/invoices/{invoice}/getpdf', 'InvoiceController@getPdf');
     //Route::get('/invoice/pay/{txref}', 'InvoiceController@pay');
     Route::get('/invoice', function () {

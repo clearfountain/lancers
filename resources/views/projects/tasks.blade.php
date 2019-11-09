@@ -82,12 +82,55 @@
                                 </td>
                                 <td class="border-top border-bottom text-right" style="text-align:right;">
                                     <div style="position: relative;" style="float: right;" align="right">
-                                        <img src="https://res.cloudinary.com/memz/image/upload/v1570714781/download_2_yhhlsm.jpg"
+                                        @php
+                                            //echo count($users->toArray());
+                                            $arrCount = 0;
+                                            $userArrNo = 0;
+                                            if( count($tasks->toArray()) > 0 ) {
+                                                foreach( $users->toArray() as $user){
+                                                    if( $user['id'] == $task->user_id ){
+                                                        $userArrNo = $arrCount;
+                                                        break;
+                                                    }
+                                                    else
+                                                        $arrCount++;
+                                                }
+                                            }
+                                        @endphp
+                                      <a href="{{ url('project/collaborators') }}" >
+                                        @if( ($users->toArray()[$userArrNo]['profile_picture']) !== 'user-default.png' )
+                                            <img src="{{ asset( ($users->toArray())[$userArrNo]['profile_picture']) }}"
                                             width="30px" height="30px" class="woman1" />
+                                        @endif
+                                        
+                                        @if( ($users->toArray()[$userArrNo]['profile_picture']) == 'user-default.png' )
+                                            <div class="woman1" name="no-img" style="width: 30px; height: 30px; line-height: 30px; border-radius: 50%; pointer: finger; background-color: #ff9000; color: #fff; text-align: center; vertical-align: middle; " alt="Profile Image">
+                                            @php
+                                                    $count = 0;
+                                                    $name = ($users->toArray())[$userArrNo]['name'];
+                                                    $nameArr = explode(' ',$name);
+                                                    if(strlen($nameArr[0]) > 1){
+                                                        $initials = strtoupper($nameArr[0][0]).strtolower($nameArr[0][1]);
+                                                    }
+                                        
+                                                    else{
+                                                        $initials = strtoupper($nameArr[0][0]);
+                                                    }
+                                        
+                                                    echo htmlspecialchars($initials);
+                                                @endphp
+                                            </div>
+                                        @endif
+                                      </a>
+                                        
+                                        {{--<img src="https://res.cloudinary.com/memz/image/upload/v1570714781/download_2_yhhlsm.jpg"
+                                            width="30px" height="30px" class="woman2" />
                                         <img src="https://res.cloudinary.com/memz/image/upload/v1570714759/download_3_aym7zh.jpg"
                                             width="30px" height="30px" class="woman2" />
                                         <img src="https://res.cloudinary.com/memz/image/upload/v1570714722/download_4_hqdpcn.jpg"
                                             width="30px" height="30px" class="woman3" />
+                                        <img src="{{ asset($users->toArray()[1]['profile_picture']) }}"
+                                            width="30px" height="30px" class="woman3" />--}}
                                     </div>
                                 </td>
                                 <td class="rounded-right border border-left-0">
