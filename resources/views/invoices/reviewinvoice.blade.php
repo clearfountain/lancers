@@ -114,7 +114,7 @@
                                 </div>
 
                                 <button type="button" class="btn btn-primary paymentButton" style="background: #0ABAB5;" disabled>Pay with
-                                    Paystack</button>
+                                    Flutterwave</button>
                             </div>
                         </div>
 
