@@ -200,7 +200,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/clients/view/{id}', 'ClientController@viewClient')->name('viewClient');
     Route::get('/clients/{client}/edit', 'ClientController@edit');
     Route::put('/clients/edit', 'ClientController@update');
-    Route::delete('/clients/{client}/delete', 'ClientController@delete');
+    Route::get('/clients/{client}/delete', 'ClientController@delete');
 
 
     //Invoice routes
