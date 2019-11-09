@@ -150,7 +150,7 @@
     }
 
       .bg-primary{
-          background-color : #0ABAB5 !important;
+          background-color : @if(isset($invoiceColor)) {{ $invoiceColor  }} @else #0ABAB5  @endif !important;
       }
 
     th:nth-child(1), td:nth-child(1) { text-align: start; padding: 10px;
