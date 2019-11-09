@@ -423,7 +423,6 @@ class InvoiceController extends Controller {
                 return back();
             }
 
-
             $encoded = base64_encode(base64_encode($client_email));
 
             $url = "/clients/" . $encoded . "/invoices/" . strtotime($invoice->created_at);
