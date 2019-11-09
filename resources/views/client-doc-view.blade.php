@@ -139,7 +139,15 @@
         text-align: right;
     }
 
-    thead { background-color: #0ABAB5; color: #fff; font-size: 14px; text-align : right;
+      thead { background-color: 
+            @if(array_key_exists('invoiceColor', $docData)) 
+                $docData['invoiceColor']
+          @else 
+              #0ABAB5
+          @endif ; 
+          color: #fff; 
+          font-size: 14px; 
+          text-align : right;
     }
 
       .mg{
@@ -151,7 +159,7 @@
       }
 
       .bg-primary{
-          background-color : #0ABAB5 !important;
+          background-color : @if(array_key_exists('invoiceColor', $docData)) {{ $docData['invoiceColor'] }} @else #0ABAB5 @endif !important;
       }
 
     th:nth-child(1), td:nth-child(1) { text-align: start; padding: 10px;
@@ -276,7 +284,7 @@
           <span class="nav-span"></span>
         </div> -->
         <a href="#"><h4 class="header-nav-item header-nav-item-left main-color">Project Info</h4></a>
-        <a href="#"><h4 class="header-nav-item">Documents</h4></a>
+        {{--<a href="#"><h4 class="header-nav-item">Documents</h4></a>--}}
       </div>
 
       <div class="content">

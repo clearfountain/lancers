@@ -348,6 +348,8 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::post('/process_contact_form', function() {
         return view('process_contact_form');
     });
+
+    //FAQ
     Route::get('/faq', function () {
         return view('faq');
     });
