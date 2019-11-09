@@ -373,9 +373,6 @@ class InvoiceController extends Controller {
 
                 $storedImageStatus = $imageStatus;
                 
-                Post::where('id',3)->update(['title'=>'Updated title']);
-                
-
                 //check image return value and act accordingly
                 if ($storedImageStatus == false) {
 
