@@ -209,7 +209,7 @@ Route::group(['middleware' => 'auth:web'], function() {
 
     Route::get('/invoice/pay/{txref}', 'InvoiceController@pay');
     Route::get('/invoices/{invoice}/getpdf', 'InvoiceController@getPdf');
-    // Route::get('/invoice', function () { return view('invoice_view'); });
+    Route::get('/invoices/{invoice}/view', 'InvoiceController@show');
     Route::get('/invoice_sent', function () {
         return view('invoice_sent');
     });

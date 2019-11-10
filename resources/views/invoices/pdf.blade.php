@@ -470,9 +470,10 @@ tbody, .bold {
                 </div>
 
                 <div class="col-6">
+
+                    {{-- <img src="/storage/logos/{{$invoice->logo}}" --}}
                     @if(null == $invoice->client->profile_picture)
-                    <img src="https://res.cloudinary.com/samtech/image/upload/v1570725037/My_Logo_-_Black.png"
-                        class="img-fluid logo-img">
+                    <img src="https://res.cloudinary.com/samtech/image/upload/v1570725037/My_Logo_-_Black.png" class="img-fluid logo-img">
                     @endif
                     @if(null != $invoice->client->profile_picture)
                     <img id="image_selecter" src="{{ asset($invoice->client->profile_picture) }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
