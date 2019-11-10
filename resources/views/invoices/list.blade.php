@@ -96,31 +96,69 @@
 <a href="{{url('estimate/create/step1')}}"><button class="btn btn-secondary text-white rounded-circle" id="add-something">
     <i class="fas fa-plus"></i>
 </button></a>
-@endsection
 
+    <div class="modal" tabindex="-1" role="dialog" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmMessage"> </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                <a href="" id="delLink"><button class="btn btn-primary modal-save">YES I DO</button></a>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                <button class="btn btn-primary modal-close" data-dismiss="modal">NO I DO NOT</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+            </div>
+          </div>
+          </div>
+@endsection
 
 @section('script')
 <script>
+const url = "{{ url('/')}}/invoice/remove/";
     //alert for invoice delete
     $('.text-danger').on("click",function(e){
             e.preventDefault();
             let invoiceObject = e.target.dataset.id;
             let invoiceObjectArray = invoiceObject.split(":");
+            let urlLink = url+invoiceObjectArray[0];
+            let projectName = invoiceObjectArray[1].toUpperCase();
+            $("#delLink").attr("href", urlLink);
+            $("#confirmMessage").html(`DO YOU WANT TO DELETE INVOICE WITH PROJECT NAME ${projectName} ?`);
+            $("#myModal").modal();
 
-           //fire confirmation dialogue
-        var confirmation = confirm(`Do you want to delete invoice with project name ${invoiceObjectArray[1].toUpperCase()}`);
+      /*  var confirmation = confirm(`Do you want to delete invoice with project name ${invoiceObjectArray[1].toUpperCase()}`);
               //run switch statement after dialogue
             switch(true){
-                case confirmation == true: window.location = @if(isset($invoice))"{{ url('/')}}/invoice/remove/{{ $invoice->id }}"@endif;
+                case confirmation == true: window.location = url+invoiceObjectArray[0];
                 break;
                 case confirmation == false: alert("Invoice delete aborted");
                 break;
                 default: alert("Please select Ok or Cancel to proceed with Invoice delete");
                 break;
             }
-
+        */
 
     });
+
+
 
 
     let selectStatus = document.querySelector('#select-filter');
@@ -128,5 +166,8 @@
         if (selectStatus.value == 'all') window.location.href = "/invoices";
         else window.location.href = "/invoices?filter=" + selectStatus.value;
     }, false)
+
+
+
 </script>
 @endsection
