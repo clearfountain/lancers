@@ -36,6 +36,7 @@ class InvoiceController extends Controller {
     public function edit($id) {
         $invoice = Invoice::where('id', $id)->first();
         $projects = Project::where('user_id', Auth::user()->id)->get(['id', 'title']);
+
         $users = User::all(['id', 'name']);
         return view('invoices.reviewinvoice')->withInvoice($invoice)->withProjects($projects)->withUsers($users);
     }
