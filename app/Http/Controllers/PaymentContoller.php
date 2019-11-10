@@ -76,9 +76,9 @@ class PaymentContoller extends Controller {
                 }
             }
 
-            if($data['id'] == 1){
-                return redirect($data['redirect']);
-            }
+            // if($data['id'] == 1){
+            //     return redirect($data['redirect']);
+            // }
             return view('pay')->with('data', $data);
         } else {
             session()->flash('message.alert', 'danger');
