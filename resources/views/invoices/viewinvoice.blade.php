@@ -459,7 +459,7 @@
                 </div>
 
                 <div class="col-6">
-                    <img src="https://res.cloudinary.com/samtech/image/upload/v1570725037/My_Logo_-_Black.png"
+                    <img src="/storage/logos/{{$invoice->logo}}"
                         class="img-fluid logo-img">
                 </div>
             </div>

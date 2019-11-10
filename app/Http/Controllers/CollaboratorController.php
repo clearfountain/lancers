@@ -7,6 +7,7 @@ use App\Collaborator;
 use Auth;
 use App\User;
 use App\Project;
+use App\Notifications\UserNotification;
 
 
 class CollaboratorController extends Controller
@@ -40,6 +41,14 @@ class CollaboratorController extends Controller
 
         if ($query) {
             // $request->session()->flash('success', 'Collaborator Added!');
+            User::find($request->user_id)->notify(new UserNotification([
+                "subject" => "You have been added as a collaborator",
+                "body" => auth()->user()->name." has added you as a collaborator on the project, ".Project::find($request->project_id)->title.".",
+                "action" => [
+                    "text" => "View projects",
+                    "url" => url('/projects')
+                ]
+            ]));
             return back()->withSuccess('Collaborator Added Successful');
         }else{
             // $request->session()->flash('errors', 'Collaborator addtion failed!');
