@@ -51,7 +51,7 @@ class TaskController extends Controller
 
             User::find($request->user_id)->notify(new UserNotification([
                 "subject" => "New task",
-                "body" => auth()->user()->name." has assigned you a new task, ".$request->title."on the project ".Project::find($request->project_id)->title.".",
+                "body" => auth()->user()->name." has assigned you a new task, ".$request->title." on the project ".Project::find($request->project_id)->title.".",
                 "action" => [
                     "text" => "View tasks",
                     "url" => '/project/tasks'
