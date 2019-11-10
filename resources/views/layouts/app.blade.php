@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
          <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
          <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151870549-1"></script>
         <script>
@@ -33,6 +34,7 @@
         gtag('config', 'UA-151870549-1');
         </script>
        
+
         <!-- end add animations -->
 
     <!-- Styles -->
@@ -77,9 +79,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    
 
-<!-- 
+
+<!--
     <script>
     //image picker jquery
       $("#image_selecter").on("click", function() {
@@ -120,16 +122,16 @@
    {{--  // inline scrpt  --}} -->
 
    @yield('script')
-   
+
 <script type="text/javascript">
-        
+
         // window.onload=function(){
             let back = document.querySelector('#icon-back');
             let close = document.querySelector('#icon-close');
             if(back !== null) back.addEventListener('click', function(e){e.preventDefault(); window.history.back()});
             if(close !== null) close.addEventListener('click', function(e){e.preventDefault(); window.location.href='/dashboard'});
         // }
-        
+
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
