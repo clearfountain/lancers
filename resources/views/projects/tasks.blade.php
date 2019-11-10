@@ -76,7 +76,7 @@
                                     <span class="alert alert-primary py-0 px-2 small m-0">{{$task->progress}}%</span>
                                 </td> -->
                                 <td class="border-top border-bottom text-left">
-                                <span class="alert {{$task->status == 'pending' ? 'alert-default' 
+                                <span class="alert {{$task->status == 'pending' ? 'alert-default'
                                     : $task->status == 'in-progress' ? 'alert-warning' : 'alert-success' }}
                                     alert-primary py-0 px-2 small m-0 active">{{ucfirst($task->status) }}</span>
                                 </td>
@@ -102,7 +102,7 @@
                                             <img src="{{ asset( ($users->toArray())[$userArrNo]['profile_picture']) }}"
                                             width="30px" height="30px" class="woman1" />
                                         @endif
-                                        
+
                                         @if( ($users->toArray()[$userArrNo]['profile_picture']) == 'user-default.png' )
                                             <div class="woman1" name="no-img" style="width: 30px; height: 30px; line-height: 30px; border-radius: 50%; pointer: finger; background-color: #ff9000; color: #fff; text-align: center; vertical-align: middle; " alt="Profile Image">
                                             @php
@@ -112,17 +112,17 @@
                                                     if(strlen($nameArr[0]) > 1){
                                                         $initials = strtoupper($nameArr[0][0]).strtolower($nameArr[0][1]);
                                                     }
-                                        
+
                                                     else{
                                                         $initials = strtoupper($nameArr[0][0]);
                                                     }
-                                        
+
                                                     echo htmlspecialchars($initials);
                                                 @endphp
                                             </div>
                                         @endif
                                       </a>
-                                        
+
                                         {{--<img src="https://res.cloudinary.com/memz/image/upload/v1570714781/download_2_yhhlsm.jpg"
                                             width="30px" height="30px" class="woman2" />
                                         <img src="https://res.cloudinary.com/memz/image/upload/v1570714759/download_3_aym7zh.jpg"
@@ -145,9 +145,9 @@
                                                 class="fas fa-binoculars"></i> View
                                             </a>  --}}
                                              <a class="dropdown-item text-secondary" href="{{ url('/')}}/task/edit/{{ $task->id }}"><i
-                                                class="fas fa-edit"></i> Edit  
+                                                class="fas fa-edit"></i> Edit
                                             </a>
-                                            <a class="dropdown-item text-danger" href="{{ url('/')}}/task/remove/{{ $task->id }}"><i
+                                            <a class="dropdown-item text-danger" data-id="{{ $task->id}}:{{$task->task_title}}" href=""><i
                                                 class="fas fa-trash-alt"></i> Delete
                                             </a>
                                         </div>
@@ -169,7 +169,7 @@
     <button class="btn btn-secondary text-white rounded-circle" id="add-something">
         <i class="fas fa-plus"></i>
     </button>
-    
+
     <button class="btn btn-secondary text-white rounded-circle" id="add-something" data-toggle="modal"
         data-target="#myModal">
         <i class="fas fa-plus"></i>
@@ -186,7 +186,7 @@
 
                 <form method="post" action="{{url('project/task/create')}}">
                     @csrf
-                    <div class="modal-body">                       
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -226,14 +226,14 @@
                                 <div class="form-group">
                                         <label for="start" class="col-form-label">Start Date:</label>
                                         <input required type="date" name="start_date" class="form-control" id="start">
-                                    
+
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                         <label for="end" class="col-form-label">End Date:</label>
                                         <input required type="date" name="due_date" class="form-control" id="end">
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -246,29 +246,71 @@
             </div>
         </div>
     </div>
+
+
+
+
+    <div class="modal" tabindex="-1" role="dialog" id="myModal2">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmMessage"> </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                <a href="" id="delLink"><button class="btn btn-primary modal-save">YES I DO</button></a>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                <button class="btn btn-primary modal-close" data-dismiss="modal">NO I DO NOT</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+            </div>
+          </div>
+          </div>
 @endsection
 
 @section('script')
     <script>
-        // $(document).ready(function () {
-        //     $('#sidebarCollapse').on('click', function () {
-        //         $('#sidebar').toggleClass('active');
-        //         $(this).toggleClass('active');
-        //     });
 
-        //     $('#myModal').on('shown.bs.modal', function () {
-        //         $('#myInput').trigger('focus')
-        //     });
-        //     $('.table-responsive').on('show.bs.dropdown', function () {
-        //         $('.table-responsive').css( "overflow", "inherit" );
-        //     });
+      const url = "{{ url('/')}}/task/remove/";
+    //alert for invoice delete
+    $('.text-danger').on("click",function(e){
+            e.preventDefault();
+            let taskObject = e.target.dataset.id;
+            let taskObjectArray = taskObject.split(":");
+            let urlLink = url+taskObjectArray[0];
+            let taskName = taskObjectArray[1].toUpperCase();
+            $("#delLink").attr("href", urlLink);
+            $("#confirmMessage").html(`DO YOU WANT TO DELETE TASK WITH NAME ${taskName} ?`);
+            $("#myModal2").modal();
 
-        //     $('.table-responsive').on('hide.bs.dropdown', function () {
-        //         $('.table-responsive').css( "overflow", "auto" );
-        //     })
-                    
-        // });
+      /*  var confirmation = confirm(`Do you want to delete invoice with project name ${invoiceObjectArray[1].toUpperCase()}`);
+              //run switch statement after dialogue
+            switch(true){
+                case confirmation == true: window.location = url+invoiceObjectArray[0];
+                break;
+                case confirmation == false: alert("Invoice delete aborted");
+                break;
+                default: alert("Please select Ok or Cancel to proceed with Invoice delete");
+                break;
+            }
+        */
 
+    });
 
         let selectStatus = document.querySelector('#select-filter');
         selectStatus.addEventListener('change', function(){
