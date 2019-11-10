@@ -1,6 +1,20 @@
 @extends('layouts.app')
 
 @section('styles')
+
+<style>
+    .validated {
+        background: #0ABAB5 !important;
+        color: white;
+    }
+
+    .icon-btn:hover {
+        cursor: pointer;
+        color: rgb(10, 186, 181) !important;
+        /* background: red; */
+    }
+</style>
+
 <style type="text/css">
     /*Main page style by message*/
     @import url(http://fonts.googleapis.com/css?family=Open+Sans);
@@ -252,13 +266,6 @@
     }
 
 
-
-
-
-
-
-
-
     .validated {
         background: #0ABAB5 !important;
         color: white;
@@ -278,7 +285,7 @@
         font-family: 'ubuntu'
     }
 
-    .logo {
+    /* .logo {
         font-size: 36px;
         font-family: 'pacifico', Ubuntu;
         display: block;
@@ -294,7 +301,7 @@
 
     .logo span {
         color: #0abab5;
-    }
+    } */
 
     .box2 {
         padding: 30px;
@@ -344,7 +351,7 @@
             'View Project';
     }
 
-    form input {
+    /* form input {
         display: block;
         width: 100%;
         margin-top: 10px;
@@ -352,7 +359,7 @@
         border: 6px solid #eaebed;
         border-radius: 6px;
         padding: 0 10px;
-    }
+    } */
 
     input[type=text],
     select {
@@ -389,14 +396,14 @@
         opacity: 0.6;
     }
 
-    p {
+    /* p {
         color: #262626;
         font-size: 16px;
         font-family: 'ubuntu'
             font-weight: normal;
         margin-left: 20%;
         margin-top: 30px;
-    }
+    } */
 
     a {
         color: #0ABAB5;
@@ -471,6 +478,8 @@
         </div>
     </nav>
 </header>
+<div class="sub-msg">
+</div>
 @stop
 
 @section('sidebar')
@@ -491,17 +500,18 @@
 
             <div class="box">
                 <div class="box2">
-                    <h2> Track your Project</h2>
-                    <h4>Track your project's code to continue</h4>
+                    <h2 style="font-size: 30px;"> Track your Project</h2>
+                    <h4 class="text-center">Input your project code to continue</h4>
                     <form method="post" action="/guest/track/project">
                         @csrf
                         <div class="box3">
-                            <label for="">Project Code</label><br>
+                            <label for="" style=" font-size: 15px">Project Code</label><br>
                             <input type="text" name="projectid" id="projectid"><br><br>
                         </div>
 
-                        <input type="submit" class="viewproject" value="View Project" />
-                        <p> Or <b><a href="{{ route('login') }}">sign in</a></b> to view your projects</p>
+                        <input type="submit" class="viewproject" value="View Project" style="height: 40px;" />
+                        <br><br>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Or <b><a href="{{ route('login') }}">sign in</a></b> to view your projects</p>
                     </form>
                 </div>
                 <div class="col-sm-3"></div>
@@ -511,7 +521,7 @@
 </div>
 @section('footer')
 <footer class="bg-white pt-4" data-aos="fade-down">
-    <div class="container">
+    <div class="container" style="margin-top: 80px;">
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-2">
                 <img src="https://res.cloudinary.com/nxcloud/image/upload/v1570984909/Lancer/Lancers_c40ozr.svg" alt="" class="img img-responsive mb-2" height="30" width="auto">
@@ -532,35 +542,36 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <h5>Reach us</h5>
-                <h5>
-                    <div class="text-dark small">
-                        3 Birrel Avenue, Sabo.
-                        Yaba, Lagos State,
-                        Nigeria.
-                    </div>
-                </h5>
-                <h5>
-                    <a href="http://facebook.com" class="text-dark mr-2"><i class="fab fa-facebook-square"></i></a>
-                    <a href="http://twitter.com" class="text-dark"><i class="fab fa-twitter-square"></i></a>
-                </h5>
+
+                <p class="text-dark small">
+                    3 Birrel Avenue, Sabo.
+                    Yaba, Lagos State,
+                    Nigeria.
+                </p>
+
+
+
+                <a href="http://facebook.com" class="text-dark mr-2"><i class="fab fa-facebook-square"></i></a>
+                <a href="http://twitter.com" class="text-dark"><i class="fab fa-twitter-square"></i></a>
+
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <h5>Stay up to date</h5>
-                <h5>
-                    <div class="text-dark small">
-                        Get emails about our newest features and events you can visit. We promise not to spam.
-                    </div>
-                </h5>
-                <form class="form-inline" method="post" action="/submailinglist">
+
+                <p class="text-dark small">
+                    Get emails about our newest features and events you can visit. We promise not to spam.
+                </p>
+
+                <form class="form-inline" method="post" action="/submailinglist" style="margin-left: -35px;">
                     @csrf
-                    <h5>
+                    
                         <div class="form-group mb-2 mr-2">
                             <label for="subEmail" class="sr-only">Email</label>
                             <input type="email" class="form-control" id="subEmail" name="subEmail" placeholder="Email Address" required>
                         </div>
-                    </h5>
-                    <h5> <input type="submit" class="btn btn-secondary mb-2" id="btn-sub" name="btn-sub" value="Subscribe" />
-                    </h5>
+                    
+                    <input type="submit" class="btn btn-secondary mb-2" id="btn-sub" name="btn-sub" value="Subscribe" />
+                    
                 </form>
             </div>
         </div>
@@ -568,15 +579,15 @@
     <div class="bg-white text-left py-2 mt-0">
         <div class="container">
             <h5>
-                <div class="float-right">
+                <p class="float-right">
                     {{-- <a href="#">Back to top</a> --}}
                     <a href="javascript:void(0)" onClick="window.scrollTo(0, 0)" class="btn btn-secondary mb-2" id="btn-sub">
                         <span>&#8593;</span></a>
-                </div>
-                <h5>
-                    <div>&copy; Lancer 2019.</div>
-                </h5>
-            </h5>
+               </p>
+                
+                    <p>&copy; Lancer 2019.</p>
+                
+            
         </div>
     </div>
 </footer>
