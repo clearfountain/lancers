@@ -84,15 +84,19 @@
                     <section>
                         <div class="invoice-logo">
                         <i>Click Image to upload client logo</i>
+                        @if(null !== $invoice->estimate->project->client->profile_picture)
+                        <img id="invoice_image_selecter" src="{{ asset($invoice->estimate->project->client->profile_picture) }}" style="width: 100px; height: 100px; border-radius: 2%; pointer: finger;" alt="Client Image">
+                        @endif
+                        @if(null == $invoice->estimate->project->client->profile_picture)
                         <img id="invoice_image_selecter" src="{{ asset('images/ClientImages/user-default.jpg') }}" style="width: 100px; height: 100px; border-radius: 2%; pointer: finger;" alt="Client Image">
-
+                        @endif
                         </div>
-                        
+
 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#settingsModal" style="background-color: #00FF00; border-color: #00FF00">Edit Color</button>
 
 <div class="modal fade" id="settingsModal" role="dialog">
     <div class="modal-dialog">
-      <div class="modal-content">        
+      <div class="modal-content">
           <div class="modal-body {{--settings-modal--}}">
               <form class="settings-form" action="settings" method="POST" action="#">
                     <div class="modal-header">
@@ -115,7 +119,7 @@
                                     </select>
                                 </span> <input class="colors modal-input" type="color" name="favcolor" id="clrBox" value="#0ABAB5">
                             </div>
-                        </div>  
+                        </div>
                         <div class="samples">
                             <p class="title-text dynamicColor">Sample Title</p>
                             <button class="button_1 dynamicBgColor" style="margin-right:5%;">Sample Button</button>
@@ -125,7 +129,7 @@
                         <button type="button" class="button_2 dynamicBgColor" id="saveClrBtn" data-dismiss="modal">SAVE SETTINGS</button>
                     </div>
                 </form>
-            </div>          
+            </div>
         </div>
     </div>
 </div>
@@ -281,15 +285,15 @@
         }
 
     }
-        
+
     $("#clrs").on("change", function() {
         var color = $(this).val();
         $("#clrBox").val(color);
         $(".dynamicBgColor").css("background-color", color);
         $(".dynamicColor").css("color", color);
-        
+
     });
-        
+
     $("#saveClrBtn").on("click", function() {
         var color = $("#clrs").val();
         $(".contentBgColor").css("background-color", color);
@@ -544,7 +548,7 @@
             font-size: 14px;
             cursor: pointer;
         }
-        
+
         /* Modal's style */
         .modal-body {
             font-family: 'Ubuntu', sans-serif;
@@ -879,7 +883,7 @@
                 width: 100px;
             }
         }
-        
+
 
         @media only screen and (max-width: 360px) {
             .upload-area {
@@ -946,7 +950,7 @@
             }
             .brand-color {
                 font-weight: normal;
-                
+
             }
 
             .text-bc {
@@ -986,7 +990,7 @@
             }
 
             .colors {
-                
+
                 height: 34px;
                 width: 30%;
                 margin-right:;
@@ -1001,7 +1005,7 @@
                 width: 100px;
                 margin-right: -40px;
             }
-                
+
             select.colors-dropdown option {
                 color: red;
                 background-color: green;
