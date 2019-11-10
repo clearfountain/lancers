@@ -379,6 +379,13 @@
     </p>
     @endif
 </div>
+  @if(session()->has('message.alert'))
+                <div class="text-center">
+                    <button class=" alert alert-{{ session('message.alert') }}">
+                        {!! session('message.content') !!}
+                    </button>
+                </div>
+                @endif
 <section class="pricing">
     <div class="container">
         <div class="title-header">
@@ -418,7 +425,7 @@
                     </ul>
 
                     <div class="price-button p-3">
-                        <a href="{{ route('register') }}" class="btn btn-primary btn-block">Choose plan</a>
+                        <a href="{{ url('/payment/subscription/starter') }}" class="btn btn-primary btn-block">Choose plan</a>
                     </div>
 
                 </div>
