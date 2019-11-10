@@ -296,7 +296,7 @@ Trait VerifyandStoreTransactions{
 			"body" => $body,
 			"action" => [
 				"text" => "View transactions",
-				"url" => "/transactions"
+				"url" => url("/transactions")
 			]
 		]));
 	}

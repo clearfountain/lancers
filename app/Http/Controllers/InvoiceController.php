@@ -181,6 +181,7 @@ class InvoiceController extends Controller {
 
         $invoice = Project::where('invoice_id', $invoice)->select('id', 'title', 'estimate_id', 'client_id', 'invoice_id')->with(['estimate', 'invoice', 'client'])->first();
 
+        dd($invoice);
     // return $invoice;
         return view('invoices.viewinvoice')->with('invoice', $invoice);
     }

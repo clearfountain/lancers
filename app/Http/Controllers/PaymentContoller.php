@@ -80,7 +80,7 @@ class PaymentContoller extends Controller
             // if($data['id'] == 1){
             //     return redirect($data['redirect']);
             // }
-            return view('paystackpay')->with('data', $data);
+            return view('pay')->with('data', $data);
         }else{
             return "Invalid payment option";
         }
@@ -112,7 +112,7 @@ class PaymentContoller extends Controller
                     'balance' => 0
                 ];
             }
-            return view('paystackpay')->with('data', $data);
+            return view('pay')->with('data', $data);
         }
     }
 }
