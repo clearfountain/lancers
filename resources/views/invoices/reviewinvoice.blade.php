@@ -105,9 +105,9 @@
                     </div>
                     <div class="modal-body">
                         <div class="brand-color">
-                            <div class="text-bc">Brand Color</div>
+                            <div class="text-bc">Select Brand Color</div>
                             <div class="colors-box">
-                                <span class="color-text" id="color-value">
+                                <div class="color-text" id="color-value">
                                     <!--#0ABAB5-->
                                     <select id="clrs">
                                         <option class="clrOption" value="#0ABAB5" selected>Default</option>
@@ -117,12 +117,12 @@
                                         <option class="clrOption" value="#0000FF">Blue</option>
                                         <option class="clrOption" value="#FFFF00">Yellow</option>
                                     </select>
-                                </span> <input class="colors modal-input" type="color" name="favcolor" id="clrBox" value="#0ABAB5">
+                                </div> <input class="colors modal-input" type="color" name="favcolor" id="clrBox" value="#0ABAB5">
                             </div>
                         </div>
                         <div class="samples">
                             <p class="title-text dynamicColor">Sample Title</p>
-                            <button class="button_1 dynamicBgColor" style="margin-right:5%;">Sample Button</button>
+                            <button disabled class="button_1 dynamicBgColor" style="margin-right:5%;">Sample Button</button>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -578,11 +578,11 @@
         .settings-form{
             background: #ffffff;
             width: 100%;
-            /*margin: 40px auto; */
+            {{--margin: 40px auto; --}}
             height: auto;
             overflow: auto;
             border-top: 5px solid #0ABAB5;
-            /*padding: 38px 50px 86px 50px; --}}*/
+            padding: 38px 50px 86px 50px; 
         }
 
         .closebtn {
@@ -771,7 +771,7 @@
                 font-weight: normal;
                 width: 135px;
                 height: 50%;
-                margin-right: 40px;
+                {{--margin-right: 40px;--}}
             }
 
             .sample {
@@ -828,6 +828,11 @@
         }
 
         @media only screen and (max-width: 431px) {
+            .modal-body{
+                margin-left: 0 !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
             .upload-area {
                 font-size: 1px larger;
             }
@@ -848,8 +853,8 @@
             }
 
             .modal-content {
-                padding: 36px 60px 70px 60px;
-                width: 50%;
+                {{-- padding: 36px 60px 70px 60px;--}}
+                width: 100%;
             }
 
             .button_1 {
@@ -871,11 +876,12 @@
             .colors-box {
                 width: 100px;
                 height: 22px;
+                margin-right: 80% !important;
             }
 
             .colors {
                 min-height: 22px;
-                width: 30px;
+                width: 20px;
             }
 
             .color-text {
@@ -885,7 +891,7 @@
         }
 
 
-        @media only screen and (max-width: 360px) {
+        {{--@media only screen and (max-width: 360px) {
             .upload-area {
                 font-size: 1px larger;
             }
@@ -904,9 +910,9 @@
                 margin-left: 10px;
             }
 
-            .modal-content {
-                padding: 36px 60px 70px 60px;
-                width: 50%;
+            .modal-content { --}}
+                {{--padding: 36px 60px 70px 60px;--}}
+                {{--    width: 80%;
             }
 
             .button_1 {
@@ -945,10 +951,10 @@
                 font-size: 1px larger;
             }
             .settings-form{
-                width: 90%;
-                padding: 30px 30px 78px 30px;
+                width: 90%;--}}
+                {{--padding: 30px 30px 78px 30px;--}}
             }
-            .brand-color {
+            {{--.brand-color {
                 font-weight: normal;
 
             }
@@ -963,9 +969,9 @@
                 margin-left: 8px;
             }
 
-            .modal-content {
-                padding: 30px 54px 54px 54px;
-                width: 50%;
+                .modal-content { --}}
+                {{--padding: 30px 54px 54px 54px;--}}
+                {{--width: 80%;
             }
 
             .button_1 {
@@ -1009,7 +1015,7 @@
             select.colors-dropdown option {
                 color: red;
                 background-color: green;
-            }
+                    }--}}
         }
 
     </style>
