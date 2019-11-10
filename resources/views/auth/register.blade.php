@@ -83,9 +83,9 @@
             <div class="col-md-6 register">
                 <h2>Register to save your project and gain access to:</h2>
                 <ul class="list">
-                    <li><h5>- The document generator</h5></li>
-                    <li><h5>- Our project management features</h5></li>
-                    <li><h5>- Much more...</h5></li>
+                    <li><h5> The document generator</h5></li>
+                    <li><h5> Our project management features</h5></li>
+                    <li><h5> Much more...</h5></li>
                 </ul>
             </div>
             <div class="col-md-5 offset-md-1 signinform mt-5 pl-5 pr-5 pt-4 pb-4">
