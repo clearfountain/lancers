@@ -75,14 +75,29 @@ h1{
    
 <div class="container">
 <div class="card">
+
+
+    
+    
     <div class="logo">
             <h2>Lan<span>c</span>ers</h2>
     </div>
+ 
+    
+   
+    
+   
+
     <div class="content">
   <h1>Hi,</h1>
 
-  <p>{{ $collaborator->user->name }} have accepted your invitation to collaborate on a Lancer project,
-You can now assign tasks to {{ $collaborator->user->name }}.</p>
+  <p>{{$data['user']}} has sent you an invoice of NGN {{$data['amount']}} for the project {{$data['project']}}.</p>
+
+    <p>Your project Tracking code</p>
+    <h2> Tracking Code :  {{$data['trackingcode']}} </h2>
+
+  <p>Use the button below to view the invoice and make payment.</p>
+  <a href="{{ url($data['invoice_url']) }}"><button type="submit" class="button"> View Invoice</button></a>
   <p>Thanks, <br>{{ config('app.name') }}</p> 
 </div>
 </div>
@@ -93,7 +108,3 @@ You can now assign tasks to {{ $collaborator->user->name }}.</p>
 
 
 </html> 
-
-
-
-<p>Hi,</p>
