@@ -93,7 +93,8 @@ public function process(Request $request)
     
     
     if($invite->save()){
-    Mail::to($request->get('email'))->send(new InviteCreated($invite));
+        // now we will send the email to the invitee
+    Mail::to( $invite->email)->send(new InviteCreated($invite));
     }
 
 
@@ -137,11 +138,7 @@ public function accept( Request $request, $token)
         return back();
         }
 
-    // create the user with the details from the invite
-    // User::create([
-    //     'email' => $invite->email,
-    //     'name' =>
-    //     ]);
+    
 
         $password = Hash::make($request->password);
         $user = User::create([
@@ -150,24 +147,28 @@ public function accept( Request $request, $token)
                     'password' => $password
         ]);
 
-         // Lets log the user in and show them the dashboard
+        // change  the invite status so it can't be used again
+        $invite->status = 'completed';
+        $invite->save();
 
-        Auth::login($user);
+         
 
         //create the collaborator and add the user as a collaborator
 
-        $collaborator = Collaborator::updateOrCreate(
-            ['user_id'=>$user->id, 'role'=>$invite->role, 'project_id'=> $invite->project_id]
-           
-        );
-        //send email notification to the Inviter
+        $collaborator = Collaborator::Create([
+            'user_id'=>$user->id,
+             'role'=>$invite->role, 
+             'project_id'=> $invite->project_id
+             ]);
 
+        //send email notification to the Inviter
         Mail::to($invite->user->email)->send(new NotifyCreator($collaborator));
         // Mail::to('$invite->user->email')->send(new InviteCreated($invite));
 
-    // change  the invite status so it can't be used again
-    $invite->status = 'completed';
-    $invite->save();
+        // Lets log the user in and show them the dashboard
+        Auth::login($user);
+
+    
 
 
 

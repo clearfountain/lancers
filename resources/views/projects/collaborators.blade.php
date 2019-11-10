@@ -44,7 +44,7 @@
                             </select>
                         </form>
                     </div>
-                    
+
                     <table class="table project-table table-borderless">
                         <thead>
                             <tr>
@@ -56,7 +56,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        
+
                             @if(isset($collabo) && count($collabo) < 1)
                             <tr class="py-2">
                                 <td scope="row" class="rounded-left border border-right-0" colspan="5">No Collaborators found for your projects</td>
@@ -65,10 +65,10 @@
                             @foreach($collabo as $collabo)
                             <tr class="py-2">
                                 <td  class="rounded-left border border-right-0">
-                                    @if(Auth::user()->profile_picture !== 'user-default.png')
-                                    <img id="image_selecter" src="{{ asset(Auth::user()->profile_picture) }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
+                                    @if( $collabo->toArray()['profile_picture'] !== 'user-default.png')
+                                    <img id="image_selecter" src="{{ asset($collabo->toArray()['profile_picture']) }}" style="width: 30px; height: 30px; border-radius: 50%; pointer: finger;" alt="Profile Image">
                                     @endif
-                                    @if(Auth::user()->profile_picture == 'user-default.png')
+                                    @if( $collabo->toArray()['profile_picture'] == 'user-default.png')
                                     <img id="image_selecter" src="{{ asset('images/user-default.jpg') }}" style="width: 30px; height: 30px; border-radius: 10%; pointer: finger;" alt="Profile Image">
                                     @endif
                                 </td>
@@ -92,9 +92,9 @@
                                               --}}
 
                                             <a class="dropdown-item text-secondary" href="{{ url('/')}}/project/collaborator/edit/{{ $collabo->id }}"><i
-                                                class="fas fa-edit"></i> Edit  
+                                                class="fas fa-edit"></i> Edit
                                             </a>
-                                            <a class="dropdown-item text-danger" href="{{ url('/')}}/project/collaborator/remove/{{ $collabo->id }}"><i
+                                            <a class="dropdown-item text-danger" data-id="{{ $collabo->id}}:{{$collabo->name}}" href=""><i
                                                 class="fas fa-trash-alt"></i> Delete
                                             </a>
 
@@ -117,7 +117,7 @@
     <button class="btn btn-secondary text-white rounded-circle" id="add-something">
         <i class="fas fa-plus"></i>
     </button>
-    
+
     <button class="btn btn-secondary text-white rounded-circle" id="add-something" data-toggle="modal"
         data-target="#myModal">
         <i class="fas fa-plus"></i>
@@ -134,7 +134,7 @@
 
                 <form method="post" action="{{url('project/collaborator/create')}}">
                 {!! csrf_field() !!}
-                    <div class="modal-body">                       
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -173,29 +173,68 @@
             </div>
         </div>
     </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="myModal2">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmMessage"> </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                <a href="" id="delLink"><button class="btn btn-primary modal-save">YES I DO</button></a>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                <button class="btn btn-primary modal-close" data-dismiss="modal">NO I DO NOT</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+            </div>
+          </div>
+          </div>
 @endsection
 
 @section('script')
     <script>
-        // $(document).ready(function () {
-        //     $('#sidebarCollapse').on('click', function () {
-        //         $('#sidebar').toggleClass('active');
-        //         $(this).toggleClass('active');
-        //     });
 
-        //     $('#myModal').on('shown.bs.modal', function () {
-        //         $('#myInput').trigger('focus')
-        //     });
-        //     $('.table-responsive').on('show.bs.dropdown', function () {
-        //         $('.table-responsive').css( "overflow", "inherit" );
-        //     });
+         const url = "{{ url('/')}}/project/collaborator/remove/";
+    //alert for invoice delete
+    $('.text-danger').on("click",function(e){
+            e.preventDefault();
+            let collabObject = e.target.dataset.id;
+            let collabObjectArray = collabObject.split(":");
+            let urlLink = url+collabObjectArray[0];
+            let collaboName = collabObjectArray[1].toUpperCase();
+            $("#delLink").attr("href", urlLink);
+            $("#confirmMessage").html(`DO YOU WANT TO DELETE COLLABORATOR WITH NAME ${collaboName} ?`);
+            $("#myModal2").modal();
 
-        //     $('.table-responsive').on('hide.bs.dropdown', function () {
-        //         $('.table-responsive').css( "overflow", "auto" );
-        //     })
-                    
-        // });
+      /*  var confirmation = confirm(`Do you want to delete invoice with project name ${invoiceObjectArray[1].toUpperCase()}`);
+              //run switch statement after dialogue
+            switch(true){
+                case confirmation == true: window.location = url+invoiceObjectArray[0];
+                break;
+                case confirmation == false: alert("Invoice delete aborted");
+                break;
+                default: alert("Please select Ok or Cancel to proceed with Invoice delete");
+                break;
+            }
+        */
 
+    });
 
         let selectStatus = document.querySelector('#select-filter');
         selectStatus.addEventListener('change', function(){

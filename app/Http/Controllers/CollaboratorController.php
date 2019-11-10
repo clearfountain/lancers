@@ -9,6 +9,7 @@ use App\User;
 use App\Project;
 use App\Notifications\UserNotification;
 
+
 class CollaboratorController extends Controller
 {
     

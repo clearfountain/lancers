@@ -379,6 +379,13 @@
     </p>
     @endif
 </div>
+  @if(session()->has('message.alert'))
+                <div class="text-center">
+                    <button class=" alert alert-{{ session('message.alert') }}">
+                        {!! session('message.content') !!}
+                    </button>
+                </div>
+                @endif
 <section class="pricing">
     <div class="container">
         <div class="title-header">
@@ -418,7 +425,7 @@
                     </ul>
 
                     <div class="price-button p-3">
-                        <a href="{{ route('register') }}" class="btn btn-primary btn-block">Choose plan</a>
+                        <a href="{{ url('/payment/subscription/starter') }}" class="btn btn-primary btn-block">Choose plan</a>
                     </div>
 
                 </div>
@@ -604,4 +611,19 @@
         </div>
     </div>
 </footer>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {},
+      Tawk_LoadStart = new Date();
+    (function() {
+      var s1 = document.createElement("script"),
+        s0 = document.getElementsByTagName("script")[0];
+      s1.async = true;
+      s1.src = 'https://embed.tawk.to/5dc11896e4c2fa4b6bda03bf/default';
+      s1.charset = 'UTF-8';
+      s1.setAttribute('crossorigin', '*');
+      s0.parentNode.insertBefore(s1, s0);
+    })();
+  </script>
+  <!--End of Tawk.to Script-->
 @endsection

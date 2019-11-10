@@ -12,6 +12,8 @@ use App\Invoice;
 class TrackingCode extends Mailable
 {
     use Queueable, SerializesModels;
+
+    
     public $invoice;
 
     /**

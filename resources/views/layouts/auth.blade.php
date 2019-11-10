@@ -468,12 +468,12 @@ table.project-table thead tr th {
                         </button>
                     </div>
                     <div class="col-6">
-                        <form class="form-inline my-2">
+                        <form class="form-inline my-2" action="clients/search" method="get">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text border-right-0 bg-white" id="basic-addon1"><i class="fas fa-search"></i></span>
                                 </div>
-                                <input class="form-control border border-left-0 searchBox" type="text" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
+                                <input class="form-control border border-left-0 searchBox" type="search" name="search" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
                             </div>
                         </form>
                     </div>

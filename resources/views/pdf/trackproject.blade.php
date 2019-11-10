@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('styles')
-  <style> 
-      
+  <style>
+
       #page-container {
         position: relative;
         min-height: 100vh;
@@ -18,23 +18,23 @@
         width: 100%;
         height: 2.5rem;            /* Footer height */
       }
-      
-      
+
+
       .top-left {left: -20px; top: 50px; position: fixed; font-size: 15px !important;}
       .top-right {right: 0px; left: 550px; top:-10px; position: fixed;}
-      
+
       .bill-left {right: 0px; left: 0px; top: 250px; position: fixed; width: 30%; overflow-wrap: break-word;}
       .bill-mid {right: 0px; left: 300px; top: 240px; position: fixed; font-size: 15px !important; width: 30%; overflow-wrap: break-word;}
       .bill-right {right: 0px; left: 400px; top: 240px; position: fixed; width: 30%; overflow-wrap: break-word;}
-      
+
       a {
           text-decoration : none !important;
       }
-      
+
       .main-color {
           color: #0ABAB5;
       }
-      
+
       .main-color:hover {
           text-decoration:none;
           color: #FFF;
@@ -122,7 +122,7 @@
         position: absolute !important;
         bottom: 0 !important;
         width: 100% !important;
-        height: 2.5rem !important; 
+        height: 2.5rem !important;
     }
 
     .billing-data-table>table { width: 100%; margin: auto; border-collapse: separate; border-spacing: 0;
@@ -141,22 +141,22 @@
 
     tfoot>tr { text-align: right;
     }
-      
+
     tbody {
         text-align: right;
     }
 
     thead { background-color: #0ABAB5; color: #fff; font-size: 14px; text-align : right;
     }
-      
+
       .bg-primary{
-          background-color : #0ABAB5 !important;
+          background-color : @if(isset($invoiceColor)) {{ $invoiceColor  }} @else #0ABAB5  @endif !important;
       }
 
     th:nth-child(1), td:nth-child(1) { text-align: start; padding: 10px;
     }
-      
-      .left { 
+
+      .left {
           text-align: left;
       }
 
@@ -267,7 +267,7 @@
 @endsection
 
 @section('content')
-      <div class="content"> 
+      <div class="content">
         <div class="invoice-cont">
           <h5 class="invoice-banner-txt"><b>Invoice</b></h5>
           <div class="lanclient-invoice-logo">
@@ -300,12 +300,18 @@
                 </p>
             </div>
             <span class="left-invy-logo top-right">
-              <img src="https://res.cloudinary.com/abisalde/image/upload/v1570566026/My_Logo_-_Black.png" alt="Lancer-Logo">
+
+              @if(!isset($profile_picture))
+              <img src="https://res.cloudinary.com/abisalde/image/upload/v1570566026/My_Logo_-_Black.png" alt="Client-Logo">
+                    @endif
+                    @if(isset($profile_picture))
+                    <img id="image_selecter" src="{{ $profile_picture }}" style="width: 100px; height: 100px; border-radius: 10%; pointer: finger;" alt="Client-Logo">
+                    @endif
             </span>
           </div>
 
           <div class="lanclient-billing">
-              <div class="bill-left"> 
+              <div class="bill-left">
                     <p class="billing-clhead">Bill to</p>
                      <div class="bills-descrip"> <p class="bills-description">{{ $clientName }}</p> <p class="bills-description">{{ $clientMail }}</p>
                             <p>
@@ -385,11 +391,11 @@
                   <td>{{ number_format((float)$equipmentCost, 2) }}</td>
                   <td>{{ number_format((float)$equipmentCost, 2) }}</td>
                 </tr>
-                @if(null !== $subContractorCost)  
+                @if(null !== $subContractorCost)
                 <tr>
                         <td class="left">Sub-contractors</td>
                         <td>1</td>
-                        <td>{{ number_format((float)$subContractorCost, 2) }}</td>    
+                        <td>{{ number_format((float)$subContractorCost, 2) }}</td>
                         <td>{{ number_format((float)$subContractorCost, 2) }}</td>
                     </tr>
                 @endif
