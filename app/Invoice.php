@@ -17,9 +17,9 @@ class Invoice extends Model
     public function estimate(){
     	return $this->belongsTo(Estimate::class, 'estimate_id')->with('project');
     }
-    
+
      public function currency(){
     	return $this->belongsTo(Currency::class, 'currency_id');
     }
-  
+
 }
