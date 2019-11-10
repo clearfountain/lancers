@@ -117,7 +117,7 @@
 @endsection
 
 @section('content')
-<div class="logo"> <a href="https://lancers.app/">Lan<span>c</span>ers </a></div>
+<div class="logo"> <a href="{{ url('/') }}">Lan<span>c</span>ers </a></div>
 <br>
 
 <div class="container">
