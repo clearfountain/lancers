@@ -79,7 +79,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     
 
-<!-- 
+
     <script>
     //image picker jquery
       $("#image_selecter").on("click", function() {
@@ -117,7 +117,7 @@
 
     </script>
 
-   {{--  // inline scrpt  --}} -->
+   {{--  // inline scrpt  --}} 
 
    @yield('script')
    
