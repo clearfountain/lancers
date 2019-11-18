@@ -36,6 +36,7 @@ class InvoiceController extends Controller {
     public function edit($id) {
         $invoice = Invoice::where('id', $id)->first();
         $projects = Project::where('user_id', Auth::user()->id)->get(['id', 'title']);
+
         $users = User::all(['id', 'name']);
         return view('invoices.reviewinvoice')->withInvoice($invoice)->withProjects($projects)->withUsers($users);
     }
@@ -181,6 +182,7 @@ class InvoiceController extends Controller {
         $invoice = Project::where('invoice_id', $invoice)->select('id', 'title', 'estimate_id', 'client_id', 'invoice_id')->with(['estimate', 'invoice', 'client'])->first();
 
         // return $invoice;
+
         return view('invoices.viewinvoice')->with('invoice', $invoice);
     }
 

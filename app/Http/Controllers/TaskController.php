@@ -9,6 +9,7 @@ use App\Project;
 use App\Collaborator;
 use App\Rules\IsUser;
 use Illuminate\Http\Request;
+use App\Notifications\UserNotification;
 
 class TaskController extends Controller
 {
@@ -47,6 +48,15 @@ class TaskController extends Controller
         $task = Task::create($request->all());
 
         if ($task) {
+
+            User::find($request->user_id)->notify(new UserNotification([
+                "subject" => "New task",
+                "body" => auth()->user()->name." has assigned you a new task, ".$request->title." on the project ".Project::find($request->project_id)->title.".",
+                "action" => [
+                    "text" => "View tasks",
+                    "url" => '/project/tasks'
+                ]
+            ]));
             $request->session()->flash('success', 'Task Created!');
             return back()->withSuccess('Task Creation Successful');
         }else{
@@ -55,68 +65,68 @@ class TaskController extends Controller
         }
     }
 
-    public function addTeam(Task $task, Request $request) {
-        $team = $task->team ?? [];
-        $request->validate([
-            'user_id' => ['required', 'integer', new IsUser],
-            'designation' => 'required|string',
-        ]);
+    // public function addTeam(Task $task, Request $request) {
+    //     $team = $task->team ?? [];
+    //     $request->validate([
+    //         'user_id' => ['required', 'integer', new IsUser],
+    //         'designation' => 'required|string',
+    //     ]);
 
-        array_push($team, [
-            'user_id' => $request->input('user_id'),
-            'designation' => $request->input('designation')
-        ]);
+    //     array_push($team, [
+    //         'user_id' => $request->input('user_id'),
+    //         'designation' => $request->input('designation')
+    //     ]);
 
 
-        $task = $task->update(['team' => $team]);
+    //     $task = $task->update(['team' => $team]);
 
-        return $this->SUCCESS("team added", $task);
-    }
+    //     return $this->SUCCESS("team added", $task);
+    // }
 
-    public function team(Task $task){
-        $team = $task->team ?? [];
+    // public function team(Task $task){
+    //     $team = $task->team ?? [];
         
-        // fetch all the team mates as users with profile_picture, name
-        $members_id = array_column($team, "user_id");
-        $members = User::whereIn('id', $members_id)->select('id', 'name', 'profile_picture')->get();
+    //     // fetch all the team mates as users with profile_picture, name
+    //     $members_id = array_column($team, "user_id");
+    //     $members = User::whereIn('id', $members_id)->select('id', 'name', 'profile_picture')->get();
 
-        // add profile profile_picture name to main data
-        foreach ($members as $key => $person) {
-            $members[$key]["designation"] = $team[$key]["designation"];
-        }
+    //     // add profile profile_picture name to main data
+    //     foreach ($members as $key => $person) {
+    //         $members[$key]["designation"] = $team[$key]["designation"];
+    //     }
 
-        return $this->SUCCESS("members retrieved", $members);
-    }
+    //     return $this->SUCCESS("members retrieved", $members);
+    // }
     
-    public function index(Project $project){
-        $user = Auth::user();
+    // public function index(Project $project){
+    //     $user = Auth::user();
 
-        $projects = $user->projects->pluck('id')->toArray();
+    //     $projects = $user->projects->pluck('id')->toArray();
 
-        $tasks = Task::whereIn('project_id', $projects )->select('name', 'project_id', 'status', 'progress', 'team')->with('project:id,title')->get();
+    //     $tasks = Task::whereIn('project_id', $projects )->select('name', 'project_id', 'status', 'progress', 'team')->with('project:id,title')->get();
 
-        if($tasks){
-            return $this->SUCCESS("tasks retrieved", $tasks);
-        }
-        return $this->ERROR('no Task Found');
-    }
+    //     if($tasks){
+    //         return $this->SUCCESS("tasks retrieved", $tasks);
+    //     }
+    //     return $this->ERROR('no Task Found');
+    // }
 
-    public function projectTasks(Project $project){
-        $tasks = Task::where('project_id', $project->id)->get();
-        if($tasks){
-            return $this->SUCCESS("tasks retrieved", $tasks);
-        }
-        return $this->ERROR('no Task Found');
-    }
+    // public function projectTasks(Project $project){
+    //     $tasks = Task::where('project_id', $project->id)->get();
+    //     if($tasks){
+    //         return $this->SUCCESS("tasks retrieved", $tasks);
+    //     }
+    //     return $this->ERROR('no Task Found');
+    // }
 
 
     
-    public function show(Task $task){
-        if($task){
-            return $this->SUCCESS($task);
-        }
-        return $this->ERROR('Task not Found');
-    }
+    // public function show(Task $task){
+    //     if($task){
+    //         return $this->SUCCESS($task);
+    //     }
+    //     return $this->ERROR('Task not Found');
+    // }
 
     public function update(Request $request, $id){
 

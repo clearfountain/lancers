@@ -282,7 +282,7 @@
               {{-- <p><strong>Address:&nbsp;</strong>Accra, Ghana</p> --}}
             </div>
             <div class="left-invy-logo">
-              <img src="https://res.cloudinary.com/abisalde/image/upload/v1570566026/My_Logo_-_Black.png" alt="Lancer-Logo">
+              <img src="/storage/logos/{{$invoice->logo}}" alt="Lancer-Logo">
             </div>
           </div>
 
