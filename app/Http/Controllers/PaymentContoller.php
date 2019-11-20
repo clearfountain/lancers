@@ -19,7 +19,7 @@ class PaymentContoller extends Controller {
      */
     public function create($type) {
         $user = Auth::user();
-
+  
         $subcriptions = SubscriptionPlan::all();
         $key = Transaction::$PYS_PUB_KEY;
         $txRef = Transaction::generateRef();
@@ -42,7 +42,9 @@ class PaymentContoller extends Controller {
             ];
         }
 
+
         if (in_array($type, array_keys($payment_types))) {
+
             // if the requested payment is a subcription
             $data = $payment_types[$type];
 
@@ -53,7 +55,9 @@ class PaymentContoller extends Controller {
             if ($sub) {
                 if ($sub->plan_id > $data['id']) {
                     // return session value here
-                    return "Sorry, you cannot downgrade your subscription";
+                    session()->flash('message.alert', 'danger');
+                    session()->flash('message.content', "Sorry, you cannot downgrade your subscription");
+                    return back();
                 }
 
                 if ($data['id'] > $sub->plan_id) {
@@ -75,9 +79,11 @@ class PaymentContoller extends Controller {
             // if($data['id'] == 1){
             //     return redirect($data['redirect']);
             // }
-            return view('paystackpay')->with('data', $data);
+            return view('pay')->with('data', $data);
         } else {
-            return "Invalid payment option";
+            session()->flash('message.alert', 'danger');
+            session()->flash('message.content', "Invalid Plan");
+            return back();
         }
     }
 
@@ -111,7 +117,7 @@ class PaymentContoller extends Controller {
                     'balance' => 0
                 ];
             }
-            return view('paystackpay')->with('data', $data);
+            return view('pay')->with('data', $data);
         }
     }
 

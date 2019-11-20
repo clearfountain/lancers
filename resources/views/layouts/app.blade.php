@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+         <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151870549-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    ​
+    gtag('config', 'UA-151870549-1');
+    </script>
+       
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -10,8 +20,15 @@
     <title>{{ config('app.name', 'Lancers') }} - @yield('title')</title>
     <link rel="shortcut icon" href="https://res.cloudinary.com/ddu0ww15f/image/upload/c_scale,h_16/v1571841777/icons8-home-office-24_veiqea.png" type="image/x-icon">
 
-    {{--  <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>  --}}
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151943830-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    ​
+    gtag('config', 'UA-151943830-1');
+    </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -70,7 +87,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
-<!--
     <script>
     //image picker jquery
       $("#image_selecter").on("click", function() {
@@ -108,7 +124,7 @@
 
     </script>
 
-   {{--  // inline scrpt  --}} -->
+   {{--  // inline scrpt  --}} 
 
    @yield('script')
 

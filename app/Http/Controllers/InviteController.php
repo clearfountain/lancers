@@ -31,6 +31,7 @@ use App\Http\Resources\EstimateCollection;
 use App\Profile;
 use App\Subscription;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Notifications\UserNotification;
 
 class InviteController extends Controller {
 
@@ -67,6 +68,14 @@ public function process(Request $request)
 
     $collaborator = User::where('email', $request->get('email'))->first();
     if ($collaborator){
+        $collaborator->notify(new UserNotification([
+            "subject" => auth()->user()->name." wants to add you as a collaborator",
+            "body" => auth()->user()->name." has requested to add you as a collaborator on the project, ".Project::find($invite->project_id)->title.".",
+            "action" => [
+                "text" => "View projects",
+                "url" => '/projects'
+            ]
+        ]));
         return redirect()->back()->with('error','The user already exists ');
     }
 
@@ -93,6 +102,7 @@ public function process(Request $request)
     
     
     if($invite->save()){
+        // now we will send the email to the invitee
     Mail::to( $invite->email)->send(new InviteCreated($invite));
     }
 
@@ -159,9 +169,17 @@ public function accept( Request $request, $token)
              'role'=>$invite->role, 
              'project_id'=> $invite->project_id
              ]);
-        //send email notification to the Inviter
 
-        Mail::to($invite->user->email)->send(new NotifyCreator($collaborator));
+        //send email notification to the Inviter
+            $invite->user->notify(new UserNotification([
+                "subject" => "Your invite was accepted",
+                "body" => $request->name." has accepted your invitation to collaborate on the project, ".Project::find($request->$invite->project_id)->title.".",
+                "action" => [
+                    "text" => "View collaborators",
+                    "url" => '/project/collaborators'
+                ]
+            ]));
+        // Mail::to($invite->user->email)->send(new NotifyCreator($collaborator));
         // Mail::to('$invite->user->email')->send(new InviteCreated($invite));
 
         // Lets log the user in and show them the dashboard
