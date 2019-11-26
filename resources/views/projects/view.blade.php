@@ -53,7 +53,7 @@
                                     <h2 class="pull-left">{{$projects->title}}</h2>
                                 </div>
                                 <hr>
-                                <div class="clearrfix"></div>
+                                <div class="clearfix"></div>
                                 <br/>
 
                                 <hr class="my-hr-line">
