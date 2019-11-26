@@ -544,15 +544,15 @@
                 <h5>Reach us</h5>
 
                 <p class="text-dark small">
-                    3 Birrel Avenue, Sabo.
-                    Yaba, Lagos State,
+                    17 Akinsanya St, Ojodu 100213, Ikeja,
+                    Lagos State,
                     Nigeria.
                 </p>
 
 
 
-                <a href="http://facebook.com" class="text-dark mr-2"><i class="fab fa-facebook-square"></i></a>
-                <a href="http://twitter.com" class="text-dark"><i class="fab fa-twitter-square"></i></a>
+                <a href="http://facebook.com/lancers.NG" class="text-dark mr-2"><i class="fab fa-facebook-square"></i></a>
+                <a href="http://twitter.com/lancersNG" class="text-dark"><i class="fab fa-twitter-square"></i></a>
 
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4">
@@ -564,14 +564,14 @@
 
                 <form class="form-inline" method="post" action="/submailinglist" style="margin-left: -35px;">
                     @csrf
-                    
-                        <div class="form-group mb-2 mr-2">
-                            <label for="subEmail" class="sr-only">Email</label>
-                            <input type="email" class="form-control" id="subEmail" name="subEmail" placeholder="Email Address" required>
-                        </div>
-                    
+
+                    <div class="form-group mb-2 mr-2">
+                        <label for="subEmail" class="sr-only">Email</label>
+                        <input type="email" class="form-control" id="subEmail" name="subEmail" placeholder="Email Address" required>
+                    </div>
+
                     <input type="submit" class="btn btn-secondary mb-2" id="btn-sub" name="btn-sub" value="Subscribe" />
-                    
+
                 </form>
             </div>
         </div>
@@ -583,11 +583,11 @@
                     {{-- <a href="#">Back to top</a> --}}
                     <a href="javascript:void(0)" onClick="window.scrollTo(0, 0)" class="btn btn-secondary mb-2" id="btn-sub">
                         <span>&#8593;</span></a>
-               </p>
-                
-                    <p>&copy; Lancer 2019.</p>
-                
-            
+                </p>
+
+                <p>&copy; Lancers 2019.</p>
+
+
         </div>
     </div>
 </footer>

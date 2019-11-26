@@ -392,16 +392,16 @@ table.project-table thead tr th {
 
         </div>
         <ul class="list-unstyled components">
-            <li class=" @if( preg_match("/^dashboard.*$/",request()->path())) active @endif">
+            <li class=" @if( preg_match("/^dashboard.*$/", request()->path()) ) active @endif">
                 <a href="{{url('dashboard')}}">
                     <img src="https://lancer-app.000webhostapp.com/images/svg/home.svg" height="20" width="auto"> <span> Dashboard</span></a>
             </li>
             <li class=" @if( preg_match("/^client.*$/", request()->path()) ) active @endif">
                 <a href="{{url('clients')}}">
-                    <img src="https://lancer-app.000webhostapp.com/images/svg/customer.svg" height="20" width="auto"> <span> Client</span>
+                    <img src="https://lancer-app.000webhostapp.com/images/svg/customer.svg" height="20" width="auto"> <span> Clients</span>
                 </a>
             </li>
-            <li class="@if( preg_match("/^project.*$/", request()->path()) ) active @endif">
+            <li class=" @if( preg_match("/^project.*$/", request()->path()) ) active @endif">
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><img src="https://lancer-app.000webhostapp.com/images/svg/lightbulb.svg" height="20" width="auto"> <span> Projects</span></a>
                 <ul class="collapse list-unstyled " id="homeSubmenu">
                     <li>
@@ -413,13 +413,13 @@ table.project-table thead tr th {
                         <a href="{{url('project/overview')}}" class="pl-4"><i class="fas fa-dot-circle"></i> Overview</a>
                     </li> -->
                     <li>
-                        <a href="{{url('project/collaborators')}}" class="pl-4 " @if( preg_match( "/^project\/collaborators.*$/",request()->path()) ) style="color:#0ABAB5;" @endif>
+                        <a href="{{url('project/collaborators')}}" class="pl-4 " @if( preg_match( "/^project\/collaborators.*$/", request()->path()) ) style="color:#0ABAB5;" @endif>
                             <i class="fas fa-dot-circle"></i> Collaborators
                         </a>
                     </li>
                     <li>
                         <a href="{{url('project/tasks')}}" class="pl-4" @if( preg_match("/^project\/tasks.*$/",request()->path()) )style="color:#0ABAB5;" @endif>
-                            <i class="fas fa-dot-circle"></i> Task
+                            <i class="fas fa-dot-circle"></i> Tasks
                         </a>
                     </li>
                     <!-- <li>
@@ -430,7 +430,7 @@ table.project-table thead tr th {
             </li>
             <li class="@if( preg_match("/^invoice.*$/",request()->path()) ) active @endif">
                 <a href="{{url('invoices')}}">
-                    <img src="https://lancer-app.000webhostapp.com/images/svg/approve-invoice.svg" height="20" width="auto"> <span> Invoice</span>
+                    <img src="https://lancer-app.000webhostapp.com/images/svg/approve-invoice.svg" height="20" width="auto"> <span> Invoices</span>
                 </a>
             </li>
             <!-- <li>
