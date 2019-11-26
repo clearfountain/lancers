@@ -391,7 +391,7 @@
                   <td>{{ number_format((float)$equipmentCost, 2) }}</td>
                   <td>{{ number_format((float)$equipmentCost, 2) }}</td>
                 </tr>
-                @if(null !== $subContractorCost)
+                @if( /*(null !== $subContractorCost) && */ (isset($subContractorCost)) )
                 <tr>
                         <td class="left">Sub-contractors</td>
                         <td>1</td>

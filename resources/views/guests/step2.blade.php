@@ -74,13 +74,13 @@
 
                 <div class="hour">
                     <p id="sub">Sub contractors (If any)</p>
-                    <input type="text" required name="sub_contractors" id="sub_contractors" style="width: 83% !important;" placeholder="E.g. Illustrator, Consulting..." class="sub" />
+                    <input type="text" name="sub_contractors" id="sub_contractors" style="width: 83% !important;" placeholder="E.g. Illustrator, Consulting..." class="sub" />
                 </div>
                 <br />
 
                 <div class="hour">
                     <p id="pay">How much would they be paid <span tabindex="0" data-toggle="popover" data-content="Enter total estimated amount to be paid to all sub-contractors" data-placement="top" data-trigger="focus"><i class="fa fa-question-circle" aria-hidden="true"></i></span></p>
-                    <input type="number" min="0" required name="sub_contractors_cost" id="sub_contractors_cost" placeholder="NGN 0.00" style="width: 83% !important;" />
+                    <input type="number" min="0" name="sub_contractors_cost" id="sub_contractors_cost" placeholder="NGN 0.00" style="width: 83% !important;" />
                 </div>
             </div>
             <br>
@@ -169,6 +169,15 @@
     function validate(){
         for(let i in form_children){
             if(form_children[i] !== next_btn && form_children[i] !== next_page && falsy(form_children[i])) {
+
+                //sub_contractors and sub_contractors_cost fields can both be empty
+                //but one of them cannot be empty while the other is not empty
+                if( (i == 'sub_contractors' ) || (i == 'sub_contractors_cost' )) {
+                    if(falsy(form_children['sub_contractors']) && falsy(form_children['sub_contractors_cost'])) {
+                            continue;
+                    }    
+                }
+                
                 // console.log(form_children[i])
                 next_page.disabled = true;
                 next_btn.disabled = true;

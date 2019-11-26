@@ -131,6 +131,15 @@ class GuestController extends Controller {
 
                 if($request->sub_contractors_cost < 0) $errorArray[] = "Number of sub contractors value cannot be a negative value";
 
+                //Next seven lines check and generate error messages if either but not both 'sub_contractors' and 'sub_contractors_cost' fields are empty
+                $sub_contractors_flag = isset($request->sub_contractors) || !empty($request->sub_contractors);
+                $sub_contractors_cost_flag = isset($request->sub_contractors_cost) || !empty($request->sub_contractors_cost);
+
+                if( !sub_contractors_flag != !sub_contractors_cost_flag) {
+                    if(sub_contactors_flag) $errorArray += "Enter subcontractor cost";
+                    if(sub_contactors_flag) $errorArray += "Enter subcontractor name";
+                }
+                
                 if($request->similar_projects < 0) $errorArray[] = "Similar projects value cannot be a negative value";
 
                 if(($request->rating < 0)  && ($request->rating > 5)) $errorArray[] = "The rating for your experience level must be greater than -1 and less than or equal to 5";
