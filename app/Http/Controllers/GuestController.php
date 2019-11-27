@@ -92,7 +92,12 @@ class GuestController extends Controller {
     }
 
     public function savestep2(Request $request) {
-        if(($request->time >= 0) && ($request->cost_per_hour >= 0) && ($request->equipment_cost >= 0) && ($request->sub_contractors_cost >= 0) && ($request->similar_projects >= 0) && (($request->rating >= 0) && ($request->rating <= 5)))
+
+        //Check if 'sub_contractors' or 'sub_contractors_cost' input field is filled
+        $sub_contractors_flag = isset($request->sub_contractors) || !empty($request->sub_contractors);
+        $sub_contractors_cost_flag = isset($request->sub_contractors_cost) || !empty($request->sub_contractors_cost);
+
+        if(($request->time >= 0) && ($request->cost_per_hour >= 0) && ($request->equipment_cost >= 0) && ($request->sub_contractors_cost >= 0) && ($request->similar_projects >= 0) && (($request->rating >= 0) && ($request->rating <= 5)) && (!$sub_contractors_flag == !$sub_contractors_cost_flag) )
         {
         $project = Session::get('project');
         $request->session()->put('project', $project);
@@ -131,13 +136,12 @@ class GuestController extends Controller {
 
                 if($request->sub_contractors_cost < 0) $errorArray[] = "Number of sub contractors value cannot be a negative value";
 
-                //Next seven lines check and generate error messages if either but not both 'sub_contractors' and 'sub_contractors_cost' fields are empty
+                //Check and generate error messages if either but not both 'sub_contractors' and 'sub_contractors_cost' fields are empty
                 $sub_contractors_flag = isset($request->sub_contractors) || !empty($request->sub_contractors);
                 $sub_contractors_cost_flag = isset($request->sub_contractors_cost) || !empty($request->sub_contractors_cost);
-
-                if( !sub_contractors_flag != !sub_contractors_cost_flag) {
-                    if(sub_contactors_flag) $errorArray += "Enter subcontractor cost";
-                    if(sub_contactors_flag) $errorArray += "Enter subcontractor name";
+                if( !$sub_contractors_flag != !$sub_contractors_cost_flag) {
+                    if($sub_contactors_flag) $errorArray += "Enter subcontractor cost";
+                    if($sub_contactors_cost_flag) $errorArray += "Enter subcontractor name";
                 }
                 
                 if($request->similar_projects < 0) $errorArray[] = "Similar projects value cannot be a negative value";
