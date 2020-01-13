@@ -159,6 +159,9 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/project/track', function() {
         return view('trackproject');
     });
+    Route::get('/manage_project', function () {
+        return view('manage_project');
+    });
     Route::get('/edit-project/{id}', 'ProjectController@edit');
     Route::post('/edit-project-save/{id}', 'ProjectController@update');
     Route::get('/view-project/{id}', 'ProjectController@view');
@@ -177,7 +180,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/project/collaborator/edit/{id}', 'CollaboratorController@edit');
     Route::post('/project/collaborator/update/{id}', 'CollaboratorController@update');
     Route::get('/project/collaborator/view/{id}', 'CollaboratorController@view');
-
+    
 
     // Client Routes
     Route::get('/clients/search', 'ClientController@search');
@@ -216,6 +219,9 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::post('/invoice/send/{id}', 'InvoiceController@send');
     Route::get('/invoice-view', function () {
         return view('invoice-view');
+    });
+    Route::get('/create_invoice', function () {
+        return view('create_invoice');
     });
     Route::get('/client-doc-view', function () {
         return view('client-doc-view');
