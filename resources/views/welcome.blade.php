@@ -438,9 +438,9 @@
 				<h5>Features</h5>
 				<ul class="list-unstyled">
 					<li><a class="text-dark" href="{{ url('/dashboard') }}">Dashboard</a></li>
-					<li><a class="text-dark" href="{{ url('/manage_project') }}"> Manage Projects</a></li>
-					<li><a class="text-dark" href="{{ url('/create_invoice') }}">Create Invoices</a></li>
-					<li><a class="text-dark" href="{{ url('/guest/create/step1') }}">Track Projects</a></li>
+					<li><a class="text-dark" href="{{ url('/guest/manage_project') }}"> Manage Projects</a></li>
+					<li><a class="text-dark" href="{{ url('/guest/create_invoice') }}">Create Invoices</a></li>
+					<li><a class="text-dark" href="{{ url('/guest/track_project_description') }}">Track Projects</a></li>
 				</ul>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4">
