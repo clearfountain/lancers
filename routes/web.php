@@ -53,7 +53,15 @@ Route::get('/guest/create/step4', 'GuestController@createstep4')->middleware('gu
 Route::post('/guest/save/step4', 'GuestController@savestep4')->middleware('guest');
 
 Route::get('/guest/invoice/review', 'InvoiceController@review');
-
+Route::get('/guest/manage_project', function () {
+    return view('manage_project');
+})->middleware('guest');
+Route::get('/guest/track_project_description', function () {
+    return view('track_project_description');
+})->middleware('guest');
+Route::get('/guest/create_invoice', function () {
+    return view('create_invoice');
+})->middleware('guest');
 /* Track Project */
 Route::get('/guest/track/', 'ProjectController@acceptproject');
 Route::post('/guest/track/project', 'ProjectController@selectproject');
@@ -159,9 +167,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/project/track', function() {
         return view('trackproject');
     });
-    Route::get('/manage_project', function () {
-        return view('manage_project');
-    });
+    
     Route::get('/edit-project/{id}', 'ProjectController@edit');
     Route::post('/edit-project-save/{id}', 'ProjectController@update');
     Route::get('/view-project/{id}', 'ProjectController@view');
@@ -198,8 +204,6 @@ Route::group(['middleware' => 'auth:web'], function() {
     });
 
     Route::get("/clients/details/json/{client_id}", 'ClientController@getClientName');
-
-
     Route::get('/clients/view/{id}', 'ClientController@viewClient')->name('viewClient');
     Route::get('/clients/{client}/edit', 'ClientController@edit');
     Route::put('/clients/edit', 'ClientController@update');
@@ -209,7 +213,6 @@ Route::group(['middleware' => 'auth:web'], function() {
     //Invoice routes
     // Route::resource('invoices', 'InvoiceController');
     Route::post('/invoice/send', 'InvoiceController@sendinvoice');
-
     Route::get('/invoice/pay/{txref}', 'InvoiceController@pay');
     Route::get('/invoices/{invoice}/getpdf', 'InvoiceController@getPdf');
     Route::get('/invoices/{invoice}/view', 'InvoiceController@show');
@@ -219,9 +222,6 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::post('/invoice/send/{id}', 'InvoiceController@send');
     Route::get('/invoice-view', function () {
         return view('invoice-view');
-    });
-    Route::get('/create_invoice', function () {
-        return view('create_invoice');
     });
     Route::get('/client-doc-view', function () {
         return view('client-doc-view');

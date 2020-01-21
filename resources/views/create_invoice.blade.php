@@ -155,19 +155,36 @@
         <button class="navbar-toggler navbar-light bg-light" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link" href="{{ url('/pricing') }}">Pricing <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="{{ url('/create_invoice') }}">Generate an Invoice</a>
-                <a class="nav-item nav-link" href="{{ url('/guest/create/step1') }}">Track a Project</a>
-                <a class="nav-item nav-link" href="{{ url('/login') }}">Sign in</a>
-                <a class="nav-item nav-link" href="{{ url('/register') }}">Sign up</a>
-            </div>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url('/') }}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/pricing') }}">Pricing</a>
+                </li>
+                @guest
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('guest/track') }}">Track a Project</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">Sign in</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">Sign up</a>
+                </li>
+                @endauth
+                @auth
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                </li>
+                @endauth
+            </ul>
         </div>
     </nav>
 
 
-    <!-- decription -->
+    <!-- description -->
 
     <section class="mt-5 mb-5 pt-5">
         <div class="container">
@@ -180,7 +197,7 @@
                             By creating an invoice, users are generating a document, which indicates the total amount due, the service rendered to the client, man-hours required to handle the project and client's information.
                         </p>
                         <p class="text-dark medium" style="text-align: justify">
-                            When users create an invoice on lancer, an invoice number, which is a unique and sequential code is systematically assigned. <br> The invoice number is one of the most essential aspects of invoicing on lancer, this ensures proper documentation of the income and precise tracking of payment.
+                            When users create an invoice on Lancers, an invoice number, which is a unique and sequential code is systematically assigned. <br> The invoice number is one of the most essential aspects of invoicing on lancer, this ensures proper documentation of the income and precise tracking of payment.
                             <p class="text-dark my-4" data-aos="fade-right">
                                 <a href="https://dev.lancers.app/guest/create/step1" class="btn btn-secondary btn-lg py-2" style="background: #0ABAB5;  color:white; font-size: medium;">Create Project</a>
                             </p>
@@ -201,7 +218,7 @@
 
 @section('footer')
 <!-- footer  -->
-<footer class="bg-white pt-4 animated fadeInUp footer-main">
+<footer class="bg-white pt-4" data-aos="fade-down">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-2">
@@ -248,23 +265,30 @@
             </div>
         </div>
     </div>
+    </div>
     <div class="bg-white text-left py-2 mt-0">
         <div class="container">
             <p class="float-right">
-                <a href="#" class="btn btn-secondary mb-2" id="btn-sub">
+                {{-- <a href="#">Back to top</a> --}}
+                <a href="javascript:void(0)" onClick="window.scrollTo(0, 0)" class="btn btn-secondary mb-2" id="btn-sub">
                     <span>&#8593;</span></a>
             </p>
+            <p>&copy; Lancers 2019.</p>
         </div>
     </div>
 </footer>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-
-<script>
-    document.querySelector('.button').addEventListener('click', () => {
-        location.href = "contact-support.html"
-    })
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {},
+        Tawk_LoadStart = new Date();
+    (function() {
+        var s1 = document.createElement("script"),
+            s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/5dc11896e4c2fa4b6bda03bf/default';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
 </script>
-
+<!--End of Tawk.to Script-->
 @stop

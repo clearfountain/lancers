@@ -159,13 +159,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lancer Manage Project Description</title>
+    <title>Lancer Track Project Description</title>
     <link rel="shortcut icon" href="https://res.cloudinary.com/ddu0ww15f/image/upload/c_scale,h_16/v1571841777/icons8-home-office-24_veiqea.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
 </head>
 @stop
 @section('content')
-
 <main>
     <nav class="pricing-header navbar pl-5 pr-5 navbar-expand-lg ">
         <a class="navbar-brand" href="{{ url('/') }}">
@@ -202,19 +201,15 @@
         </div>
     </nav>
 
-
-    <!-- decription -->
+    <!-- description -->
 
     <article class="container article-content">
         <div class="article-case">
-            <h1 class="h1 manage-title my-2">Manage Project Description</h1>
+            <h1 class="h1 manage-title my-2">Track Project Description</h1>
             <p class="">
-                Lancer helps you create an invoice as well as manage your project.
-                You can add collaborators, invite other team-players and assign tasks
-                easily on the platform. New collaborators will receive email invites and
-                notification of the project and their assigned tasks. Collaborators can also view
-                other collaborators, view work progress and the various stages of
-                the project.
+                Lancer helps you keep track of your project. Users are issued a six(6) digit code through their registered email
+                upon creating a project. This code is used to track a project to see whatever state or progress you are making.
+                Different tracking codes would be assigned to their respective projects for easy identification and security.
             </p>
             <button type="button" class="btn-lg btn btn-create mt-3"><a href="https://dev.lancers.app/guest/create/step1" class="a-create">Create Project</a></button>
 
@@ -222,18 +217,17 @@
     </article>
 </main>
 @stop
-
-
-
 @section('footer')
+
 <!-- footer  -->
+
 <footer class="bg-white pt-4" data-aos="fade-down">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-2">
                 <a href="/"><img src="https://res.cloudinary.com/nxcloud/image/upload/v1570984909/Lancer/Lancers_c40ozr.svg" alt="" class="img img-responsive mb-2" height="30" width="80px"></a>
                 <ul class="list-unstyled">
-                    <li><a class="text-dark" href="{{ url('/pricing') }}">Pricing</a></li>
+                    <li><a class="text-dark" href="{{ url('/pricing') }}">Pricing</a> </li>
                     <li><a class="text-dark" href="{{ url('/login') }}">Sign in</a></li>
                     <li><a class="text-dark" href="{{ url('/register') }}">Sign up</a></li>
                 </ul>
@@ -255,8 +249,8 @@
                     Nigeria.
                 </p>
                 <h5 class="">
-                    <a href="https://www.facebook.com/lancers.NG" class="text-dark mr-2"><i class="fab fa-facebook-square"></i></a>
-                    <a href="https://www.twitter.com/lancersNG" class="text-dark"><i class="fab fa-twitter-square"></i></a>
+                    <a href="https://www.facebook.com/Lancers.NG" class="text-dark mr-2"><i class="fab fa-facebook-square"></i></a>
+                    <a href="https://www.twitter.com/LancersNG" class="text-dark"><i class="fab fa-twitter-square"></i></a>
                 </h5>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4 mt-2">
