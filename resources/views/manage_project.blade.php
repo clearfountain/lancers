@@ -210,7 +210,7 @@
 
 @section('footer')
 <!-- footer  -->
-<footer class="bg-white pt-4 animated fadeInUp footer-main">
+<footer class="bg-white pt-4" data-aos="fade-down">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-2">
@@ -257,23 +257,30 @@
             </div>
         </div>
     </div>
+    </div>
     <div class="bg-white text-left py-2 mt-0">
         <div class="container">
             <p class="float-right">
-                <a href="#" class="btn btn-secondary mb-2" id="btn-sub">
+                {{-- <a href="#">Back to top</a> --}}
+                <a href="javascript:void(0)" onClick="window.scrollTo(0, 0)" class="btn btn-secondary mb-2" id="btn-sub">
                     <span>&#8593;</span></a>
             </p>
+            <p>&copy; Lancers 2019.</p>
         </div>
     </div>
 </footer>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-
-<script>
-    document.querySelector('.button').addEventListener('click', () => {
-        location.href = "{{ url('/contact_support') }}"
-    })
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {},
+        Tawk_LoadStart = new Date();
+    (function() {
+        var s1 = document.createElement("script"),
+            s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/5dc11896e4c2fa4b6bda03bf/default';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
 </script>
-
+<!--End of Tawk.to Script-->
 @stop
