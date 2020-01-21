@@ -155,14 +155,31 @@
         <button class="navbar-toggler navbar-light bg-light" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link" href="{{ url('/pricing') }}">Pricing <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="{{ url('/create_invoice') }}">Generate an Invoice</a>
-                <a class="nav-item nav-link" href="{{ url('/guest/create/step1') }}">Track a Project</a>
-                <a class="nav-item nav-link" href="{{ url('/login') }}">Sign in</a>
-                <a class="nav-item nav-link" href="{{ url('/register') }}">Sign up</a>
-            </div>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url('/') }}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/pricing') }}">Pricing</a>
+                </li>
+                @guest
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('guest/track') }}">Track a Project</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">Sign in</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">Sign up</a>
+                </li>
+                @endauth
+                @auth
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                </li>
+                @endauth
+            </ul>
         </div>
     </nav>
 
