@@ -438,21 +438,21 @@
 				<h5>Features</h5>
 				<ul class="list-unstyled">
 					<li><a class="text-dark" href="{{ url('/dashboard') }}">Dashboard</a></li>
-					<li><a class="text-dark" href="{{ url('/projects') }}">Projects</a></li>
-					<li><a class="text-dark" href="{{ url('/invoices') }}">Invoices</a></li>
-					<li><a class="text-dark" href="{{ url('/guest/create/step1') }}">Create a Project</a></li>
+					<li><a class="text-dark" href="{{ url('/guest/manage_project') }}"> Manage Projects</a></li>
+					<li><a class="text-dark" href="{{ url('/guest/create_invoice') }}">Create Invoices</a></li>
+					<li><a class="text-dark" href="{{ url('/guest/track_project_description') }}">Track Projects</a></li>
 				</ul>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4">
 				<h5>Reach us</h5>
 				<p class="text-dark small">
-					3 Birrel Avenue, Sabo.
-					Yaba, Lagos State,
+					17 Akinsanya St, Ojodu 100213, Ikeja,
+					Lagos State,
 					Nigeria.
 				</p>
 				<h5>
-					<a href="http://facebook.com" class="text-dark mr-2"><i class="fab fa-facebook-square"></i></a>
-					<a href="http://twitter.com" class="text-dark"><i class="fab fa-twitter-square"></i></a>
+					<a href="http://facebook.com/lancers.NG" class="text-dark mr-2"><i class="fab fa-facebook-square"></i></a>
+					<a href="http://twitter.com/lancersNG" class="text-dark"><i class="fab fa-twitter-square"></i></a>
 				</h5>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4">
@@ -478,7 +478,7 @@
 				<a href="javascript:void(0)" onClick="window.scrollTo(0, 0)" class="btn btn-secondary mb-2" id="btn-sub">
 					<span>&#8593;</span></a>
 			</p>
-			<p>&copy; Lancer 2019.</p>
+			<p>&copy; Lancers 2019.</p>
 		</div>
 	</div>
 </footer>
