@@ -72,7 +72,12 @@
                         </div>
                     </div>
                 </section> --}}
-
+                
+                <div class="text-center" id="size_err_msg">
+                        <button class="alert alert-danger" >
+                            Choose an image with size less than 8mb
+                        </button>
+                    </div>
                 @if(session()->has('message.alert'))
                 <div class="text-center">
                     <button class=" alert alert-{{ session('message.alert') }}">
@@ -83,7 +88,7 @@
                 <section class="mainContentBelowLogo">
                     <section>
                         <div class="invoice-logo">
-                        <i>Click Image to upload client logo</i>
+                        <i>Click Image to upload client logo(size must be less than 8mb)</i>
                         @if(null !== $invoice->estimate->project->client->profile_picture)
                         <img id="invoice_image_selecter" src="{{ asset($invoice->estimate->project->client->profile_picture) }}" style="width: 100px; height: 100px; border-radius: 2%; pointer: finger;" alt="Client Image">
                         @endif
@@ -272,19 +277,28 @@
 
       function invoiceImage(input) {
         if (input.files && input.files[0]) {
-            var reader = new FileReader();
+            var FileSize = input.files[0].size / 1024 /1024; // in MB
+            if (FileSize > 8) {
+                $('#size_err_msg').show();
+                $('#invoice_image_selecter').attr('src', "{{ asset('images/ClientImages/user-default.jpg') }}");
+                $(input).val(''); //for clearing with Jquery
+            } else {
+                $('#size_err_msg').hide();
+                var reader = new FileReader();
 
-            reader.onload = function (e) {
+                reader.onload = function (e) {
                 $('#invoice_image_selecter')
                     .attr('src', e.target.result)
                     .width(100)
                     .height(100);
-            };
+                };
 
-            reader.readAsDataURL(input.files[0]);
+                reader.readAsDataURL(input.files[0]);
+            }
         }
+        $(input).val(''); 
+      }
 
-    }
 
     $("#clrs").on("change", function() {
         var color = $(this).val();
@@ -372,6 +386,10 @@
         }
         img:hover {
             color: white;
+        }
+
+        #size_err_msg {
+            display: none;
         }
         .card {
             border: 0px

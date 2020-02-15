@@ -51,6 +51,10 @@ class Handler extends ExceptionHandler
                 return response()->view('errors.' . '404', [], 404);
             }
         }
+
+        if ($exception instanceof \Illuminate\Http\Exceptions\PostTooLargeException) {
+            return back();
+        }
         
         return parent::render($request, $exception);
     }
